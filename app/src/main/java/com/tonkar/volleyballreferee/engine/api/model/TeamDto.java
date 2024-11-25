@@ -13,7 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiTeam {
+public class TeamDto {
 
     public static final String DEFAULT_COLOR = "#633303";
 
@@ -36,15 +36,15 @@ public class ApiTeam {
     @SerializedName("liberoColor")
     private String          liberoColor;
     @SerializedName("players")
-    private List<ApiPlayer> players;
+    private List<PlayerDto> players;
     @SerializedName("liberos")
-    private List<ApiPlayer> liberos;
+    private List<PlayerDto> liberos;
     @SerializedName("captain")
     private int             captain;
     @SerializedName("coach")
     private String          coach;
 
-    public ApiTeam() {
+    public TeamDto() {
         id = UUID.randomUUID().toString();
         createdBy = null;
         createdAt = 0L;

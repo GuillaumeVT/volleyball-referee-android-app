@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.GameSummaryDto;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -18,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.DateFormat;
 import java.util.*;
 
-public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummary> {
+public class StoredGamesListAdapter extends SelectableArrayAdapter<GameSummaryDto> {
 
     static class ViewHolder {
         MaterialCardView listItemCard;
@@ -31,12 +31,12 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
     }
 
     private final LayoutInflater       mLayoutInflater;
-    private final List<ApiGameSummary> mStoredGamesList;
-    private final List<ApiGameSummary> mFilteredStoredGamesList;
+    private final List<GameSummaryDto> mStoredGamesList;
+    private final List<GameSummaryDto> mFilteredStoredGamesList;
     private final DateFormat           mFormatter;
     private final NamesFilter          mNamesFilter;
 
-    StoredGamesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiGameSummary> storedGamesList) {
+    StoredGamesListAdapter(Context context, LayoutInflater layoutInflater, List<GameSummaryDto> storedGamesList) {
         super(context, R.layout.stored_games_list_item, storedGamesList);
         mLayoutInflater = layoutInflater;
         mStoredGamesList = storedGamesList;
@@ -47,7 +47,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
         mNamesFilter = new NamesFilter();
     }
 
-    void updateStoredGamesList(List<ApiGameSummary> storedGamesList) {
+    void updateStoredGamesList(List<GameSummaryDto> storedGamesList) {
         mStoredGamesList.clear();
         mFilteredStoredGamesList.clear();
         mStoredGamesList.addAll(storedGamesList);
@@ -61,7 +61,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
     }
 
     @Override
-    public ApiGameSummary getItem(int index) {
+    public GameSummaryDto getItem(int index) {
         return mFilteredStoredGamesList.get(index);
     }
 
@@ -90,13 +90,13 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
-        ApiGameSummary game = mFilteredStoredGamesList.get(index);
+        GameSummaryDto game = mFilteredStoredGamesList.get(index);
         updateGame(viewHolder, game);
 
         return gameView;
     }
 
-    private void updateGame(ViewHolder viewHolder, ApiGameSummary game) {
+    private void updateGame(ViewHolder viewHolder, GameSummaryDto game) {
         viewHolder.summaryText.setText(
                 String.format(Locale.getDefault(), "%s\t\t%d - %d\t\t%s", game.getHomeTeamName(), game.getHomeSets(), game.getGuestSets(),
                               game.getGuestTeamName()));
@@ -148,9 +148,9 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiGameSummary> matchValues = new ArrayList<>();
+                List<GameSummaryDto> matchValues = new ArrayList<>();
 
-                for (ApiGameSummary game : mStoredGamesList) {
+                for (GameSummaryDto game : mStoredGamesList) {
                     if (lowerCaseText.isEmpty() || game.getHomeTeamName().toLowerCase(Locale.getDefault()).contains(lowerCaseText) || game
                             .getGuestTeamName()
                             .toLowerCase(Locale.getDefault())
@@ -174,7 +174,7 @@ public class StoredGamesListAdapter extends SelectableArrayAdapter<ApiGameSummar
             mFilteredStoredGamesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredGamesList.addAll((Collection<? extends ApiGameSummary>) results.values);
+                mFilteredStoredGamesList.addAll((Collection<? extends GameSummaryDto>) results.values);
             }
 
             if (results.count > 0) {

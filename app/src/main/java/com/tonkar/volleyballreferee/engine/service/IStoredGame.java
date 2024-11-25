@@ -13,10 +13,10 @@ public interface IStoredGame extends IBaseGeneral, IBaseScore, IBaseTeam, IBaseT
 
     int getGameCaptain(TeamType teamType, int setIndex);
 
-    List<ApiTimeout> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
+    List<TimeoutDto> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
 
-    List<ApiSubstitution> getSubstitutionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
+    List<SubstitutionDto> getSubstitutionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
 
-    List<ApiSanction> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
+    List<SanctionDto> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints);
 
 }

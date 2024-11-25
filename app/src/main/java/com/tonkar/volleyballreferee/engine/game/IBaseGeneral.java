@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.game;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSelectedLeague;
+import com.tonkar.volleyballreferee.engine.api.model.SelectedLeagueDto;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 
 public interface IBaseGeneral {
@@ -37,7 +37,7 @@ public interface IBaseGeneral {
 
     Rules getRules();
 
-    ApiSelectedLeague getLeague();
+    SelectedLeagueDto getLeague();
 
     long getStartTime();
 

@@ -8,15 +8,15 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiFriendsAndRequests {
+public class FriendsAndRequestsDto {
     @SerializedName("friends")
-    private List<ApiFriend>        friends;
+    private List<FriendDto>        friends;
     @SerializedName("receivedFriendRequests")
-    private List<ApiFriendRequest> receivedFriendRequests;
+    private List<FriendRequestDto> receivedFriendRequests;
     @SerializedName("sentFriendRequests")
-    private List<ApiFriendRequest> sentFriendRequests;
+    private List<FriendRequestDto> sentFriendRequests;
 
-    public ApiFriendsAndRequests() {
+    public FriendsAndRequestsDto() {
         this.friends = new ArrayList<>();
         this.receivedFriendRequests = new ArrayList<>();
         this.sentFriendRequests = new ArrayList<>();

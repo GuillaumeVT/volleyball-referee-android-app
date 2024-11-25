@@ -164,7 +164,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSubstitutions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (ApiSubstitution substitution : mBaseTeam.getSubstitutions(teamType, setIndex)) {
+        for (SubstitutionDto substitution : mBaseTeam.getSubstitutions(teamType, setIndex)) {
             int homePoints = substitution.getHomePoints();
             int guestPoints = substitution.getGuestPoints();
 
@@ -177,7 +177,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addTimeouts(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (ApiTimeout timeout : mBaseTimeout.getCalledTimeouts(teamType, setIndex)) {
+        for (TimeoutDto timeout : mBaseTimeout.getCalledTimeouts(teamType, setIndex)) {
             int homePoints = timeout.getHomePoints();
             int guestPoints = timeout.getGuestPoints();
 
@@ -190,7 +190,7 @@ public class LadderListAdapter extends BaseAdapter {
     }
 
     private void addSanctions(TeamType teamType, int setIndex, List<LadderItem> ladderItems) {
-        for (ApiSanction sanction : mBaseSanction.getAllSanctions(teamType, setIndex)) {
+        for (SanctionDto sanction : mBaseSanction.getAllSanctions(teamType, setIndex)) {
             int homePoints = sanction.getHomePoints();
             int guestPoints = sanction.getGuestPoints();
 

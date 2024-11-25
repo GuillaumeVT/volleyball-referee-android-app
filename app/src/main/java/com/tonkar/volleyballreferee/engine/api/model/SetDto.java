@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiSet {
+public class SetDto {
     @SerializedName("duration")
     private long                  duration;
     @SerializedName("startTime")
@@ -32,34 +32,34 @@ public class ApiSet {
     @SerializedName("firstServing")
     private TeamType              firstServing;
     @SerializedName("homeCurrentPlayers")
-    private ApiCourt              homeCurrentPlayers;
+    private CourtDto              homeCurrentPlayers;
     @SerializedName("guestCurrentPlayers")
-    private ApiCourt              guestCurrentPlayers;
+    private CourtDto              guestCurrentPlayers;
     @SerializedName("homeStartingPlayers")
-    private ApiCourt              homeStartingPlayers;
+    private CourtDto              homeStartingPlayers;
     @SerializedName("guestStartingPlayers")
-    private ApiCourt              guestStartingPlayers;
+    private CourtDto              guestStartingPlayers;
     @SerializedName("homeSubstitutions")
-    private List<ApiSubstitution> homeSubstitutions;
+    private List<SubstitutionDto> homeSubstitutions;
     @SerializedName("guestSubstitutions")
-    private List<ApiSubstitution> guestSubstitutions;
+    private List<SubstitutionDto> guestSubstitutions;
     @SerializedName("homeCaptain")
     private int                   homeCaptain;
     @SerializedName("guestCaptain")
     private int                   guestCaptain;
     @SerializedName("homeCalledTimeouts")
-    private List<ApiTimeout>      homeCalledTimeouts;
+    private List<TimeoutDto>      homeCalledTimeouts;
     @SerializedName("guestCalledTimeouts")
-    private List<ApiTimeout>      guestCalledTimeouts;
+    private List<TimeoutDto>      guestCalledTimeouts;
     @SerializedName("remainingTime")
     private long                  remainingTime;
 
-    public ApiSet() {
+    public SetDto() {
         this.ladder = new ArrayList<>();
-        this.homeCurrentPlayers = new ApiCourt();
-        this.guestCurrentPlayers = new ApiCourt();
-        this.homeStartingPlayers = new ApiCourt();
-        this.guestStartingPlayers = new ApiCourt();
+        this.homeCurrentPlayers = new CourtDto();
+        this.guestCurrentPlayers = new CourtDto();
+        this.homeStartingPlayers = new CourtDto();
+        this.guestStartingPlayers = new CourtDto();
         this.homeSubstitutions = new ArrayList<>();
         this.guestSubstitutions = new ArrayList<>();
         this.homeCalledTimeouts = new ArrayList<>();
@@ -106,8 +106,8 @@ public class ApiSet {
         }
     }
 
-    public ApiCourt getCurrentPlayers(TeamType teamType) {
-        ApiCourt players;
+    public CourtDto getCurrentPlayers(TeamType teamType) {
+        CourtDto players;
 
         if (TeamType.HOME.equals(teamType)) {
             players = homeCurrentPlayers;
@@ -118,8 +118,8 @@ public class ApiSet {
         return players;
     }
 
-    public ApiCourt getStartingPlayers(TeamType teamType) {
-        ApiCourt players;
+    public CourtDto getStartingPlayers(TeamType teamType) {
+        CourtDto players;
 
         if (TeamType.HOME.equals(teamType)) {
             players = homeStartingPlayers;
@@ -130,8 +130,8 @@ public class ApiSet {
         return players;
     }
 
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
-        List<ApiSubstitution> substitutions;
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
+        List<SubstitutionDto> substitutions;
 
         if (TeamType.HOME.equals(teamType)) {
             substitutions = homeSubstitutions;
@@ -162,8 +162,8 @@ public class ApiSet {
         }
     }
 
-    public List<ApiTimeout> getCalledTimeouts(TeamType teamType) {
-        List<ApiTimeout> timeouts;
+    public List<TimeoutDto> getCalledTimeouts(TeamType teamType) {
+        List<TimeoutDto> timeouts;
 
         if (TeamType.HOME.equals(teamType)) {
             timeouts = homeCalledTimeouts;

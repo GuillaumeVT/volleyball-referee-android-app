@@ -26,13 +26,13 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
 
     private Activity           mActivity;
     private StoredGamesService mStoredGamesService;
-    private ApiGameSummary     mGameDescription;
+    private GameSummaryDto     mGameDescription;
     private boolean            mConfigureBeforeStart;
 
-    public static ScheduleGameListActionMenu newInstance(ApiGameSummary gameDescription) {
+    public static ScheduleGameListActionMenu newInstance(GameSummaryDto gameDescription) {
         ScheduleGameListActionMenu fragment = new ScheduleGameListActionMenu();
         Bundle args = new Bundle();
-        args.putString("game", JsonConverters.GSON.toJson(gameDescription, ApiGameSummary.class));
+        args.putString("game", JsonConverters.GSON.toJson(gameDescription, GameSummaryDto.class));
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,7 +40,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         String gameDescriptionStr = requireArguments().getString("game");
-        mGameDescription = JsonConverters.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
+        mGameDescription = JsonConverters.GSON.fromJson(gameDescriptionStr, GameSummaryDto.class);
 
         Log.i(Tags.SCHEDULE_UI, "Create schedule game list action menu fragment");
         View view = inflater
@@ -58,7 +58,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
 
-            ApiUserSummary user = PrefUtils.getUser(mActivity);
+            UserSummaryDto user = PrefUtils.getUser(mActivity);
 
             if (!mGameDescription.getCreatedBy().equals(user.getId())) {
                 rescheduleGameText.setVisibility(View.GONE);
@@ -102,7 +102,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
                 case INDOOR, INDOOR_4X4, BEACH -> {
                     Log.i(Tags.SCHEDULE_UI, "Start activity to reschedule game");
                     final Intent intent = new Intent(mActivity, ScheduledGameActivity.class);
-                    intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, ApiGameSummary.class));
+                    intent.putExtra("game", JsonConverters.GSON.toJson(mGameDescription, GameSummaryDto.class));
                     intent.putExtra("create", false);
                     startActivity(intent);
                     UiUtils.animateForward(mActivity);
@@ -185,7 +185,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
     }
 
     @Override
-    public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {}
+    public void onAvailableGamesReceived(List<GameSummaryDto> gameDescriptionList) {}
 
     @Override
     public void onError(int httpCode) {

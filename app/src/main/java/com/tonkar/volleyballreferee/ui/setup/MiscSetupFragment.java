@@ -73,7 +73,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
         leagueNameInput.setAdapter(
                 new AutocompleteLeagueListAdapter(getContext(), getLayoutInflater(), storedLeaguesService.listLeagues(mGame.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
-            ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);
+            LeagueSummaryDto leagueDescription = (LeagueSummaryDto) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
             mGame.getLeague().setAll(leagueDescription);
             divisionNameInput.setText("");
@@ -102,18 +102,18 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
 
         computeDivisionLayoutVisibility(view);
 
-        List<ApiFriend> referees = storedUserService.listReferees();
+        List<FriendDto> referees = storedUserService.listReferees();
 
         Spinner refereeSpinner = view.findViewById(R.id.referee_spinner);
         if (PrefUtils.canSync(getContext())) {
-            NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(requireContext(), inflater, referees) {
+            NameSpinnerAdapter<FriendDto> refereeAdapter = new NameSpinnerAdapter<>(requireContext(), inflater, referees) {
                 @Override
-                public String getName(ApiFriend referee) {
+                public String getName(FriendDto referee) {
                     return referee.getPseudo();
                 }
 
                 @Override
-                public String getId(ApiFriend referee) {
+                public String getId(FriendDto referee) {
                     return referee.getId();
                 }
             };
@@ -125,7 +125,7 @@ public class MiscSetupFragment extends Fragment implements GameServiceHandler {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     Log.i(Tags.SETUP_UI, "Update referee");
-                    ApiFriend referee = refereeAdapter.getItem(position);
+                    FriendDto referee = refereeAdapter.getItem(position);
                     mGame.setRefereedBy(referee.getId());
                     mGame.setRefereeName(referee.getPseudo());
                 }

@@ -6,8 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class ApiUserSummary {
-    private String id;
-    private String pseudo;
+public class UserPasswordUpdateDto {
+    private String currentPassword;
+    private String newPassword;
 }

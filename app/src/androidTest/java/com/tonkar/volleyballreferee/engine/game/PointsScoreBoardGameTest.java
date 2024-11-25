@@ -9,7 +9,7 @@ import android.util.Log;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiUserSummary;
+import com.tonkar.volleyballreferee.engine.api.model.UserSummaryDto;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.*;
@@ -33,7 +33,7 @@ public class PointsScoreBoardGameTest {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                        System.currentTimeMillis(), Rules.officialIndoorRules());

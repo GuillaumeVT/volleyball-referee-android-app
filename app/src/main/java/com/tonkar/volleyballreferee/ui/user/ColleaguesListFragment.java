@@ -128,7 +128,7 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
     }
 
     @Override
-    public void onFriendsAndRequestsReceived(ApiFriendsAndRequests friendsAndRequests) {
+    public void onFriendsAndRequestsReceived(FriendsAndRequestsDto friendsAndRequests) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 mColleaguesListAdapter.updateFriendsAndRequests(friendsAndRequests);
@@ -148,7 +148,7 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
     }
 
     @Override
-    public void onFriendRequestAccepted(ApiFriendRequest friendRequest) {
+    public void onFriendRequestAccepted(FriendRequestDto friendRequest) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
@@ -158,7 +158,7 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
     }
 
     @Override
-    public void onFriendRequestRejected(ApiFriendRequest friendRequest) {
+    public void onFriendRequestRejected(FriendRequestDto friendRequest) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();
@@ -168,7 +168,7 @@ public class ColleaguesListFragment extends Fragment implements AsyncFriendReque
     }
 
     @Override
-    public void onFriendRemoved(ApiFriend friend) {
+    public void onFriendRemoved(FriendDto friend) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 UiUtils.makeText(requireContext(), getString(R.string.sync_succeeded_message), Toast.LENGTH_LONG).show();

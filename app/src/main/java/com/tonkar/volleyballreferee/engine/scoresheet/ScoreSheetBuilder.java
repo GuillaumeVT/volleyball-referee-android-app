@@ -153,7 +153,7 @@ public class ScoreSheetBuilder {
         Element gameInfoDiv = new Element("div");
         gameInfoDiv.addClass("div-grid-game-header-info");
 
-        ApiSelectedLeague selectedLeague = mStoredGame.getLeague();
+        SelectedLeagueDto selectedLeague = mStoredGame.getLeague();
         String league = selectedLeague == null ? "" : selectedLeague.getName() + " / " + selectedLeague.getDivision();
 
         gameInfoDiv.appendChild(createCellSpan(league, true, false));
@@ -232,7 +232,7 @@ public class ScoreSheetBuilder {
         Element teamDiv = new Element("div");
         teamDiv.addClass("div-grid-team");
 
-        for (ApiPlayer player : mStoredGame.getPlayers(teamType)) {
+        for (PlayerDto player : mStoredGame.getPlayers(teamType)) {
             teamDiv.appendChild(createPlayerSpan(teamType, player.getNum(), mStoredGame.isLibero(teamType, player.getNum())));
             teamDiv.appendChild(createCellSpan(player.getName(), false, false));
         }
@@ -265,9 +265,9 @@ public class ScoreSheetBuilder {
     private Element createPlayerSpan(TeamType teamType, int player, boolean isLibero) {
         String playerStr = String.valueOf(player);
 
-        if (player < 0 || player == ApiSanction.TEAM) {
+        if (player < 0 || player == SanctionDto.TEAM) {
             playerStr = "-";
-        } else if (player == ApiSanction.COACH) {
+        } else if (player == SanctionDto.COACH) {
             playerStr = mContext.getString(R.string.coach_abbreviation);
         }
 
@@ -429,14 +429,14 @@ public class ScoreSheetBuilder {
         Element substitutionsDiv = new Element("div");
         substitutionsDiv.addClass("div-flex-column");
 
-        for (ApiSubstitution substitution : mStoredGame.getSubstitutions(teamType, setIndex)) {
+        for (SubstitutionDto substitution : mStoredGame.getSubstitutions(teamType, setIndex)) {
             substitutionsDiv.appendChild(createSubstitutionDiv(teamType, substitution));
         }
 
         return substitutionsDiv;
     }
 
-    private Element createSubstitutionDiv(TeamType teamType, ApiSubstitution substitution) {
+    private Element createSubstitutionDiv(TeamType teamType, SubstitutionDto substitution) {
         Element substitutionDiv = new Element("div");
         substitutionDiv.addClass("div-grid-substitution");
 
@@ -473,14 +473,14 @@ public class ScoreSheetBuilder {
         Element timeoutsDiv = new Element("div");
         timeoutsDiv.addClass("div-flex-column");
 
-        for (ApiTimeout timeout : mStoredGame.getCalledTimeouts(teamType, setIndex)) {
+        for (TimeoutDto timeout : mStoredGame.getCalledTimeouts(teamType, setIndex)) {
             timeoutsDiv.appendChild(createTimeoutDiv(teamType, timeout));
         }
 
         return timeoutsDiv;
     }
 
-    private Element createTimeoutDiv(TeamType teamType, ApiTimeout timeout) {
+    private Element createTimeoutDiv(TeamType teamType, TimeoutDto timeout) {
         Element timeoutDiv = new Element("div");
         timeoutDiv.addClass("div-grid-timeout");
 
@@ -530,14 +530,14 @@ public class ScoreSheetBuilder {
         Element sanctionsDiv = new Element("div");
         sanctionsDiv.addClass("div-flex-column");
 
-        for (ApiSanction sanction : mStoredGame.getAllSanctions(teamType, setIndex)) {
+        for (SanctionDto sanction : mStoredGame.getAllSanctions(teamType, setIndex)) {
             sanctionsDiv.appendChild(createSanctionDiv(teamType, sanction));
         }
 
         return sanctionsDiv;
     }
 
-    private Element createSanctionDiv(TeamType teamType, ApiSanction sanction) {
+    private Element createSanctionDiv(TeamType teamType, SanctionDto sanction) {
         Element sanctionDiv = new Element("div");
         sanctionDiv.addClass("div-grid-sanction");
 

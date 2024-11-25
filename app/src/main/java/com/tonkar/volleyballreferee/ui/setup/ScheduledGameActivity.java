@@ -28,7 +28,7 @@ import java.util.*;
 
 public class ScheduledGameActivity extends AppCompatActivity {
 
-    private ApiGameSummary                     mGameSummary;
+    private GameSummaryDto                     mGameSummary;
     private DateFormat                         mDateFormatter;
     private DateFormat                         mTimeFormatter;
     private Calendar                           mScheduleDate;
@@ -37,13 +37,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
     private MaterialButton                     mGenderButton;
     private Spinner                            mHomeTeamSpinner;
     private Spinner                            mGuestTeamSpinner;
-    private NameSpinnerAdapter<ApiTeamSummary> mTeamAdapter;
+    private NameSpinnerAdapter<TeamSummaryDto> mTeamAdapter;
     private boolean                            mCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String gameDescriptionStr = getIntent().getStringExtra("game");
-        mGameSummary = JsonConverters.GSON.fromJson(gameDescriptionStr, ApiGameSummary.class);
+        mGameSummary = JsonConverters.GSON.fromJson(gameDescriptionStr, GameSummaryDto.class);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scheduled_game);
@@ -118,7 +118,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         leagueNameInput.setAdapter(
                 new AutocompleteLeagueListAdapter(this, getLayoutInflater(), storedLeaguesService.listLeagues(mGameSummary.getKind())));
         leagueNameInput.setOnItemClickListener((parent, input, index, id) -> {
-            ApiLeagueSummary leagueDescription = (ApiLeagueSummary) leagueNameInput.getAdapter().getItem(index);
+            LeagueSummaryDto leagueDescription = (LeagueSummaryDto) leagueNameInput.getAdapter().getItem(index);
             leagueNameInput.setText(leagueDescription.getName());
             mGameSummary.setLeagueId(leagueDescription.getId());
             mGameSummary.setLeagueName(leagueDescription.getName());
@@ -183,16 +183,16 @@ public class ScheduledGameActivity extends AppCompatActivity {
             computeScheduleLayoutVisibility();
         });
 
-        List<ApiRulesSummary> rules = storedRulesService.listRules(mGameSummary.getKind());
+        List<RulesSummaryDto> rules = storedRulesService.listRules(mGameSummary.getKind());
 
-        final NameSpinnerAdapter<ApiRulesSummary> rulesAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), rules) {
+        final NameSpinnerAdapter<RulesSummaryDto> rulesAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), rules) {
             @Override
-            public String getName(ApiRulesSummary rules) {
+            public String getName(RulesSummaryDto rules) {
                 return rules.getName();
             }
 
             @Override
-            public String getId(ApiRulesSummary rules) {
+            public String getId(RulesSummaryDto rules) {
                 return rules.getId();
             }
         };
@@ -214,17 +214,17 @@ public class ScheduledGameActivity extends AppCompatActivity {
             }
         });
 
-        List<ApiFriend> referees = storedUserService.listReferees();
+        List<FriendDto> referees = storedUserService.listReferees();
 
         Spinner refereeSpinner = findViewById(R.id.referee_spinner);
-        NameSpinnerAdapter<ApiFriend> refereeAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), referees) {
+        NameSpinnerAdapter<FriendDto> refereeAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), referees) {
             @Override
-            public String getName(ApiFriend referee) {
+            public String getName(FriendDto referee) {
                 return referee.getPseudo();
             }
 
             @Override
-            public String getId(ApiFriend referee) {
+            public String getId(FriendDto referee) {
                 return referee.getId();
             }
         };
@@ -236,7 +236,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(Tags.SETUP_UI, "Update referee");
-                ApiFriend referee = refereeAdapter.getItem(position);
+                FriendDto referee = refereeAdapter.getItem(position);
                 updateReferee(referee);
             }
 
@@ -252,7 +252,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        getIntent().putExtra("game", JsonConverters.GSON.toJson(mGameSummary, ApiGameSummary.class));
+        getIntent().putExtra("game", JsonConverters.GSON.toJson(mGameSummary, GameSummaryDto.class));
     }
 
     @Override
@@ -290,16 +290,16 @@ public class ScheduledGameActivity extends AppCompatActivity {
 
     private void updateTeamSpinners(boolean changedGender) {
         StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
-        List<ApiTeamSummary> teams = storedTeamsService.listTeams(mGameSummary.getKind(), mGameSummary.getGender());
+        List<TeamSummaryDto> teams = storedTeamsService.listTeams(mGameSummary.getKind(), mGameSummary.getGender());
 
         mTeamAdapter = new NameSpinnerAdapter<>(this, getLayoutInflater(), teams) {
             @Override
-            public String getName(ApiTeamSummary team) {
+            public String getName(TeamSummaryDto team) {
                 return team.getName();
             }
 
             @Override
-            public String getId(ApiTeamSummary team) {
+            public String getId(TeamSummaryDto team) {
                 return team.getId();
             }
         };
@@ -324,7 +324,7 @@ public class ScheduledGameActivity extends AppCompatActivity {
         }
     }
 
-    private void updateTeam(TeamType teamType, ApiTeamSummary team) {
+    private void updateTeam(TeamType teamType, TeamSummaryDto team) {
         if (TeamType.HOME.equals(teamType)) {
             mGameSummary.setHomeTeamId(team == null ? null : team.getId());
             mGameSummary.setHomeTeamName(team == null ? "" : team.getName());
@@ -335,13 +335,13 @@ public class ScheduledGameActivity extends AppCompatActivity {
         computeScheduleLayoutVisibility();
     }
 
-    private void updateRules(ApiRulesSummary rules) {
+    private void updateRules(RulesSummaryDto rules) {
         mGameSummary.setRulesId(rules == null ? null : rules.getId());
         mGameSummary.setRulesName(rules == null ? "" : rules.getName());
         computeScheduleLayoutVisibility();
     }
 
-    private void updateReferee(ApiFriend referee) {
+    private void updateReferee(FriendDto referee) {
         mGameSummary.setRefereedBy(referee == null ? null : referee.getId());
         mGameSummary.setRefereeName(referee == null ? null : referee.getPseudo());
         computeScheduleLayoutVisibility();

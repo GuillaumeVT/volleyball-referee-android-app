@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiCourt {
+public class CourtDto {
     @SerializedName("p1")
     private int p1;
     @SerializedName("p2")
@@ -23,7 +23,7 @@ public class ApiCourt {
     @SerializedName("p6")
     private int p6;
 
-    public ApiCourt() {
+    public CourtDto() {
         this.p1 = -1;
         this.p2 = -1;
         this.p3 = -1;

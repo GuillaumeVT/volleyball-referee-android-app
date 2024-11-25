@@ -7,7 +7,7 @@ import android.content.Context;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
+import com.tonkar.volleyballreferee.engine.api.model.RulesDto;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 
@@ -86,11 +86,11 @@ public class StoredRulesIOTest {
     public void writeThenRead() {
         StoredRulesService storedRulesService = new StoredRulesManager(mContext.getApplicationContext());
 
-        List<ApiRules> expectedList = new ArrayList<>();
+        List<RulesDto> expectedList = new ArrayList<>();
         expectedList.add(storedRulesService.getRules(GameType.INDOOR, "Test Rules 1"));
         expectedList.add(storedRulesService.getRules(GameType.BEACH, "Test Rules 2"));
 
-        List<ApiRules> actualList = new ArrayList<>();
+        List<RulesDto> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
@@ -105,7 +105,7 @@ public class StoredRulesIOTest {
         assertEquals(expectedList, actualList);
         assertNotEquals(0, actualList.size());
 
-        for (ApiRules rules : expectedList) {
+        for (RulesDto rules : expectedList) {
             storedRulesService.deleteRules(rules.getId());
         }
     }

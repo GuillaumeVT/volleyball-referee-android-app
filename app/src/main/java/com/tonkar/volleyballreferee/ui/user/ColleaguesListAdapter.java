@@ -143,19 +143,19 @@ public class ColleaguesListAdapter extends ArrayAdapter<ColleagueItem> {
         return mNameFilter;
     }
 
-    void updateFriendsAndRequests(ApiFriendsAndRequests friendsAndRequests) {
+    void updateFriendsAndRequests(FriendsAndRequestsDto friendsAndRequests) {
         mColleagueItems.clear();
         mFilteredColleagueItems.clear();
 
-        for (ApiFriendRequest friendRequest : friendsAndRequests.getReceivedFriendRequests()) {
+        for (FriendRequestDto friendRequest : friendsAndRequests.getReceivedFriendRequests()) {
             mColleagueItems.add(new ColleagueItem(ColleagueItem.ItemType.RECEIVED, friendRequest));
         }
 
-        for (ApiFriendRequest friendRequest : friendsAndRequests.getSentFriendRequests()) {
+        for (FriendRequestDto friendRequest : friendsAndRequests.getSentFriendRequests()) {
             mColleagueItems.add(new ColleagueItem(ColleagueItem.ItemType.SENT, friendRequest));
         }
 
-        for (ApiFriend friend : friendsAndRequests.getFriends()) {
+        for (FriendDto friend : friendsAndRequests.getFriends()) {
             mColleagueItems.add(new ColleagueItem(ColleagueItem.ItemType.FRIEND, friend));
         }
 

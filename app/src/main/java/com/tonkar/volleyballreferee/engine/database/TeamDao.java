@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.engine.database;
 
 import androidx.room.*;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.TeamSummaryDto;
 import com.tonkar.volleyballreferee.engine.database.model.TeamEntity;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
@@ -13,13 +13,13 @@ import java.util.*;
 public interface TeamDao {
 
     @Query("SELECT id, createdBy, createdAt, updatedAt, synced, name, kind, gender FROM teams ORDER BY name ASC")
-    List<ApiTeamSummary> listTeams();
+    List<TeamSummaryDto> listTeams();
 
     @Query("SELECT id, createdBy, createdAt, updatedAt, synced, name, kind, gender FROM teams WHERE kind = :kind ORDER BY name ASC")
-    List<ApiTeamSummary> listTeamsByKind(GameType kind);
+    List<TeamSummaryDto> listTeamsByKind(GameType kind);
 
     @Query("SELECT id, createdBy, createdAt, updatedAt, synced, name, kind, gender FROM teams WHERE gender = :gender AND kind = :kind ORDER BY name ASC")
-    List<ApiTeamSummary> listTeamsByGenderAndKind(GenderType gender, GameType kind);
+    List<TeamSummaryDto> listTeamsByGenderAndKind(GenderType gender, GameType kind);
 
     @Query("SELECT content FROM teams WHERE id = :id")
     String findContentById(String id);

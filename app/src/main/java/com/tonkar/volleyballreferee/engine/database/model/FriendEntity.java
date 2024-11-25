@@ -1,13 +1,20 @@
 package com.tonkar.volleyballreferee.engine.database.model;
 
-import androidx.room.Entity;
+import androidx.annotation.NonNull;
+import androidx.room.*;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiFriend;
+import lombok.*;
 
 @Entity(tableName = "friends")
-public class FriendEntity extends ApiFriend {
+@Getter
+@Setter
+public class FriendEntity {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "id")
+    private String id;
 
-    public FriendEntity() {
-        super();
-    }
+    @NonNull
+    @ColumnInfo(name = "pseudo")
+    private String pseudo;
 }

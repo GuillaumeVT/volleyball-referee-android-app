@@ -96,10 +96,10 @@ public class BeachGame extends Game implements IBeachTeam {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
+        if (SanctionDto.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
             forceFinishSet(teamType.other());
-        } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
+        } else if (SanctionDto.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
             forceFinishMatch(teamType.other());
         }
@@ -109,7 +109,7 @@ public class BeachGame extends Game implements IBeachTeam {
     public java.util.Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
         boolean teamHasReachedPenalty = false;
 
-        for (ApiSanction sanction : getAllSanctions(teamType)) {
+        for (SanctionDto sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isMisconductSanctionType()) {
                 teamHasReachedPenalty = true;
             }
@@ -131,7 +131,7 @@ public class BeachGame extends Game implements IBeachTeam {
 
         // A player can have 2 red cards in the same set. On the third rude conduct the player is at least expulsed
 
-        for (ApiSanction sanction : getPlayerSanctions(teamType, number)) {
+        for (SanctionDto sanction : getPlayerSanctions(teamType, number)) {
             if (sanction.getSet() == currentSetIndex && sanction.getCard().isMisconductRedCard()) {
                 numberOfRedCards++;
             }
@@ -174,20 +174,20 @@ public class BeachGame extends Game implements IBeachTeam {
     }
 
     @Override
-    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public java.util.Set<PlayerDto> getLiberos(TeamType teamType) {
         return new HashSet<>();
     }
 
     @Override
-    protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {}
+    protected void undoSubstitution(TeamType teamType, SubstitutionDto substitution) {}
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
@@ -202,8 +202,8 @@ public class BeachGame extends Game implements IBeachTeam {
     }
 
     @Override
-    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
-        return new ApiCourt();
+    public CourtDto getStartingLineup(TeamType teamType, int setIndex) {
+        return new CourtDto();
     }
 
     @Override
@@ -230,23 +230,23 @@ public class BeachGame extends Game implements IBeachTeam {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<ApiTimeout> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : homeTimeouts) {
+                    List<TimeoutDto> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<ApiTimeout> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : guestTimeouts) {
+                    List<TimeoutDto> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<ApiSanction> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : homeSanctions) {
+                    List<SanctionDto> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : homeSanctions) {
                         giveSanction(TeamType.HOME, sanction.getCard(), sanction.getNum());
                     }
 
-                    List<ApiSanction> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : guestSanctions) {
+                    List<SanctionDto> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : guestSanctions) {
                         giveSanction(TeamType.GUEST, sanction.getCard(), sanction.getNum());
                     }
 

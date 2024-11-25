@@ -12,7 +12,7 @@ import androidx.fragment.app.*;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.SanctionDto;
 import com.tonkar.volleyballreferee.engine.game.IGame;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.ui.interfaces.GameServiceHandler;
@@ -90,7 +90,7 @@ public class SanctionSelectionDialogFragment extends DialogFragment implements G
 
     private void giveSanction() {
         if (mSanctionTypePager.getSelectedItemId() == R.id.delay_sanction_tab) {
-            mGame.giveSanction(mTeamType, mDelaySanctionSelectionFragment.getSelectedDelaySanction(), ApiSanction.TEAM);
+            mGame.giveSanction(mTeamType, mDelaySanctionSelectionFragment.getSelectedDelaySanction(), SanctionDto.TEAM);
         } else {
             mGame.giveSanction(mTeamType, mMisconductSanctionSelectionFragment.getSelectedMisconductSanction(),
                                mMisconductSanctionSelectionFragment.getSelectedMisconductPlayer());

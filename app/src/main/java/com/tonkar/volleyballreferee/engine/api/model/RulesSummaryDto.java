@@ -1,8 +1,5 @@
 package com.tonkar.volleyballreferee.engine.api.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.*;
-
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
@@ -10,34 +7,30 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiRulesSummary {
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
+@EqualsAndHashCode
+public class RulesSummaryDto {
     @SerializedName("id")
-    private String   id;
-    @ColumnInfo(name = "createdBy")
+    private String id;
+
     @SerializedName("createdBy")
-    private String   createdBy;
-    @ColumnInfo(name = "createdAt")
+    private String createdBy;
+
     @SerializedName("createdAt")
-    private long     createdAt;
-    @ColumnInfo(name = "updatedAt")
+    private long createdAt;
+
     @SerializedName("updatedAt")
-    private long     updatedAt;
-    @ColumnInfo(name = "synced")
+    private long updatedAt;
+
     @SerializedName("synced")
-    private boolean  synced;
-    @NonNull
-    @ColumnInfo(name = "name")
+    private boolean synced;
+
     @SerializedName("name")
-    private String   name;
-    @NonNull
-    @ColumnInfo(name = "kind")
+    private String name;
+
     @SerializedName("kind")
     private GameType kind;
 
-    public ApiRulesSummary() {
+    public RulesSummaryDto() {
         id = "";
         createdBy = null;
         createdAt = 0L;

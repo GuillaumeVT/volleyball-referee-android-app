@@ -195,7 +195,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
             TextView playerInText = substitutionView.findViewById(R.id.player_in_text);
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
-            ApiSubstitution substitution = gameEvent.getSubstitution();
+            SubstitutionDto substitution = gameEvent.getSubstitution();
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
@@ -214,7 +214,7 @@ public class UndoDialogFragment extends DialogFragment implements GameServiceHan
             TextView playerText = sanctionView.findViewById(R.id.player_text);
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
-            ApiSanction sanction = gameEvent.getSanction();
+            SanctionDto sanction = gameEvent.getSanction();
             UiUtils.setSanctionImage(sanctionTypeImage, sanction.getCard());
 
             if (sanction.isTeam()) {

@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
 
     private void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
         IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
 
     private void startBeachGame(View view) {
         Log.i(Tags.GAME_UI, "Start a beach game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
         BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                      System.currentTimeMillis(), 0L, Rules.officialBeachRules());
         mStoredGamesService.saveSetupGame(game);
@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
 
     private void startSnowGame(View view) {
         Log.i(Tags.GAME_UI, "Start a snow game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
         SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(), System.currentTimeMillis(),
                                                    0L, Rules.officialSnowRules());
         mStoredGamesService.saveSetupGame(game);
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
 
     private void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
         Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
         mStoredGamesService.saveSetupGame(game);
@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment {
 
     private void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
         IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                            System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
@@ -200,25 +200,25 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    initFriendRequestsButton(view, new ApiCount(0L));
+                    initFriendRequestsButton(view, new CountDto(0L));
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
+                            CountDto count = JsonConverters.GSON.fromJson(body.string(), CountDto.class);
                             initFriendRequestsButton(view, count);
                         }
                     } else {
-                        initFriendRequestsButton(view, new ApiCount(0L));
+                        initFriendRequestsButton(view, new CountDto(0L));
                     }
                 }
             });
         }
     }
 
-    private void initFriendRequestsButton(View view, ApiCount count) {
+    private void initFriendRequestsButton(View view, CountDto count) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 if (count.getCount() > 0) {
@@ -240,25 +240,25 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
                     call.cancel();
-                    initAvailableGamesButton(view, new ApiCount(0L));
+                    initAvailableGamesButton(view, new CountDto(0L));
                 }
 
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiCount count = JsonConverters.GSON.fromJson(body.string(), ApiCount.class);
+                            CountDto count = JsonConverters.GSON.fromJson(body.string(), CountDto.class);
                             initAvailableGamesButton(view, count);
                         }
                     } else {
-                        initAvailableGamesButton(view, new ApiCount(0L));
+                        initAvailableGamesButton(view, new CountDto(0L));
                     }
                 }
             });
         }
     }
 
-    private void initAvailableGamesButton(View view, ApiCount count) {
+    private void initAvailableGamesButton(View view, CountDto count) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 if (count.getCount() > 0) {

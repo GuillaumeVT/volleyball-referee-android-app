@@ -97,7 +97,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
             teamNameInput.setAdapter(new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(),
                                                                      storedTeamsService.listTeams(mTeamService.getTeamsKind())));
             teamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamSummary teamDescription = (ApiTeamSummary) teamNameInput.getAdapter().getItem(index);
+                TeamSummaryDto teamDescription = (TeamSummaryDto) teamNameInput.getAdapter().getItem(index);
                 teamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mTeamService, mTeamType);
 
@@ -478,7 +478,7 @@ public class TeamSetupFragment extends Fragment implements BaseTeamServiceHandle
 
         @Override
         public View getView(int position, View view, ViewGroup parent) {
-            final List<ApiPlayer> players = new ArrayList<>(mTeamService.getPlayers(mTeamType));
+            final List<PlayerDto> players = new ArrayList<>(mTeamService.getPlayers(mTeamType));
             final int playerShirtNumber = players.get(position).getNum();
             final PlayerToggleButton button;
 

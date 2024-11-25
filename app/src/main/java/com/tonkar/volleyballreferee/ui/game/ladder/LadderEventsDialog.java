@@ -50,11 +50,11 @@ public class LadderEventsDialog {
             }
         }
 
-        for (ApiSubstitution substitution : (TeamType.HOME.equals(
+        for (SubstitutionDto substitution : (TeamType.HOME.equals(
                 teamType) ? ladderItem.getHomeSubstitutions() : ladderItem.getGuestSubstitutions())) {
             gameEvents.add(GameEvent.newSubstitutionEvent(teamType, substitution));
         }
-        for (ApiSanction sanction : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions())) {
+        for (SanctionDto sanction : (TeamType.HOME.equals(teamType) ? ladderItem.getHomeSanctions() : ladderItem.getGuestSanctions())) {
             gameEvents.add(GameEvent.newSanctionEvent(teamType, sanction));
         }
 
@@ -147,7 +147,7 @@ public class LadderEventsDialog {
             TextView playerInText = substitutionView.findViewById(R.id.player_in_text);
             TextView playerOutText = substitutionView.findViewById(R.id.player_out_text);
 
-            ApiSubstitution substitution = ladderEvent.getSubstitution();
+            SubstitutionDto substitution = ladderEvent.getSubstitution();
             playerInText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerIn()));
             playerOutText.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
 
@@ -163,7 +163,7 @@ public class LadderEventsDialog {
             TextView playerText = sanctionView.findViewById(R.id.player_text);
             ImageView sanctionTypeImage = sanctionView.findViewById(R.id.sanction_type_image);
 
-            ApiSanction sanction = ladderEvent.getSanction();
+            SanctionDto sanction = ladderEvent.getSanction();
             UiUtils.setSanctionImage(sanctionTypeImage, sanction.getCard());
 
             if (sanction.isTeam()) {

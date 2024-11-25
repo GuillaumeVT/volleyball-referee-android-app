@@ -8,7 +8,7 @@ import android.graphics.Color;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.TeamDto;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.*;
 
@@ -95,10 +95,10 @@ public class StoredTeamsIOTest {
     public void writeThenRead() {
         StoredTeamsService storedTeamsService = new StoredTeamsManager(mContext.getApplicationContext());
 
-        List<ApiTeam> expectedList = new ArrayList<>();
+        List<TeamDto> expectedList = new ArrayList<>();
         expectedList.add(storedTeamsService.getTeam(GameType.INDOOR, "BRAZIL", GenderType.GENTS));
         expectedList.add(storedTeamsService.getTeam(GameType.INDOOR, "FRANCE", GenderType.GENTS));
-        List<ApiTeam> actualList = new ArrayList<>();
+        List<TeamDto> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {

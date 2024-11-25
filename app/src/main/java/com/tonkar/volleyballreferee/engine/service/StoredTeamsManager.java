@@ -36,33 +36,33 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     @Override
-    public List<ApiTeamSummary> listTeams() {
+    public List<TeamSummaryDto> listTeams() {
         return mRepository.listTeams();
     }
 
     @Override
-    public List<ApiTeamSummary> listTeams(GameType kind) {
+    public List<TeamSummaryDto> listTeams(GameType kind) {
         return mRepository.listTeams(kind);
     }
 
     @Override
-    public List<ApiTeamSummary> listTeams(GameType kind, GenderType genderType) {
+    public List<TeamSummaryDto> listTeams(GameType kind, GenderType genderType) {
         return mRepository.listTeams(genderType, kind);
     }
 
     @Override
-    public ApiTeam getTeam(String id) {
+    public TeamDto getTeam(String id) {
         return mRepository.getTeam(id);
     }
 
     @Override
-    public ApiTeam getTeam(GameType kind, String teamName, GenderType genderType) {
+    public TeamDto getTeam(GameType kind, String teamName, GenderType genderType) {
         return mRepository.getTeam(teamName, genderType, kind);
     }
 
     private WrappedTeam createWrappedTeam(GameType kind) {
         String id = UUID.randomUUID().toString();
-        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null);
+        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null);
 
         TeamDefinition teamDefinition = switch (kind) {
             case INDOOR, INDOOR_4X4 -> new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
@@ -80,7 +80,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     @Override
     public void saveTeam(IBaseTeam team, boolean create) {
-        ApiTeam savedTeam = copyTeam(team);
+        TeamDto savedTeam = copyTeam(team);
         savedTeam.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
         mRepository.insertTeam(savedTeam, false, false);
         pushTeamToServer(savedTeam, create);
@@ -118,21 +118,21 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     @Override
-    public ApiTeam copyTeam(IBaseTeam teamService) {
-        ApiTeam team = new ApiTeam();
+    public TeamDto copyTeam(IBaseTeam teamService) {
+        TeamDto team = new TeamDto();
         copyTeam(teamService, team, TeamType.HOME);
         return team;
     }
 
     @Override
-    public IBaseTeam copyTeam(ApiTeam team) {
+    public IBaseTeam copyTeam(TeamDto team) {
         IBaseTeam teamService = createTeam(team.getKind());
         copyTeam(team, teamService, TeamType.HOME);
         return teamService;
     }
 
     @Override
-    public void copyTeam(ApiTeam source, IBaseTeam dest, TeamType teamType) {
+    public void copyTeam(TeamDto source, IBaseTeam dest, TeamType teamType) {
         dest.setTeamId(teamType, source.getId());
         dest.setCreatedBy(teamType, source.getCreatedBy());
         dest.setCreatedAt(teamType, source.getCreatedAt());
@@ -142,17 +142,17 @@ public class StoredTeamsManager implements StoredTeamsService {
         dest.setLiberoColor(teamType, source.getLiberoColorInt());
         dest.setGender(teamType, source.getGender());
 
-        for (ApiPlayer player : dest.getPlayers(teamType)) {
+        for (PlayerDto player : dest.getPlayers(teamType)) {
             dest.removePlayer(teamType, player.getNum());
         }
-        for (ApiPlayer player : dest.getLiberos(teamType)) {
+        for (PlayerDto player : dest.getLiberos(teamType)) {
             dest.removeLibero(teamType, player.getNum());
         }
-        for (ApiPlayer player : source.getPlayers()) {
+        for (PlayerDto player : source.getPlayers()) {
             dest.addPlayer(teamType, player.getNum());
             dest.setPlayerName(teamType, player.getNum(), player.getName());
         }
-        for (ApiPlayer player : source.getLiberos()) {
+        for (PlayerDto player : source.getLiberos()) {
             dest.addPlayer(teamType, player.getNum());
             dest.setPlayerName(teamType, player.getNum(), player.getName());
             dest.addLibero(teamType, player.getNum());
@@ -163,7 +163,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     @Override
-    public void copyTeam(IBaseTeam source, ApiTeam dest, TeamType teamType) {
+    public void copyTeam(IBaseTeam source, TeamDto dest, TeamType teamType) {
         dest.setId(source.getTeamId(teamType));
         dest.setCreatedBy(source.getCreatedBy(teamType));
         dest.setCreatedAt(source.getCreatedAt(teamType));
@@ -177,10 +177,10 @@ public class StoredTeamsManager implements StoredTeamsService {
         dest.getPlayers().clear();
         dest.getLiberos().clear();
 
-        for (ApiPlayer player : source.getPlayers(teamType)) {
+        for (PlayerDto player : source.getPlayers(teamType)) {
             dest.getPlayers().add(player);
         }
-        for (ApiPlayer player : source.getLiberos(teamType)) {
+        for (PlayerDto player : source.getLiberos(teamType)) {
             dest.getLiberos().add(player);
         }
 
@@ -198,18 +198,18 @@ public class StoredTeamsManager implements StoredTeamsService {
         dest.setLiberoColor(teamType, source.getLiberoColor(teamType));
         dest.setGender(teamType, source.getGender(teamType));
 
-        for (ApiPlayer player : dest.getPlayers(teamType)) {
+        for (PlayerDto player : dest.getPlayers(teamType)) {
             dest.removePlayer(teamType, player.getNum());
         }
-        for (ApiPlayer player : dest.getLiberos(teamType)) {
+        for (PlayerDto player : dest.getLiberos(teamType)) {
             dest.removeLibero(teamType, player.getNum());
         }
 
-        for (ApiPlayer player : source.getPlayers(teamType)) {
+        for (PlayerDto player : source.getPlayers(teamType)) {
             dest.addPlayer(teamType, player.getNum());
             dest.setPlayerName(teamType, player.getNum(), player.getName());
         }
-        for (ApiPlayer player : source.getLiberos(teamType)) {
+        for (PlayerDto player : source.getLiberos(teamType)) {
             dest.addLibero(teamType, player.getNum());
         }
 
@@ -217,15 +217,15 @@ public class StoredTeamsManager implements StoredTeamsService {
         dest.setCoachName(teamType, source.getCoachName(teamType));
     }
 
-    public static List<ApiTeam> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<TeamDto> readTeamsStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiTeam>>() {}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<TeamDto>>() {}.getType());
         }
     }
 
-    public static void writeTeamsStream(OutputStream outputStream, List<ApiTeam> teams) throws JsonParseException, IOException {
+    public static void writeTeamsStream(OutputStream outputStream, List<TeamDto> teams) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(teams, new TypeToken<List<ApiTeam>>() {}.getType(), writer);
+        JsonConverters.GSON.toJson(teams, new TypeToken<List<TeamDto>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -247,7 +247,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
     }
 
-    private void syncTeams(List<ApiTeamSummary> remoteTeamList, int page, int size, DataSynchronizationListener listener) {
+    private void syncTeams(List<TeamSummaryDto> remoteTeamList, int page, int size, DataSynchronizationListener listener) {
         VbrApi.getInstance(mContext).getTeamPage(page, size, mContext, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -261,8 +261,8 @@ public class StoredTeamsManager implements StoredTeamsService {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     try (ResponseBody body = response.body()) {
-                        ApiPage<ApiTeamSummary> teamsPage = JsonConverters.GSON.fromJson(body.string(),
-                                                                                         new TypeToken<ApiPage<ApiTeamSummary>>() {}.getType());
+                        PageDto<TeamSummaryDto> teamsPage = JsonConverters.GSON.fromJson(body.string(),
+                                                                                         new TypeToken<PageDto<TeamSummaryDto>>() {}.getType());
                         remoteTeamList.addAll(teamsPage.getContent());
                         if (teamsPage.isLast()) {
                             syncTeams(remoteTeamList, listener);
@@ -280,16 +280,16 @@ public class StoredTeamsManager implements StoredTeamsService {
         });
     }
 
-    private void syncTeams(List<ApiTeamSummary> remoteTeamList, DataSynchronizationListener listener) {
+    private void syncTeams(List<TeamSummaryDto> remoteTeamList, DataSynchronizationListener listener) {
         String userId = PrefUtils.getUser(mContext).getId();
-        List<ApiTeamSummary> localTeamList = listTeams();
-        Queue<ApiTeamSummary> remoteTeamsToDownload = new LinkedList<>();
+        List<TeamSummaryDto> localTeamList = listTeams();
+        Queue<TeamSummaryDto> remoteTeamsToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
         // User purchased web services, write his user id
-        for (ApiTeamSummary localTeam : localTeamList) {
+        for (TeamSummaryDto localTeam : localTeamList) {
             if (StringUtils.isBlank(localTeam.getCreatedBy())) {
-                ApiTeam team = getTeam(localTeam.getId());
+                TeamDto team = getTeam(localTeam.getId());
                 team.setCreatedBy(userId);
                 team.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 mRepository.insertTeam(team, false, true);
@@ -301,17 +301,17 @@ public class StoredTeamsManager implements StoredTeamsService {
             localTeamList = listTeams();
         }
 
-        for (ApiTeamSummary localTeam : localTeamList) {
+        for (TeamSummaryDto localTeam : localTeamList) {
             boolean foundRemoteVersion = false;
 
-            for (ApiTeamSummary remoteTeam : remoteTeamList) {
+            for (TeamSummaryDto remoteTeam : remoteTeamList) {
                 if (localTeam.getId().equals(remoteTeam.getId())) {
                     foundRemoteVersion = true;
 
                     if (localTeam.getUpdatedAt() < remoteTeam.getUpdatedAt()) {
                         remoteTeamsToDownload.add(remoteTeam);
                     } else if (localTeam.getUpdatedAt() > remoteTeam.getUpdatedAt()) {
-                        ApiTeam team = getTeam(localTeam.getId());
+                        TeamDto team = getTeam(localTeam.getId());
                         pushTeamToServer(team, false);
                     }
                 }
@@ -323,16 +323,16 @@ public class StoredTeamsManager implements StoredTeamsService {
                     deleteTeam(localTeam.getId());
                 } else {
                     // if the team was not synced, then it is missing from the server because sending it must have failed, so send it again
-                    ApiTeam team = getTeam(localTeam.getId());
+                    TeamDto team = getTeam(localTeam.getId());
                     pushTeamToServer(team, true);
                 }
             }
         }
 
-        for (ApiTeamSummary remoteTeam : remoteTeamList) {
+        for (TeamSummaryDto remoteTeam : remoteTeamList) {
             boolean foundLocalVersion = false;
 
-            for (ApiTeamSummary localTeam : localTeamList) {
+            for (TeamSummaryDto localTeam : localTeamList) {
                 if (localTeam.getId().equals(remoteTeam.getId())) {
                     foundLocalVersion = true;
                     break;
@@ -347,13 +347,13 @@ public class StoredTeamsManager implements StoredTeamsService {
         downloadTeamsRecursive(remoteTeamsToDownload, listener);
     }
 
-    private void downloadTeamsRecursive(final Queue<ApiTeamSummary> remoteTeams, final DataSynchronizationListener listener) {
+    private void downloadTeamsRecursive(final Queue<TeamSummaryDto> remoteTeams, final DataSynchronizationListener listener) {
         if (remoteTeams.isEmpty()) {
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
         } else {
-            ApiTeamSummary remoteTeam = remoteTeams.poll();
+            TeamSummaryDto remoteTeam = remoteTeams.poll();
             VbrApi.getInstance(mContext).getTeam(remoteTeam.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -367,7 +367,7 @@ public class StoredTeamsManager implements StoredTeamsService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiTeam team = JsonConverters.GSON.fromJson(body.string(), ApiTeam.class);
+                            TeamDto team = JsonConverters.GSON.fromJson(body.string(), TeamDto.class);
                             mRepository.insertTeam(team, true, false);
                             downloadTeamsRecursive(remoteTeams, listener);
                         }
@@ -382,7 +382,7 @@ public class StoredTeamsManager implements StoredTeamsService {
         }
     }
 
-    private void pushTeamToServer(final ApiTeam team, boolean create) {
+    private void pushTeamToServer(final TeamDto team, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).upsertTeam(team, create, mContext, new Callback() {
                 @Override

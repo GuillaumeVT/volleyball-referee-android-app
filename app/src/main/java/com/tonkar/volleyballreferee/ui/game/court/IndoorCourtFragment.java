@@ -377,7 +377,7 @@ public class IndoorCourtFragment extends CourtFragment {
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        if (ApiSanction.isPlayer(number)) {
+        if (SanctionDto.isPlayer(number)) {
             PositionType positionType = mClassicTeam.getPlayerPosition(teamType, number);
 
             if (!PositionType.BENCH.equals(positionType)) {
@@ -498,7 +498,7 @@ public class IndoorCourtFragment extends CourtFragment {
                     UiUtils.styleTeamText(getContext(), mClassicTeam, teamType, middleBlockerNumber, substitutionView);
                     substitutionView.setVisibility(View.VISIBLE);
                 } else {
-                    for (ApiSubstitution substitution : mClassicTeam.getSubstitutions(teamType)) {
+                    for (SubstitutionDto substitution : mClassicTeam.getSubstitutions(teamType)) {
                         if (number == substitution.getPlayerIn()) {
                             substitutionView.setText(UiUtils.formatNumberFromLocale(substitution.getPlayerOut()));
                             UiUtils.styleTeamText(getContext(), mClassicTeam, teamType, substitution.getPlayerOut(), substitutionView);

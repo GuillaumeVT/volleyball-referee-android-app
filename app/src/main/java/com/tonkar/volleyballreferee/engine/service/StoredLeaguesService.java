@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface StoredLeaguesService {
 
-    List<ApiLeagueSummary> listLeagues();
+    List<LeagueSummaryDto> listLeagues();
 
-    List<ApiLeagueSummary> listLeagues(GameType kind);
+    List<LeagueSummaryDto> listLeagues(GameType kind);
 
     List<String> listDivisionNames(String id);
 
-    ApiLeague getLeague(GameType kind, String leagueName);
+    LeagueDto getLeague(GameType kind, String leagueName);
 
-    void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague);
+    void createAndSaveLeagueFrom(SelectedLeagueDto selectedLeague);
 
     void syncLeagues();
 

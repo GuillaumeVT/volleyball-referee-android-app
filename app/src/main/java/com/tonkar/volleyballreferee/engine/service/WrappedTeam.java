@@ -106,7 +106,7 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
-    public Set<ApiPlayer> getPlayers(TeamType teamType) {
+    public Set<PlayerDto> getPlayers(TeamType teamType) {
         return new TreeSet<>(mTeamDefinition.getPlayers());
     }
 
@@ -176,17 +176,17 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
-    public Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public Set<PlayerDto> getLiberos(TeamType teamType) {
         return new TreeSet<>(mTeamDefinition.getLiberos());
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
         return new ArrayList<>();
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex) {
         return new ArrayList<>();
     }
 
@@ -201,7 +201,7 @@ public class WrappedTeam implements IBaseTeam {
     }
 
     @Override
-    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+    public CourtDto getStartingLineup(TeamType teamType, int setIndex) {
         return null;
     }
 

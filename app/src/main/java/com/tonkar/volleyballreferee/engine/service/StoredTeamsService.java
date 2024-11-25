@@ -8,15 +8,15 @@ import java.util.*;
 
 public interface StoredTeamsService {
 
-    List<ApiTeamSummary> listTeams();
+    List<TeamSummaryDto> listTeams();
 
-    List<ApiTeamSummary> listTeams(GameType kind);
+    List<TeamSummaryDto> listTeams(GameType kind);
 
-    List<ApiTeamSummary> listTeams(GameType kind, GenderType genderType);
+    List<TeamSummaryDto> listTeams(GameType kind, GenderType genderType);
 
-    ApiTeam getTeam(String id);
+    TeamDto getTeam(String id);
 
-    ApiTeam getTeam(GameType kind, String teamName, GenderType gender);
+    TeamDto getTeam(GameType kind, String teamName, GenderType gender);
 
     IBaseTeam createTeam(GameType kind);
 
@@ -28,13 +28,13 @@ public interface StoredTeamsService {
 
     void createAndSaveTeamFrom(GameType kind, IBaseTeam teamService, TeamType teamType);
 
-    ApiTeam copyTeam(IBaseTeam teamService);
+    TeamDto copyTeam(IBaseTeam teamService);
 
-    IBaseTeam copyTeam(ApiTeam team);
+    IBaseTeam copyTeam(TeamDto team);
 
-    void copyTeam(ApiTeam source, IBaseTeam dest, TeamType teamType);
+    void copyTeam(TeamDto source, IBaseTeam dest, TeamType teamType);
 
-    void copyTeam(IBaseTeam source, ApiTeam dest, TeamType teamType);
+    void copyTeam(IBaseTeam source, TeamDto dest, TeamType teamType);
 
     void syncTeams();
 

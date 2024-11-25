@@ -16,7 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.*;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.GameSummaryDto;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -42,7 +42,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
         Log.i(Tags.STORED_GAMES, "Create stored games list fragment");
 
         mStoredGamesService = new StoredGamesManager(requireContext());
-        List<ApiGameSummary> games = mStoredGamesService.listGames();
+        List<GameSummaryDto> games = mStoredGamesService.listGames();
 
         View fragmentView = inflater.inflate(R.layout.fragment_stored_games_list, container, false);
 
@@ -54,7 +54,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
         storedGamesList.setAdapter(mStoredGamesListAdapter);
 
         storedGamesList.setOnItemClickListener((adapterView, itemView, position, l) -> {
-            ApiGameSummary game = mStoredGamesListAdapter.getItem(position);
+            GameSummaryDto game = mStoredGamesListAdapter.getItem(position);
 
             if (game != null) {
                 if (mStoredGamesListAdapter.hasSelectedItems()) {
@@ -80,7 +80,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
         });
 
         storedGamesList.setOnItemLongClickListener((adapterView, itemView, position, id) -> {
-            ApiGameSummary game = mStoredGamesListAdapter.getItem(position);
+            GameSummaryDto game = mStoredGamesListAdapter.getItem(position);
             if (game != null) {
                 onGameSelected(game);
             }
@@ -162,7 +162,7 @@ public class StoredGamesListFragment extends Fragment implements DataSynchroniza
         mBackPressedCallback.setEnabled(mStoredGamesListAdapter.hasSelectedItems());
     }
 
-    private void onGameSelected(ApiGameSummary game) {
+    private void onGameSelected(GameSummaryDto game) {
         mStoredGamesListAdapter.toggleItemSelection(game.getId());
         mDeleteSelectedGamesItem.setVisible(mStoredGamesListAdapter.hasSelectedItems());
         computeOnBackPressedCallbackState();

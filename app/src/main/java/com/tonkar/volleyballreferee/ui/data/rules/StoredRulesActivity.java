@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
+import com.tonkar.volleyballreferee.engine.api.model.RulesDto;
 import com.tonkar.volleyballreferee.engine.game.UsageType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
@@ -42,7 +42,7 @@ public class StoredRulesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mRules = new Rules();
-        mRules.setAll(JsonConverters.GSON.fromJson(getIntent().getStringExtra("rules"), ApiRules.class));
+        mRules.setAll(JsonConverters.GSON.fromJson(getIntent().getStringExtra("rules"), RulesDto.class));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_rules);
@@ -79,7 +79,7 @@ public class StoredRulesActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getIntent().putExtra("rules", JsonConverters.GSON.toJson(mRules, ApiRules.class));
+        getIntent().putExtra("rules", JsonConverters.GSON.toJson(mRules, RulesDto.class));
     }
 
     @Override

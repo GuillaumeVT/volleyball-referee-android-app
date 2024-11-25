@@ -10,20 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.TeamSummaryDto;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
-public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
+public class AutocompleteTeamListAdapter extends ArrayAdapter<TeamSummaryDto> {
 
     private final LayoutInflater       mLayoutInflater;
-    private final List<ApiTeamSummary> mStoredTeamsList;
-    private final List<ApiTeamSummary> mFilteredStoredTeamsList;
+    private final List<TeamSummaryDto> mStoredTeamsList;
+    private final List<TeamSummaryDto> mFilteredStoredTeamsList;
     private final NameFilter           mNameFilter;
 
-    public AutocompleteTeamListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeamSummary> storedTeamsList) {
+    public AutocompleteTeamListAdapter(Context context, LayoutInflater layoutInflater, List<TeamSummaryDto> storedTeamsList) {
         super(context, R.layout.autocomplete_list_item, storedTeamsList);
         mLayoutInflater = layoutInflater;
         mStoredTeamsList = storedTeamsList;
@@ -38,7 +38,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
     }
 
     @Override
-    public ApiTeamSummary getItem(int index) {
+    public TeamSummaryDto getItem(int index) {
         return mFilteredStoredTeamsList.get(index);
     }
 
@@ -57,7 +57,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
             teamTextView = (TextView) view;
         }
 
-        ApiTeamSummary team = mFilteredStoredTeamsList.get(index);
+        TeamSummaryDto team = mFilteredStoredTeamsList.get(index);
         teamTextView.setText(team.getName());
 
         switch (team.getGender()) {
@@ -106,9 +106,9 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
                 boolean perfectMatch = false;
-                List<ApiTeamSummary> matchValues = new ArrayList<>();
+                List<TeamSummaryDto> matchValues = new ArrayList<>();
 
-                for (ApiTeamSummary team : mStoredTeamsList) {
+                for (TeamSummaryDto team : mStoredTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
@@ -135,7 +135,7 @@ public class AutocompleteTeamListAdapter extends ArrayAdapter<ApiTeamSummary> {
             mFilteredStoredTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamSummary>) results.values);
+                mFilteredStoredTeamsList.addAll((Collection<? extends TeamSummaryDto>) results.values);
             }
 
             if (results.count > 0) {

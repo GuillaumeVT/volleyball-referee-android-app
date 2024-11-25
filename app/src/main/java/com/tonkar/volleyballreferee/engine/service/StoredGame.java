@@ -8,13 +8,13 @@ import com.tonkar.volleyballreferee.engine.team.player.PositionType;
 
 import java.util.*;
 
-public class StoredGame extends ApiGame implements IStoredGame {
+public class StoredGame extends GameDto implements IStoredGame {
 
     public StoredGame() {
         super();
-        setHomeTeam(new ApiTeam());
-        setGuestTeam(new ApiTeam());
-        setRules(new ApiRules());
+        setHomeTeam(new TeamDto());
+        setGuestTeam(new TeamDto());
+        setRules(new RulesDto());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
         return getNumberOfSets() - 1;
     }
 
-    public ApiTeam getTeam(TeamType teamType) {
+    public TeamDto getTeam(TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? getHomeTeam() : getGuestTeam();
     }
 
@@ -193,13 +193,13 @@ public class StoredGame extends ApiGame implements IStoredGame {
         boolean result;
 
         if (TeamType.HOME.equals(teamType)) {
-            result = getHomeTeam().getPlayers().contains(new ApiPlayer(number)) || getHomeTeam()
+            result = getHomeTeam().getPlayers().contains(new PlayerDto(number)) || getHomeTeam()
                     .getLiberos()
-                    .contains(new ApiPlayer(number));
+                    .contains(new PlayerDto(number));
         } else {
-            result = getGuestTeam().getPlayers().contains(new ApiPlayer(number)) || getGuestTeam()
+            result = getGuestTeam().getPlayers().contains(new PlayerDto(number)) || getGuestTeam()
                     .getLiberos()
-                    .contains(new ApiPlayer(number));
+                    .contains(new PlayerDto(number));
         }
 
         return result;
@@ -219,8 +219,8 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public Set<ApiPlayer> getPlayers(TeamType teamType) {
-        Set<ApiPlayer> players = new TreeSet<>();
+    public Set<PlayerDto> getPlayers(TeamType teamType) {
+        Set<PlayerDto> players = new TreeSet<>();
         players.addAll(getTeam(teamType).getPlayers());
         players.addAll(getTeam(teamType).getLiberos());
         return players;
@@ -233,13 +233,13 @@ public class StoredGame extends ApiGame implements IStoredGame {
     public String getPlayerName(TeamType teamType, int number) {
         String playerName = "";
 
-        for (ApiPlayer player : getTeam(teamType).getPlayers()) {
+        for (PlayerDto player : getTeam(teamType).getPlayers()) {
             if (player.getNum() == number) {
                 playerName = player.getName();
                 break;
             }
         }
-        for (ApiPlayer player : getTeam(teamType).getLiberos()) {
+        for (PlayerDto player : getTeam(teamType).getLiberos()) {
             if (player.getNum() == number) {
                 playerName = player.getName();
                 break;
@@ -280,7 +280,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
 
     @Override
     public boolean isLibero(TeamType teamType, int number) {
-        return getTeam(teamType).getLiberos().contains(new ApiPlayer(number));
+        return getTeam(teamType).getLiberos().contains(new PlayerDto(number));
     }
 
     @Override
@@ -289,17 +289,17 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public Set<PlayerDto> getLiberos(TeamType teamType) {
         return new TreeSet<>(getTeam(teamType).getLiberos());
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
         return getSubstitutions(teamType, currentSetIndex());
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex) {
         return getSets().get(setIndex).getSubstitutions(teamType);
     }
 
@@ -310,24 +310,24 @@ public class StoredGame extends ApiGame implements IStoredGame {
 
     @Override
     public boolean isStartingLineupConfirmed(TeamType teamType, int setIndex) {
-        ApiSet set = getSets().get(setIndex);
+        SetDto set = getSets().get(setIndex);
         return set.getStartingPlayers(teamType).isFilled(getKind());
     }
 
     @Override
-    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
+    public CourtDto getStartingLineup(TeamType teamType, int setIndex) {
         return getSets().get(setIndex).getStartingPlayers(teamType);
     }
 
     @Override
     public PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex) {
-        ApiCourt startingLineup = getStartingLineup(teamType, setIndex);
+        CourtDto startingLineup = getStartingLineup(teamType, setIndex);
         return startingLineup.getPositionOf(number);
     }
 
     @Override
     public int getPlayerAtPositionInStartingLineup(TeamType teamType, PositionType positionType, int setIndex) {
-        ApiCourt startingLineup = getStartingLineup(teamType, setIndex);
+        CourtDto startingLineup = getStartingLineup(teamType, setIndex);
         return startingLineup.getPlayerAt(positionType);
     }
 
@@ -370,12 +370,12 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiTimeout> getCalledTimeouts(TeamType teamType) {
+    public List<TimeoutDto> getCalledTimeouts(TeamType teamType) {
         return getSets().get(currentSetIndex()).getCalledTimeouts(teamType);
     }
 
     @Override
-    public List<ApiTimeout> getCalledTimeouts(TeamType teamType, int setIndex) {
+    public List<TimeoutDto> getCalledTimeouts(TeamType teamType, int setIndex) {
         return getSets().get(setIndex).getCalledTimeouts(teamType);
     }
 
@@ -395,15 +395,15 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSanction> getAllSanctions(TeamType teamType) {
+    public List<SanctionDto> getAllSanctions(TeamType teamType) {
         return TeamType.HOME.equals(teamType) ? getHomeCards() : getGuestCards();
     }
 
     @Override
-    public List<ApiSanction> getAllSanctions(TeamType teamType, int setIndex) {
-        List<ApiSanction> sanctionsForSet = new ArrayList<>();
+    public List<SanctionDto> getAllSanctions(TeamType teamType, int setIndex) {
+        List<SanctionDto> sanctionsForSet = new ArrayList<>();
 
-        for (ApiSanction sanction : getAllSanctions(teamType)) {
+        for (SanctionDto sanction : getAllSanctions(teamType)) {
             if (sanction.getSet() == setIndex) {
                 sanctionsForSet.add(sanction);
             }
@@ -413,7 +413,7 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSanction> getPlayerSanctions(TeamType teamType, int number) {
+    public List<SanctionDto> getPlayerSanctions(TeamType teamType, int number) {
         return new ArrayList<>();
     }
 
@@ -423,10 +423,10 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiTimeout> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
-        List<ApiTimeout> timeouts = new ArrayList<>();
+    public List<TimeoutDto> getTimeoutsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<TimeoutDto> timeouts = new ArrayList<>();
 
-        for (ApiTimeout timeout : getCalledTimeouts(teamType, setIndex)) {
+        for (TimeoutDto timeout : getCalledTimeouts(teamType, setIndex)) {
             if (timeout.getHomePoints() == hPoints && timeout.getGuestPoints() == gPoints) {
                 timeouts.add(timeout);
             }
@@ -436,10 +436,10 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
-        List<ApiSubstitution> substitutions = new ArrayList<>();
+    public List<SubstitutionDto> getSubstitutionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<SubstitutionDto> substitutions = new ArrayList<>();
 
-        for (ApiSubstitution substitution : getSubstitutions(teamType, setIndex)) {
+        for (SubstitutionDto substitution : getSubstitutions(teamType, setIndex)) {
             if (substitution.getHomePoints() == hPoints && substitution.getGuestPoints() == gPoints) {
                 substitutions.add(substitution);
             }
@@ -449,10 +449,10 @@ public class StoredGame extends ApiGame implements IStoredGame {
     }
 
     @Override
-    public List<ApiSanction> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
-        List<ApiSanction> sanctions = new ArrayList<>();
+    public List<SanctionDto> getSanctionsIfExist(TeamType teamType, int setIndex, int hPoints, int gPoints) {
+        List<SanctionDto> sanctions = new ArrayList<>();
 
-        for (ApiSanction sanction : getAllSanctions(teamType, setIndex)) {
+        for (SanctionDto sanction : getAllSanctions(teamType, setIndex)) {
             if (sanction.getHomePoints() == hPoints && sanction.getGuestPoints() == gPoints) {
                 sanctions.add(sanction);
             }

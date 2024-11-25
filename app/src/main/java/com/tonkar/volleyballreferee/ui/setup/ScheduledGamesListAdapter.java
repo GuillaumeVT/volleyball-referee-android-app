@@ -6,7 +6,7 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiGameSummary;
+import com.tonkar.volleyballreferee.engine.api.model.GameSummaryDto;
 import com.tonkar.volleyballreferee.engine.game.GameStatus;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -15,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.text.DateFormat;
 import java.util.*;
 
-public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
+public class ScheduledGamesListAdapter extends ArrayAdapter<GameSummaryDto> {
 
     static class ViewHolder {
         TextView  summaryText;
@@ -27,8 +27,8 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
     }
 
     private final LayoutInflater       mLayoutInflater;
-    private final List<ApiGameSummary> mGameDescriptionList;
-    private final List<ApiGameSummary> mFilteredGameDescriptionList;
+    private final List<GameSummaryDto> mGameDescriptionList;
+    private final List<GameSummaryDto> mFilteredGameDescriptionList;
     private final DateFormat           mFormatter;
     private final NamesFilter          mNamesFilter;
 
@@ -42,7 +42,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
         mNamesFilter = new NamesFilter();
     }
 
-    void updateGameDescriptionList(List<ApiGameSummary> gameDescriptionList) {
+    void updateGameDescriptionList(List<GameSummaryDto> gameDescriptionList) {
         mGameDescriptionList.clear();
         mFilteredGameDescriptionList.clear();
         mGameDescriptionList.addAll(gameDescriptionList);
@@ -56,7 +56,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
     }
 
     @Override
-    public ApiGameSummary getItem(int index) {
+    public GameSummaryDto getItem(int index) {
         return mFilteredGameDescriptionList.get(index);
     }
 
@@ -84,13 +84,13 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             viewHolder = (ViewHolder) gameView.getTag();
         }
 
-        ApiGameSummary gameDescription = mFilteredGameDescriptionList.get(index);
+        GameSummaryDto gameDescription = mFilteredGameDescriptionList.get(index);
         updateGameDescription(viewHolder, gameDescription);
 
         return gameView;
     }
 
-    private void updateGameDescription(ViewHolder viewHolder, ApiGameSummary gameDescription) {
+    private void updateGameDescription(ViewHolder viewHolder, GameSummaryDto gameDescription) {
         viewHolder.summaryText.setText(String.format(Locale.getDefault(), "%s\t\t - \t\t%s", gameDescription.getHomeTeamName(),
                                                      gameDescription.getGuestTeamName()));
         viewHolder.dateText.setText(mFormatter.format(new Date(gameDescription.getScheduledAt())));
@@ -140,9 +140,9 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiGameSummary> matchValues = new ArrayList<>();
+                List<GameSummaryDto> matchValues = new ArrayList<>();
 
-                for (ApiGameSummary gameDescription : mGameDescriptionList) {
+                for (GameSummaryDto gameDescription : mGameDescriptionList) {
                     if (lowerCaseText.isEmpty() || gameDescription
                             .getHomeTeamName()
                             .toLowerCase(Locale.getDefault())
@@ -172,7 +172,7 @@ public class ScheduledGamesListAdapter extends ArrayAdapter<ApiGameSummary> {
             mFilteredGameDescriptionList.clear();
 
             if (results.values != null) {
-                mFilteredGameDescriptionList.addAll((Collection<? extends ApiGameSummary>) results.values);
+                mFilteredGameDescriptionList.addAll((Collection<? extends GameSummaryDto>) results.values);
             }
 
             if (results.count > 0) {

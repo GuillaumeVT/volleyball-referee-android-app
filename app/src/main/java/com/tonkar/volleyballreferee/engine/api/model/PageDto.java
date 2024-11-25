@@ -8,7 +8,7 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiPage<T> {
+public class PageDto<T> {
     @SerializedName("content")
     private List<T> content;
     @SerializedName("empty")
@@ -28,7 +28,7 @@ public class ApiPage<T> {
     @SerializedName("totalPages")
     private int     totalPages;
 
-    public ApiPage() {
+    public PageDto() {
         this.content = new ArrayList<>();
     }
 }

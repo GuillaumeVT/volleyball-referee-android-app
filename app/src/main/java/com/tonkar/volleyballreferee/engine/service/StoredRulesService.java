@@ -8,13 +8,13 @@ import java.util.*;
 
 public interface StoredRulesService {
 
-    List<ApiRulesSummary> listRules();
+    List<RulesSummaryDto> listRules();
 
-    List<ApiRulesSummary> listRules(GameType kind);
+    List<RulesSummaryDto> listRules(GameType kind);
 
-    ApiRules getRules(String id);
+    RulesDto getRules(String id);
 
-    ApiRules getRules(GameType kind, String rulesName);
+    RulesDto getRules(GameType kind, String rulesName);
 
     Rules createRules(GameType kind);
 

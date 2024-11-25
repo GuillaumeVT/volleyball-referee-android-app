@@ -34,29 +34,29 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     }
 
     @Override
-    public List<ApiLeagueSummary> listLeagues() {
+    public List<LeagueSummaryDto> listLeagues() {
         return mRepository.listLeagues();
     }
 
     @Override
-    public List<ApiLeagueSummary> listLeagues(GameType kind) {
+    public List<LeagueSummaryDto> listLeagues(GameType kind) {
         return mRepository.listLeagues(kind);
     }
 
     @Override
     public List<String> listDivisionNames(String id) {
-        ApiLeague league = mRepository.getLeague(id);
+        LeagueDto league = mRepository.getLeague(id);
         return league.getDivisions();
     }
 
-    private void saveLeague(ApiLeague league) {
+    private void saveLeague(LeagueDto league) {
         league.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
         mRepository.insertLeague(league, false, false);
         pushLeagueToServer(league);
     }
 
     @Override
-    public void createAndSaveLeagueFrom(ApiSelectedLeague selectedLeague) {
+    public void createAndSaveLeagueFrom(SelectedLeagueDto selectedLeague) {
         if (selectedLeague.getName().length() > 1 && selectedLeague.getDivision().length() > 1) {
             long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
@@ -64,11 +64,11 @@ public class StoredLeaguesManager implements StoredLeaguesService {
             int leaguesSameId = mRepository.countLeagues(selectedLeague.getId());
 
             if (leaguesSameName == 0 && leaguesSameId == 0) {
-                ApiLeague league = new ApiLeague();
+                LeagueDto league = new LeagueDto();
                 league.setAll(selectedLeague);
                 saveLeague(league);
             } else if (leaguesSameName == 1 && leaguesSameId == 1) {
-                ApiLeague league = mRepository.getLeague(selectedLeague.getId());
+                LeagueDto league = mRepository.getLeague(selectedLeague.getId());
                 if (!league.getDivisions().contains(selectedLeague.getDivision())) {
                     league.setUpdatedAt(utcTime);
                     league.getDivisions().add(selectedLeague.getDivision());
@@ -79,19 +79,19 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     }
 
     @Override
-    public ApiLeague getLeague(GameType kind, String leagueName) {
+    public LeagueDto getLeague(GameType kind, String leagueName) {
         return mRepository.getLeague(leagueName, kind);
     }
 
-    public static List<ApiLeague> readLeaguesStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<LeagueDto> readLeaguesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiLeague>>() {}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<LeagueDto>>() {}.getType());
         }
     }
 
-    public static void writeLeaguesStream(OutputStream outputStream, List<ApiLeague> leagues) throws JsonParseException, IOException {
+    public static void writeLeaguesStream(OutputStream outputStream, List<LeagueDto> leagues) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(leagues, new TypeToken<List<ApiLeague>>() {}.getType(), writer);
+        JsonConverters.GSON.toJson(leagues, new TypeToken<List<LeagueDto>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -116,8 +116,8 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiLeagueSummary> leagueList = JsonConverters.GSON.fromJson(body.string(),
-                                                                                             new TypeToken<List<ApiLeagueSummary>>() {}.getType());
+                            List<LeagueSummaryDto> leagueList = JsonConverters.GSON.fromJson(body.string(),
+                                                                                             new TypeToken<List<LeagueSummaryDto>>() {}.getType());
                             syncLeagues(leagueList, listener);
                         }
                     } else {
@@ -136,16 +136,16 @@ public class StoredLeaguesManager implements StoredLeaguesService {
         }
     }
 
-    private void syncLeagues(List<ApiLeagueSummary> remoteLeagueList, DataSynchronizationListener listener) {
-        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null);
-        List<ApiLeagueSummary> localLeagueList = listLeagues();
-        Queue<ApiLeagueSummary> remoteLeaguesToDownload = new LinkedList<>();
+    private void syncLeagues(List<LeagueSummaryDto> remoteLeagueList, DataSynchronizationListener listener) {
+        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null);
+        List<LeagueSummaryDto> localLeagueList = listLeagues();
+        Queue<LeagueSummaryDto> remoteLeaguesToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
         // User purchased web services, write his user id
-        for (ApiLeagueSummary localLeague : localLeagueList) {
+        for (LeagueSummaryDto localLeague : localLeagueList) {
             if (StringUtils.isBlank(localLeague.getCreatedBy())) {
-                ApiLeague league = mRepository.getLeague(localLeague.getId());
+                LeagueDto league = mRepository.getLeague(localLeague.getId());
                 league.setCreatedBy(userId);
                 league.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 mRepository.insertLeague(league, false, true);
@@ -157,10 +157,10 @@ public class StoredLeaguesManager implements StoredLeaguesService {
             localLeagueList = listLeagues();
         }
 
-        for (ApiLeagueSummary localLeague : localLeagueList) {
+        for (LeagueSummaryDto localLeague : localLeagueList) {
             boolean foundRemoteVersion = false;
 
-            for (ApiLeagueSummary remoteLeague : remoteLeagueList) {
+            for (LeagueSummaryDto remoteLeague : remoteLeagueList) {
                 if (localLeague.getId().equals(remoteLeague.getId())) {
                     foundRemoteVersion = true;
                     remoteLeaguesToDownload.add(remoteLeague);
@@ -173,16 +173,16 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                     mRepository.deleteLeague(localLeague.getId());
                 } else {
                     // if the league was not synced, then it is missing from the server because sending it must have failed, so send it again
-                    ApiLeague league = mRepository.getLeague(localLeague.getId());
+                    LeagueDto league = mRepository.getLeague(localLeague.getId());
                     pushLeagueToServer(league);
                 }
             }
         }
 
-        for (ApiLeagueSummary remoteLeague : remoteLeagueList) {
+        for (LeagueSummaryDto remoteLeague : remoteLeagueList) {
             boolean foundLocalVersion = false;
 
-            for (ApiLeagueSummary localLeague : localLeagueList) {
+            for (LeagueSummaryDto localLeague : localLeagueList) {
                 if (localLeague.getId().equals(remoteLeague.getId())) {
                     foundLocalVersion = true;
                     break;
@@ -197,13 +197,13 @@ public class StoredLeaguesManager implements StoredLeaguesService {
         downloadLeaguesRecursive(remoteLeaguesToDownload, listener);
     }
 
-    private void downloadLeaguesRecursive(final Queue<ApiLeagueSummary> remoteLeagues, final DataSynchronizationListener listener) {
+    private void downloadLeaguesRecursive(final Queue<LeagueSummaryDto> remoteLeagues, final DataSynchronizationListener listener) {
         if (remoteLeagues.isEmpty()) {
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
         } else {
-            ApiLeagueSummary remoteLeague = remoteLeagues.poll();
+            LeagueSummaryDto remoteLeague = remoteLeagues.poll();
             VbrApi.getInstance(mContext).getLeague(remoteLeague.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -217,7 +217,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiLeague league = JsonConverters.GSON.fromJson(body.string(), ApiLeague.class);
+                            LeagueDto league = JsonConverters.GSON.fromJson(body.string(), LeagueDto.class);
                             mRepository.insertLeague(league, true, false);
                             downloadLeaguesRecursive(remoteLeagues, listener);
                         }
@@ -233,7 +233,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
         }
     }
 
-    private void pushLeagueToServer(final ApiLeague league) {
+    private void pushLeagueToServer(final LeagueDto league) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).createLeague(league, mContext, new Callback() {
                 @Override

@@ -18,13 +18,13 @@ public abstract class ClassicTeamComposition extends TeamComposition {
     @SerializedName("startingLineupConfirmed")
     private       boolean                 mStartingLineupConfirmed;
     @SerializedName("startingLineup")
-    private final ApiCourt                mStartingLineup;
+    private final CourtDto                mStartingLineup;
     @SerializedName("substitutionsLimitation")
     private       SubstitutionsLimitation mSubstitutionsLimitation;
     @SerializedName("maxSubstitutionsPerSet")
     private final int                     mMaxSubstitutionsPerSet;
     @SerializedName("substitutions")
-    private final List<ApiSubstitution>   mSubstitutions;
+    private final List<SubstitutionDto>   mSubstitutions;
     @SerializedName("secondaryCaptain")
     private       int                     mSecondaryCaptain;
 
@@ -32,7 +32,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
         super(teamDefinition);
 
         mStartingLineupConfirmed = false;
-        mStartingLineup = new ApiCourt();
+        mStartingLineup = new CourtDto();
         mMaxSubstitutionsPerSet = maxSubstitutionsPerSet;
         mSubstitutions = new ArrayList<>();
         mSecondaryCaptain = -1;
@@ -71,15 +71,15 @@ public abstract class ClassicTeamComposition extends TeamComposition {
         return result;
     }
 
-    public boolean undoSubstitution(ApiSubstitution substitution) {
+    public boolean undoSubstitution(SubstitutionDto substitution) {
         boolean result = false;
 
         if (isStartingLineupConfirmed()) {
             PositionType positionType = getPlayerPosition(substitution.getPlayerIn());
 
             if (!PositionType.BENCH.equals(positionType) && PositionType.BENCH.equals(getPlayerPosition(substitution.getPlayerOut()))) {
-                for (Iterator<ApiSubstitution> iterator = mSubstitutions.iterator(); iterator.hasNext(); ) {
-                    ApiSubstitution tmpSubstitution = iterator.next();
+                for (Iterator<SubstitutionDto> iterator = mSubstitutions.iterator(); iterator.hasNext(); ) {
+                    SubstitutionDto tmpSubstitution = iterator.next();
                     if (tmpSubstitution.equals(substitution)) {
                         iterator.remove();
                         mStartingLineupConfirmed = false;
@@ -149,7 +149,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
 
         if (isStartingLineupConfirmed()) {
             Log.i(Tags.TEAM, "Actual substitution");
-            mSubstitutions.add(new ApiSubstitution(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
+            mSubstitutions.add(new SubstitutionDto(newNumber, oldNumber, homeTeamPoints, guestTeamPoints));
         }
     }
 
@@ -176,7 +176,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
     protected List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (ApiPlayer player : getTeamDefinition().getPlayers()) {
+        for (PlayerDto player : getTeamDefinition().getPlayers()) {
             if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(player.getNum())) {
                 players.add(player.getNum());
             }
@@ -185,11 +185,11 @@ public abstract class ClassicTeamComposition extends TeamComposition {
         return players;
     }
 
-    public List<ApiSubstitution> getSubstitutionsCopy() {
+    public List<SubstitutionDto> getSubstitutionsCopy() {
         return new ArrayList<>(mSubstitutions);
     }
 
-    public ApiCourt getStartingLineup() {
+    public CourtDto getStartingLineup() {
         return mStartingLineup;
     }
 
@@ -206,7 +206,7 @@ public abstract class ClassicTeamComposition extends TeamComposition {
     }
 
     public boolean isGameCaptain(int number) {
-        return number == getGameCaptain() && ApiSanction.isPlayer(number);
+        return number == getGameCaptain() && SanctionDto.isPlayer(number);
     }
 
     public int getGameCaptain() {

@@ -6,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ApiLoginCredentials {
-    private String pseudo;
-    private String password;
+public class CountDto {
+    private long count;
 }

@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiSanction {
+public class SanctionDto {
     @SerializedName("card")
     private SanctionType card;
     @SerializedName("num")

@@ -35,21 +35,21 @@ public class StoredRulesManager implements StoredRulesService {
     }
 
     @Override
-    public List<ApiRulesSummary> listRules() {
+    public List<RulesSummaryDto> listRules() {
         return mRepository.listRules();
     }
 
     @Override
-    public List<ApiRulesSummary> listRules(GameType kind) {
-        List<ApiRulesSummary> rulesList = new ArrayList<>();
+    public List<RulesSummaryDto> listRules(GameType kind) {
+        List<RulesSummaryDto> rulesList = new ArrayList<>();
         rulesList.add(Rules.getDefaultRules(kind));
         rulesList.addAll(mRepository.listRules(kind));
         return rulesList;
     }
 
     @Override
-    public ApiRules getRules(String id) {
-        ApiRules rules = Rules.getDefaultRules(id);
+    public RulesDto getRules(String id) {
+        RulesDto rules = Rules.getDefaultRules(id);
 
         if (rules == null) {
             rules = mRepository.getRules(id);
@@ -59,7 +59,7 @@ public class StoredRulesManager implements StoredRulesService {
     }
 
     @Override
-    public ApiRules getRules(GameType kind, String rulesName) {
+    public RulesDto getRules(GameType kind, String rulesName) {
         return mRepository.getRules(rulesName, kind);
     }
 
@@ -75,7 +75,7 @@ public class StoredRulesManager implements StoredRulesService {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         rules.setId(UUID.randomUUID().toString());
-        rules.setCreatedBy(Optional.ofNullable(PrefUtils.getUser(mContext)).map(ApiUserSummary::getId).orElse(null));
+        rules.setCreatedBy(Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null));
         rules.setCreatedAt(utcTime);
         rules.setUpdatedAt(utcTime);
         rules.setName("");
@@ -125,15 +125,15 @@ public class StoredRulesManager implements StoredRulesService {
         }
     }
 
-    public static List<ApiRules> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
+    public static List<RulesDto> readRulesStream(InputStream inputStream) throws IOException, JsonParseException {
         try (JsonReader reader = new JsonReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<ApiRules>>() {}.getType());
+            return JsonConverters.GSON.fromJson(reader, new TypeToken<List<RulesDto>>() {}.getType());
         }
     }
 
-    public static void writeRulesStream(OutputStream outputStream, List<ApiRules> rules) throws JsonParseException, IOException {
+    public static void writeRulesStream(OutputStream outputStream, List<RulesDto> rules) throws JsonParseException, IOException {
         OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
-        JsonConverters.GSON.toJson(rules, new TypeToken<List<ApiRules>>() {}.getType(), writer);
+        JsonConverters.GSON.toJson(rules, new TypeToken<List<RulesDto>>() {}.getType(), writer);
         writer.close();
     }
 
@@ -160,8 +160,8 @@ public class StoredRulesManager implements StoredRulesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiRulesSummary> rulesList = JsonConverters.GSON.fromJson(body.string(),
-                                                                                           new TypeToken<List<ApiRulesSummary>>() {}.getType());
+                            List<RulesSummaryDto> rulesList = JsonConverters.GSON.fromJson(body.string(),
+                                                                                           new TypeToken<List<RulesSummaryDto>>() {}.getType());
                             syncRules(rulesList, listener);
                         }
                     } else {
@@ -179,16 +179,16 @@ public class StoredRulesManager implements StoredRulesService {
         }
     }
 
-    private void syncRules(List<ApiRulesSummary> remoteRulesList, DataSynchronizationListener listener) {
+    private void syncRules(List<RulesSummaryDto> remoteRulesList, DataSynchronizationListener listener) {
         String userId = PrefUtils.getUser(mContext).getId();
-        List<ApiRulesSummary> localRulesList = listRules();
-        Queue<ApiRulesSummary> remoteRulesToDownload = new LinkedList<>();
+        List<RulesSummaryDto> localRulesList = listRules();
+        Queue<RulesSummaryDto> remoteRulesToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
         // User purchased web services, write his user id
-        for (ApiRulesSummary localRules : localRulesList) {
+        for (RulesSummaryDto localRules : localRulesList) {
             if (StringUtils.isBlank(localRules.getCreatedBy())) {
-                ApiRules rules = getRules(localRules.getId());
+                RulesDto rules = getRules(localRules.getId());
                 rules.setCreatedBy(userId);
                 rules.setUpdatedAt(Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime());
                 mRepository.insertRules(rules, false, true);
@@ -200,17 +200,17 @@ public class StoredRulesManager implements StoredRulesService {
             localRulesList = listRules();
         }
 
-        for (ApiRulesSummary localRules : localRulesList) {
+        for (RulesSummaryDto localRules : localRulesList) {
             boolean foundRemoteVersion = false;
 
-            for (ApiRulesSummary remoteRules : remoteRulesList) {
+            for (RulesSummaryDto remoteRules : remoteRulesList) {
                 if (localRules.getId().equals(remoteRules.getId())) {
                     foundRemoteVersion = true;
 
                     if (localRules.getUpdatedAt() < remoteRules.getUpdatedAt()) {
                         remoteRulesToDownload.add(remoteRules);
                     } else if (localRules.getUpdatedAt() > remoteRules.getUpdatedAt()) {
-                        ApiRules rules = getRules(localRules.getId());
+                        RulesDto rules = getRules(localRules.getId());
                         pushRulesToServer(rules, false);
                     }
                 }
@@ -222,16 +222,16 @@ public class StoredRulesManager implements StoredRulesService {
                     deleteRules(localRules.getId());
                 } else {
                     // if the rules were not synced, then they are missing from the server because sending them must have failed, so send them again
-                    ApiRules rules = getRules(localRules.getId());
+                    RulesDto rules = getRules(localRules.getId());
                     pushRulesToServer(rules, true);
                 }
             }
         }
 
-        for (ApiRulesSummary remoteRules : remoteRulesList) {
+        for (RulesSummaryDto remoteRules : remoteRulesList) {
             boolean foundLocalVersion = false;
 
-            for (ApiRulesSummary localRules : localRulesList) {
+            for (RulesSummaryDto localRules : localRulesList) {
                 if (localRules.getId().equals(remoteRules.getId())) {
                     foundLocalVersion = true;
                     break;
@@ -246,13 +246,13 @@ public class StoredRulesManager implements StoredRulesService {
         downloadRulesRecursive(remoteRulesToDownload, listener);
     }
 
-    private void downloadRulesRecursive(final Queue<ApiRulesSummary> remoteRules, final DataSynchronizationListener listener) {
+    private void downloadRulesRecursive(final Queue<RulesSummaryDto> remoteRules, final DataSynchronizationListener listener) {
         if (remoteRules.isEmpty()) {
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
         } else {
-            ApiRulesSummary remoteRule = remoteRules.poll();
+            RulesSummaryDto remoteRule = remoteRules.poll();
             VbrApi.getInstance(mContext).getRules(remoteRule.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -266,7 +266,7 @@ public class StoredRulesManager implements StoredRulesService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiRules rules = JsonConverters.GSON.fromJson(body.string(), ApiRules.class);
+                            RulesDto rules = JsonConverters.GSON.fromJson(body.string(), RulesDto.class);
                             mRepository.insertRules(rules, true, false);
                             downloadRulesRecursive(remoteRules, listener);
                         }
@@ -281,7 +281,7 @@ public class StoredRulesManager implements StoredRulesService {
         }
     }
 
-    private void pushRulesToServer(final ApiRules rules, boolean create) {
+    private void pushRulesToServer(final RulesDto rules, boolean create) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).upsertRules(rules, create, mContext, new Callback() {
                 @Override

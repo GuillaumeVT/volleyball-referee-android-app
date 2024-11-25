@@ -2,7 +2,7 @@ package com.tonkar.volleyballreferee.engine.database;
 
 import androidx.room.*;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.RulesSummaryDto;
 import com.tonkar.volleyballreferee.engine.database.model.RulesEntity;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 
@@ -12,10 +12,10 @@ import java.util.*;
 public interface RulesDao {
 
     @Query("SELECT id, createdBy, createdAt, updatedAt, synced, name, kind FROM rules ORDER BY name ASC")
-    List<ApiRulesSummary> listRules();
+    List<RulesSummaryDto> listRules();
 
     @Query("SELECT id, createdBy, createdAt, updatedAt, synced, name, kind FROM rules WHERE kind = :kind ORDER BY name ASC")
-    List<ApiRulesSummary> listRulesByKind(GameType kind);
+    List<RulesSummaryDto> listRulesByKind(GameType kind);
 
     @Query("SELECT content FROM rules WHERE id = :id")
     String findContentById(String id);

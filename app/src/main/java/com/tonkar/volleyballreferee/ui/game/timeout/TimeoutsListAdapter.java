@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.TimeoutDto;
 import com.tonkar.volleyballreferee.engine.game.timeout.IBaseTimeout;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -84,7 +84,7 @@ public class TimeoutsListAdapter extends BaseAdapter {
 
         TextView timeoutText = timeoutView.findViewById(R.id.score_text);
 
-        ApiTimeout timeout;
+        TimeoutDto timeout;
 
         if (mSetIndex < 0) {
             timeout = mTimeoutService.getCalledTimeouts(mTeamType).get(index);

@@ -6,16 +6,17 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiSelectedLeague extends ApiLeagueSummary {
+public class SelectedLeagueDto extends LeagueSummaryDto {
+
     @SerializedName("division")
     private String division;
 
-    public ApiSelectedLeague() {
+    public SelectedLeagueDto() {
         super();
         division = "";
     }
 
-    public void setAll(ApiSelectedLeague league) {
+    public void setAll(SelectedLeagueDto league) {
         super.setAll(league);
         if (league != null) {
             setDivision(league.getDivision());

@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import com.google.android.material.button.MaterialButton;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.SanctionDto;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.game.sanction.SanctionType;
 import com.tonkar.volleyballreferee.engine.game.score.ScoreListener;
@@ -182,11 +182,11 @@ public class BeachCourtFragment extends CourtFragment implements ScoreListener {
 
     @Override
     public void onSanction(TeamType teamType, SanctionType sanctionType, int number) {
-        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
+        if (SanctionDto.isPlayer(number) && sanctionType.isMisconductExpulsionCard()) {
             // The team is excluded for this set, the other team wins
             UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
                                      String.format(getString(R.string.set_lost_incomplete), mBeachTeam.getTeamName(teamType)));
-        } else if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
+        } else if (SanctionDto.isPlayer(number) && sanctionType.isMisconductDisqualificationCard()) {
             // The team is excluded for this match, the other team wins
             UiUtils.showNotification(requireActivity().findViewById(R.id.activity_game_content),
                                      String.format(getString(R.string.match_lost_incomplete), mBeachTeam.getTeamName(teamType)));

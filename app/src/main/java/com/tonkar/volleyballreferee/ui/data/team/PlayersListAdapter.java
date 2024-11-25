@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.PlayerDto;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -22,7 +22,7 @@ public class PlayersListAdapter extends BaseAdapter {
     private final Context         mContext;
     private final IBaseTeam       mTeamService;
     private final TeamType        mTeamType;
-    private final List<ApiPlayer> mPlayers;
+    private final List<PlayerDto> mPlayers;
 
     PlayersListAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, TeamType teamType) {
         mLayoutInflater = layoutInflater;
@@ -62,7 +62,7 @@ public class PlayersListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) playerItem.getTag();
         }
 
-        ApiPlayer player = mPlayers.get(index);
+        PlayerDto player = mPlayers.get(index);
         viewHolder.playerNumber.setText(UiUtils.formatNumberFromLocale(player.getNum()));
         UiUtils.styleTeamText(mContext, mTeamService, mTeamType, player.getNum(), viewHolder.playerNumber);
 

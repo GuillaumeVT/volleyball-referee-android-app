@@ -1,8 +1,5 @@
 package com.tonkar.volleyballreferee.engine.api.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.*;
-
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.team.GenderType;
@@ -11,98 +8,89 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiGameSummary {
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
+public class GameSummaryDto {
     @SerializedName("id")
-    private String     id;
-    @ColumnInfo(name = "createdBy")
+    private String id;
+
     @SerializedName("createdBy")
-    private String     createdBy;
-    @ColumnInfo(name = "createdAt")
+    private String createdBy;
+
     @SerializedName("createdAt")
-    private long       createdAt;
-    @ColumnInfo(name = "updatedAt")
+    private long createdAt;
+
     @SerializedName("updatedAt")
-    private long       updatedAt;
-    @ColumnInfo(name = "synced")
+    private long updatedAt;
+
     @SerializedName("synced")
-    private boolean    synced;
-    @ColumnInfo(name = "scheduledAt")
+    private boolean synced;
+
     @SerializedName("scheduledAt")
-    private long       scheduledAt;
-    @Ignore
+    private long scheduledAt;
+
     @SerializedName("refereedBy")
-    private String     refereedBy;
-    @Ignore
+    private String refereedBy;
+
     @SerializedName("refereeName")
-    private String     refereeName;
-    @NonNull
-    @ColumnInfo(name = "kind")
+    private String refereeName;
+
     @SerializedName("kind")
-    private GameType   kind;
-    @NonNull
-    @ColumnInfo(name = "gender")
+    private GameType kind;
+
     @SerializedName("gender")
     private GenderType gender;
-    @NonNull
-    @ColumnInfo(name = "usage")
+
     @SerializedName("usage")
-    private UsageType  usage;
-    @Ignore
+    private UsageType usage;
+
     @SerializedName("status")
     private GameStatus status;
-    @Ignore
-    @SerializedName("leagueId")
-    private String     leagueId;
-    @ColumnInfo(name = "leagueName")
-    @SerializedName("leagueName")
-    private String     leagueName;
-    @ColumnInfo(name = "divisionName")
-    @SerializedName("divisionName")
-    private String     divisionName;
-    @Ignore
-    @SerializedName("homeTeamId")
-    private String     homeTeamId;
-    @NonNull
-    @ColumnInfo(name = "homeTeamName")
-    @SerializedName("homeTeamName")
-    private String     homeTeamName;
-    @Ignore
-    @SerializedName("guestTeamId")
-    private String     guestTeamId;
-    @NonNull
-    @ColumnInfo(name = "guestTeamName")
-    @SerializedName("guestTeamName")
-    private String     guestTeamName;
-    @ColumnInfo(name = "homeSets")
-    @SerializedName("homeSets")
-    private int        homeSets;
-    @ColumnInfo(name = "guestSets")
-    @SerializedName("guestSets")
-    private int        guestSets;
-    @Ignore
-    @SerializedName("rulesId")
-    private String     rulesId;
-    @Ignore
-    @SerializedName("rulesName")
-    private String     rulesName;
-    @NonNull
-    @ColumnInfo(name = "score")
-    @SerializedName("score")
-    private String     score;
-    @Ignore
-    @SerializedName("referee1Name")
-    private String     referee1Name;
-    @Ignore
-    @SerializedName("referee2Name")
-    private String     referee2Name;
-    @Ignore
-    @SerializedName("scorerName")
-    private String     scorerName;
 
-    public ApiGameSummary() {
+    @SerializedName("leagueId")
+    private String leagueId;
+
+    @SerializedName("leagueName")
+    private String leagueName;
+
+    @SerializedName("divisionName")
+    private String divisionName;
+
+    @SerializedName("homeTeamId")
+    private String homeTeamId;
+
+    @SerializedName("homeTeamName")
+    private String homeTeamName;
+
+    @SerializedName("guestTeamId")
+    private String guestTeamId;
+
+    @SerializedName("guestTeamName")
+    private String guestTeamName;
+
+    @SerializedName("homeSets")
+    private int homeSets;
+
+    @SerializedName("guestSets")
+    private int guestSets;
+
+    @SerializedName("rulesId")
+    private String rulesId;
+
+    @SerializedName("rulesName")
+    private String rulesName;
+
+    @SerializedName("score")
+    private String score;
+
+    @SerializedName("referee1Name")
+    private String referee1Name;
+
+    @SerializedName("referee2Name")
+    private String referee2Name;
+
+    @SerializedName("scorerName")
+    private String scorerName;
+
+    public GameSummaryDto() {
         id = "";
         createdBy = null;
         createdAt = 0L;
@@ -131,5 +119,4 @@ public class ApiGameSummary {
         referee2Name = "";
         scorerName = "";
     }
-
 }

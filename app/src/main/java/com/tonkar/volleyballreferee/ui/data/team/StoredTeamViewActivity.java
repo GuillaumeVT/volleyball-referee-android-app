@@ -13,7 +13,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.TeamDto;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.IBaseTeam;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -26,7 +26,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mStoredTeamsService = new StoredTeamsManager(this);
-        mTeamService = mStoredTeamsService.copyTeam(JsonConverters.GSON.fromJson(getIntent().getStringExtra("team"), ApiTeam.class));
+        mTeamService = mStoredTeamsService.copyTeam(JsonConverters.GSON.fromJson(getIntent().getStringExtra("team"), TeamDto.class));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_team_view);
@@ -87,7 +87,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
     }
 
     public void editTeam(View view) {
-        ApiTeam team = mStoredTeamsService.getTeam(mTeamService.getTeamId(null));
+        TeamDto team = mStoredTeamsService.getTeam(mTeamService.getTeamId(null));
 
         if (team == null) {
             getOnBackPressedDispatcher().onBackPressed();
@@ -95,7 +95,7 @@ public class StoredTeamViewActivity extends AppCompatActivity {
             Log.i(Tags.STORED_TEAMS, String.format("Start activity to edit stored team %s", team.getName()));
 
             final Intent intent = new Intent(this, StoredTeamActivity.class);
-            intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
+            intent.putExtra("team", JsonConverters.GSON.toJson(team, TeamDto.class));
             intent.putExtra("kind", mTeamService.getTeamsKind().toString());
             intent.putExtra("create", false);
             startActivity(intent);

@@ -4,15 +4,15 @@ import com.tonkar.volleyballreferee.engine.api.model.*;
 
 public interface AsyncFriendRequestListener {
 
-    void onFriendsAndRequestsReceived(ApiFriendsAndRequests friendsAndRequests);
+    void onFriendsAndRequestsReceived(FriendsAndRequestsDto friendsAndRequests);
 
     void onFriendRequestSent(String friendPseudo);
 
-    void onFriendRequestAccepted(ApiFriendRequest friendRequest);
+    void onFriendRequestAccepted(FriendRequestDto friendRequest);
 
-    void onFriendRequestRejected(ApiFriendRequest friendRequest);
+    void onFriendRequestRejected(FriendRequestDto friendRequest);
 
-    void onFriendRemoved(ApiFriend friend);
+    void onFriendRemoved(FriendDto friend);
 
     void onError(int httpCode);
 

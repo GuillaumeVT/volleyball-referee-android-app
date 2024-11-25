@@ -18,16 +18,6 @@ public class DatabaseConverters {
     }
 
     @TypeConverter
-    public static GameStatus toGameStatus(String gameStatusStr) {
-        return GameStatus.valueOf(gameStatusStr);
-    }
-
-    @TypeConverter
-    public static String fromGameStatus(GameStatus gameStatus) {
-        return gameStatus.toString();
-    }
-
-    @TypeConverter
     public static GenderType toGenderType(String genderTypeStr) {
         return GenderType.valueOf(genderTypeStr);
     }

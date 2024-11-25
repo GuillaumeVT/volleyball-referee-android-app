@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.engine.team.substitution;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.SubstitutionDto;
 
 import java.util.*;
 
@@ -14,10 +14,10 @@ public abstract class SubstitutionsLimitation {
         mClassType = getClass().getName();
     }
 
-    public abstract boolean isInvolvedInPastSubstitution(List<ApiSubstitution> substitutions, int number);
+    public abstract boolean isInvolvedInPastSubstitution(List<SubstitutionDto> substitutions, int number);
 
-    public abstract boolean canSubstitute(List<ApiSubstitution> substitutions, int number);
+    public abstract boolean canSubstitute(List<SubstitutionDto> substitutions, int number);
 
-    public abstract Set<Integer> getSubstitutePlayers(List<ApiSubstitution> substitutions, int number, List<Integer> freePlayersOnBench);
+    public abstract Set<Integer> getSubstitutePlayers(List<SubstitutionDto> substitutions, int number, List<Integer> freePlayersOnBench);
 
 }

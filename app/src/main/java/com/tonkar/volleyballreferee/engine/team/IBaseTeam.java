@@ -44,7 +44,7 @@ public interface IBaseTeam {
 
     int getNumberOfPlayers(TeamType teamType);
 
-    Set<ApiPlayer> getPlayers(TeamType teamType);
+    Set<PlayerDto> getPlayers(TeamType teamType);
 
     void setPlayerName(TeamType teamType, int number, String name);
 
@@ -72,17 +72,17 @@ public interface IBaseTeam {
 
     boolean canAddLibero(TeamType teamType);
 
-    Set<ApiPlayer> getLiberos(TeamType teamType);
+    Set<PlayerDto> getLiberos(TeamType teamType);
 
-    List<ApiSubstitution> getSubstitutions(TeamType teamType);
+    List<SubstitutionDto> getSubstitutions(TeamType teamType);
 
-    List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex);
+    List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex);
 
     boolean isStartingLineupConfirmed(TeamType teamType);
 
     boolean isStartingLineupConfirmed(TeamType teamType, int setIndex);
 
-    ApiCourt getStartingLineup(TeamType teamType, int setIndex);
+    CourtDto getStartingLineup(TeamType teamType, int setIndex);
 
     PositionType getPlayerPositionInStartingLineup(TeamType teamType, int number, int setIndex);
 

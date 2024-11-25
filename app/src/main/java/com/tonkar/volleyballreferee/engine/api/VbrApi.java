@@ -61,14 +61,14 @@ public class VbrApi {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    private Request buildGet(String path, ApiUserToken userToken) {
+    private Request buildGet(String path, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
                 .build();
     }
 
-    public Request buildGet(String path, int page, int size, ApiUserToken userToken) {
+    public Request buildGet(String path, int page, int size, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(HttpUrl
                              .parse(String.format(Locale.US, "%s/%s", mBaseUrl, path))
@@ -80,11 +80,7 @@ public class VbrApi {
                 .build();
     }
 
-    private Request buildGet(String path) {
-        return new Request.Builder().url(String.format(Locale.US, "%s/%s", mBaseUrl, path)).build();
-    }
-
-    private Request buildPost(String path, String jsonBody, ApiUserToken userToken) {
+    private Request buildPost(String path, String jsonBody, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -92,7 +88,7 @@ public class VbrApi {
                 .build();
     }
 
-    private Request buildPost(String path, ApiUserToken userToken) {
+    private Request buildPost(String path, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -107,14 +103,7 @@ public class VbrApi {
                 .build();
     }
 
-    private Request buildPost(String path) {
-        return new Request.Builder()
-                .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
-                .post(RequestBody.create("", JSON_MEDIA_TYPE))
-                .build();
-    }
-
-    private Request buildPut(String path, String jsonBody, ApiUserToken userToken) {
+    private Request buildPut(String path, String jsonBody, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -122,7 +111,7 @@ public class VbrApi {
                 .build();
     }
 
-    private Request buildPatch(String path, String jsonBody, ApiUserToken userToken) {
+    private Request buildPatch(String path, String jsonBody, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -130,7 +119,7 @@ public class VbrApi {
                 .build();
     }
 
-    private Request buildDelete(String path, ApiUserToken userToken) {
+    private Request buildDelete(String path, UserTokenDto userToken) {
         return new Request.Builder()
                 .url(String.format(Locale.US, "%s/%s", mBaseUrl, path))
                 .addHeader(AUTHORIZATION_HEADER, bearerToken(userToken.getToken()))
@@ -142,14 +131,14 @@ public class VbrApi {
         return String.format("Bearer %s", token);
     }
 
-    public void signInUser(ApiLoginCredentials loginCredentials, Context context, Callback callback) {
-        String json = JsonConverters.GSON.toJson(loginCredentials, ApiLoginCredentials.class);
+    public void signInUser(LoginCredentialsDto loginCredentials, Context context, Callback callback) {
+        String json = JsonConverters.GSON.toJson(loginCredentials, LoginCredentialsDto.class);
         Request request = buildPost("public/users/token", json);
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void updateUserPassword(ApiUserPasswordUpdate passwordUpdate, Context context, Callback callback) {
-        String passwordUpdateStr = JsonConverters.GSON.toJson(passwordUpdate, ApiUserPasswordUpdate.class);
+    public void updateUserPassword(UserPasswordUpdateDto passwordUpdate, Context context, Callback callback) {
+        String passwordUpdateStr = JsonConverters.GSON.toJson(passwordUpdate, UserPasswordUpdateDto.class);
         Request request = buildPatch("users/password", passwordUpdateStr, PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -164,19 +153,19 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void acceptFriendRequest(ApiFriendRequest friendRequest, Context context, Callback callback) {
+    public void acceptFriendRequest(FriendRequestDto friendRequest, Context context, Callback callback) {
         Request request = buildPost(String.format(Locale.US, "users/friends/accept/%s", friendRequest.getId()),
                                     PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void rejectFriendRequest(ApiFriendRequest friendRequest, Context context, Callback callback) {
+    public void rejectFriendRequest(FriendRequestDto friendRequest, Context context, Callback callback) {
         Request request = buildPost(String.format(Locale.US, "users/friends/reject/%s", friendRequest.getId()),
                                     PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void removeFriend(ApiFriend friend, Context context, Callback callback) {
+    public void removeFriend(FriendDto friend, Context context, Callback callback) {
         Request request = buildDelete(String.format(Locale.US, "users/friends/remove/%s", friend.getId()), PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -196,8 +185,8 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void createLeague(ApiLeague league, Context context, Callback callback) {
-        String json = JsonConverters.GSON.toJson(league, ApiLeague.class);
+    public void createLeague(LeagueDto league, Context context, Callback callback) {
+        String json = JsonConverters.GSON.toJson(league, LeagueDto.class);
         Request request = buildPost("leagues", json, PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -217,9 +206,9 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void upsertRules(ApiRules rules, boolean create, Context context, Callback callback) {
-        ApiUserToken userToken = PrefUtils.getUserToken(context);
-        String json = JsonConverters.GSON.toJson(rules, ApiRules.class);
+    public void upsertRules(RulesDto rules, boolean create, Context context, Callback callback) {
+        UserTokenDto userToken = PrefUtils.getUserToken(context);
+        String json = JsonConverters.GSON.toJson(rules, RulesDto.class);
         Request request = create ? buildPost("rules", json, userToken) : buildPut("rules", json, userToken);
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -239,9 +228,9 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void upsertTeam(ApiTeam team, boolean create, Context context, Callback callback) {
-        ApiUserToken userToken = PrefUtils.getUserToken(context);
-        String json = JsonConverters.GSON.toJson(team, ApiTeam.class);
+    public void upsertTeam(TeamDto team, boolean create, Context context, Callback callback) {
+        UserTokenDto userToken = PrefUtils.getUserToken(context);
+        String json = JsonConverters.GSON.toJson(team, TeamDto.class);
         Request request = create ? buildPost("teams", json, userToken) : buildPut("teams", json, userToken);
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -266,15 +255,15 @@ public class VbrApi {
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void scheduleGame(ApiGameSummary game, boolean create, Context context, Callback callback) {
-        ApiUserToken userToken = PrefUtils.getUserToken(context);
-        String json = JsonConverters.GSON.toJson(game, ApiGameSummary.class);
+    public void scheduleGame(GameSummaryDto game, boolean create, Context context, Callback callback) {
+        UserTokenDto userToken = PrefUtils.getUserToken(context);
+        String json = JsonConverters.GSON.toJson(game, GameSummaryDto.class);
         Request request = create ? buildPost("games", json, userToken) : buildPut("games", json, userToken);
         getHttpClient(context).newCall(request).enqueue(callback);
     }
 
-    public void upsertGame(ApiGame game, Context context, Callback callback) {
-        String json = JsonConverters.GSON.toJson(game, ApiGame.class);
+    public void upsertGame(GameDto game, Context context, Callback callback) {
+        String json = JsonConverters.GSON.toJson(game, GameDto.class);
         Request request = buildPost("games/full", json, PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);
     }
@@ -286,7 +275,7 @@ public class VbrApi {
 
     public void updateSet(StoredGame game, Context context, Callback callback) {
         int setIndex = game.currentSetIndex();
-        String json = JsonConverters.GSON.toJson(game.getSets().get(setIndex), ApiSet.class);
+        String json = JsonConverters.GSON.toJson(game.getSets().get(setIndex), SetDto.class);
         Request request = buildPatch(String.format(Locale.US, "games/%s/set/%d", game.getId(), 1 + setIndex), json,
                                      PrefUtils.getUserToken(context));
         getHttpClient(context).newCall(request).enqueue(callback);

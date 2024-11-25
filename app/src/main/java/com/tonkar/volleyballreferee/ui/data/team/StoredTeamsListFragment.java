@@ -52,7 +52,7 @@ public class StoredTeamsListFragment extends Fragment implements DataSynchroniza
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mStoredTeamsService = new StoredTeamsManager(requireContext());
 
-        List<ApiTeamSummary> teams = mStoredTeamsService.listTeams();
+        List<TeamSummaryDto> teams = mStoredTeamsService.listTeams();
 
         Log.i(Tags.STORED_TEAMS, "Create teams list fragment");
 
@@ -69,19 +69,19 @@ public class StoredTeamsListFragment extends Fragment implements DataSynchroniza
         storedTeamsList.setAdapter(mStoredTeamsListAdapter);
 
         storedTeamsList.setOnItemClickListener((adapterView, itemView, position, l) -> {
-            ApiTeamSummary teamDescription = mStoredTeamsListAdapter.getItem(position);
+            TeamSummaryDto teamDescription = mStoredTeamsListAdapter.getItem(position);
 
             if (mStoredTeamsListAdapter.hasSelectedItems()) {
                 onTeamSelected(teamDescription);
             } else {
                 computeOnBackPressedCallbackState();
-                ApiTeam team = mStoredTeamsService.getTeam(teamDescription.getId());
+                TeamDto team = mStoredTeamsService.getTeam(teamDescription.getId());
 
                 if (team != null) {
                     Log.i(Tags.STORED_TEAMS, String.format("Start activity to view stored team %s", team.getName()));
 
                     final Intent intent = new Intent(requireContext(), StoredTeamViewActivity.class);
-                    intent.putExtra("team", JsonConverters.GSON.toJson(team, ApiTeam.class));
+                    intent.putExtra("team", JsonConverters.GSON.toJson(team, TeamDto.class));
                     startActivity(intent, ActivityOptionsCompat
                             .makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails")
                             .toBundle());
@@ -90,7 +90,7 @@ public class StoredTeamsListFragment extends Fragment implements DataSynchroniza
         });
 
         storedTeamsList.setOnItemLongClickListener((adapterView, itemView, position, id) -> {
-            ApiTeamSummary teamDescription = mStoredTeamsListAdapter.getItem(position);
+            TeamSummaryDto teamDescription = mStoredTeamsListAdapter.getItem(position);
             onTeamSelected(teamDescription);
             return true;
         });
@@ -220,7 +220,7 @@ public class StoredTeamsListFragment extends Fragment implements DataSynchroniza
         IBaseTeam teamService = mStoredTeamsService.createTeam(gameType);
 
         final Intent intent = new Intent(requireContext(), StoredTeamActivity.class);
-        intent.putExtra("team", JsonConverters.GSON.toJson(mStoredTeamsService.copyTeam(teamService), ApiTeam.class));
+        intent.putExtra("team", JsonConverters.GSON.toJson(mStoredTeamsService.copyTeam(teamService), TeamDto.class));
         intent.putExtra("kind", gameType.toString());
         intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
@@ -230,7 +230,7 @@ public class StoredTeamsListFragment extends Fragment implements DataSynchroniza
         mBackPressedCallback.setEnabled(mStoredTeamsListAdapter.hasSelectedItems() || mIsFabOpen);
     }
 
-    private void onTeamSelected(ApiTeamSummary teamDescription) {
+    private void onTeamSelected(TeamSummaryDto teamDescription) {
         mStoredTeamsListAdapter.toggleItemSelection(teamDescription.getId());
         mDeleteSelectedTeamsItem.setVisible(mStoredTeamsListAdapter.hasSelectedItems());
         computeOnBackPressedCallbackState();

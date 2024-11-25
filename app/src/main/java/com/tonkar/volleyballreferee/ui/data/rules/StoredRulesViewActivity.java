@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRules;
+import com.tonkar.volleyballreferee.engine.api.model.RulesDto;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.interfaces.RulesHandler;
@@ -39,7 +39,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mStoredRulesService = new StoredRulesManager(this);
         mRules = new Rules();
-        mRules.setAll(JsonConverters.GSON.fromJson(getIntent().getStringExtra("rules"), ApiRules.class));
+        mRules.setAll(JsonConverters.GSON.fromJson(getIntent().getStringExtra("rules"), RulesDto.class));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_rules_view);
@@ -99,7 +99,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
     }
 
     public void editRules(View view) {
-        ApiRules rules = mStoredRulesService.getRules(mRules.getId());
+        RulesDto rules = mStoredRulesService.getRules(mRules.getId());
 
         if (rules == null) {
             getOnBackPressedDispatcher().onBackPressed();
@@ -107,7 +107,7 @@ public class StoredRulesViewActivity extends AppCompatActivity {
             Log.i(Tags.STORED_RULES, String.format("Start activity to edit stored rules %s", rules.getName()));
 
             final Intent intent = new Intent(this, StoredRulesActivity.class);
-            intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
+            intent.putExtra("rules", JsonConverters.GSON.toJson(rules, RulesDto.class));
             intent.putExtra("create", false);
             startActivity(intent);
             UiUtils.animateForward(this);

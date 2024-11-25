@@ -1,7 +1,6 @@
 package com.tonkar.volleyballreferee.engine.api.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.*;
+import androidx.room.ColumnInfo;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.game.GameType;
@@ -11,38 +10,33 @@ import lombok.*;
 
 @Getter
 @Setter
-public class ApiTeamSummary {
-    @PrimaryKey
-    @NonNull
-    @ColumnInfo(name = "id")
+@EqualsAndHashCode
+public class TeamSummaryDto {
     @SerializedName("id")
-    private String     id;
-    @ColumnInfo(name = "createdBy")
+    private String id;
+
     @SerializedName("createdBy")
-    private String     createdBy;
-    @ColumnInfo(name = "createdAt")
+    private String createdBy;
+
     @SerializedName("createdAt")
-    private long       createdAt;
-    @ColumnInfo(name = "updatedAt")
+    private long createdAt;
+
     @SerializedName("updatedAt")
-    private long       updatedAt;
-    @ColumnInfo(name = "synced")
+    private long updatedAt;
+
     @SerializedName("synced")
-    private boolean    synced;
-    @NonNull
-    @ColumnInfo(name = "name")
+    private boolean synced;
+
     @SerializedName("name")
-    private String     name;
-    @NonNull
+    private String name;
+
     @ColumnInfo(name = "kind")
-    @SerializedName("kind")
-    private GameType   kind;
-    @NonNull
+    private GameType kind;
+
     @ColumnInfo(name = "gender")
-    @SerializedName("gender")
     private GenderType gender;
 
-    public ApiTeamSummary() {
+    public TeamSummaryDto() {
         id = "";
         createdBy = null;
         createdAt = 0L;
@@ -52,5 +46,4 @@ public class ApiTeamSummary {
         gender = GenderType.MIXED;
         name = "";
     }
-
 }

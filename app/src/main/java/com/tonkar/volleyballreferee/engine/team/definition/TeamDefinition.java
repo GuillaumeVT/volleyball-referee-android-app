@@ -10,7 +10,7 @@ import com.tonkar.volleyballreferee.engine.team.TeamType;
 
 import java.util.*;
 
-public abstract class TeamDefinition extends ApiTeam {
+public abstract class TeamDefinition extends TeamDto {
 
     @SerializedName("classType")
     private       String   mClassType;
@@ -41,21 +41,21 @@ public abstract class TeamDefinition extends ApiTeam {
     public void addPlayer(final int number) {
         if (!hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Add player #%d to %s team", number, mTeamType));
-            getPlayers().add(new ApiPlayer(number));
+            getPlayers().add(new PlayerDto(number));
         }
     }
 
     public void removePlayer(final int number) {
         if (hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Remove player #%d from %s team", number, mTeamType));
-            getPlayers().remove(new ApiPlayer(number));
+            getPlayers().remove(new PlayerDto(number));
         }
     }
 
-    ApiPlayer getPlayer(final int number) {
-        ApiPlayer matchingPlayer = null;
+    PlayerDto getPlayer(final int number) {
+        PlayerDto matchingPlayer = null;
 
-        for (ApiPlayer player : getPlayers()) {
+        for (PlayerDto player : getPlayers()) {
             if (number == player.getNum()) {
                 matchingPlayer = player;
                 break;
@@ -66,13 +66,13 @@ public abstract class TeamDefinition extends ApiTeam {
     }
 
     public boolean hasPlayer(final int number) {
-        return getPlayers().contains(new ApiPlayer(number));
+        return getPlayers().contains(new PlayerDto(number));
     }
 
     public String getPlayerName(final int number) {
         String playerName = "";
 
-        for (ApiPlayer player : getPlayers()) {
+        for (PlayerDto player : getPlayers()) {
             if (player.getNum() == number) {
                 playerName = player.getName();
                 break;
@@ -84,7 +84,7 @@ public abstract class TeamDefinition extends ApiTeam {
 
     public void setPlayerName(final int number, final String name) {
         Log.i(Tags.TEAM, String.format("Set name of player #%d to %s team as %s", number, mTeamType, name));
-        for (ApiPlayer player : getPlayers()) {
+        for (PlayerDto player : getPlayers()) {
             if (player.getNum() == number) {
                 player.setName(name);
                 break;

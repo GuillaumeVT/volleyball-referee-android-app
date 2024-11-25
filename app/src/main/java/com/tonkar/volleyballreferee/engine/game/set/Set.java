@@ -1,7 +1,7 @@
 package com.tonkar.volleyballreferee.engine.game.set;
 
 import com.google.gson.annotations.SerializedName;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTimeout;
+import com.tonkar.volleyballreferee.engine.api.model.TimeoutDto;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 import com.tonkar.volleyballreferee.engine.team.composition.TeamComposition;
@@ -41,9 +41,9 @@ public abstract class Set {
     @SerializedName("guestComposition")
     private       TeamComposition  mGuestComposition;
     @SerializedName("homeCalledTimeouts")
-    private final List<ApiTimeout> mHomeCalledTimeouts;
+    private final List<TimeoutDto> mHomeCalledTimeouts;
     @SerializedName("guestCalledTimeouts")
-    private final List<ApiTimeout> mGuestCalledTimeouts;
+    private final List<TimeoutDto> mGuestCalledTimeouts;
 
     protected Set(Rules rules, int pointsToWinSet, TeamType servingTeamAtStart) {
         this(rules, pointsToWinSet, servingTeamAtStart, null, null);
@@ -158,7 +158,7 @@ public abstract class Set {
         return TeamType.HOME.equals(teamType) ? mHomeRemainingTimeouts : mGuestRemainingTimeouts;
     }
 
-    public List<ApiTimeout> getCalledTimeouts(final TeamType teamType) {
+    public List<TimeoutDto> getCalledTimeouts(final TeamType teamType) {
         return new ArrayList<>(TeamType.HOME.equals(teamType) ? mHomeCalledTimeouts : mGuestCalledTimeouts);
     }
 
@@ -168,11 +168,11 @@ public abstract class Set {
         if (TeamType.HOME.equals(teamType)) {
             mHomeRemainingTimeouts--;
             timeouts = mHomeRemainingTimeouts;
-            mHomeCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
+            mHomeCalledTimeouts.add(new TimeoutDto(mHomePoints, mGuestPoints));
         } else {
             mGuestRemainingTimeouts--;
             timeouts = mGuestRemainingTimeouts;
-            mGuestCalledTimeouts.add(new ApiTimeout(mHomePoints, mGuestPoints));
+            mGuestCalledTimeouts.add(new TimeoutDto(mHomePoints, mGuestPoints));
         }
 
         return timeouts;
@@ -181,7 +181,7 @@ public abstract class Set {
     public int undoTimeout(TeamType teamType) {
         int timeouts = TeamType.HOME.equals(teamType) ? mHomeRemainingTimeouts : mGuestRemainingTimeouts;
 
-        for (ApiTimeout timeout : getCalledTimeouts(teamType)) {
+        for (TimeoutDto timeout : getCalledTimeouts(teamType)) {
             if (timeout.getHomePoints() == mHomePoints && timeout.getGuestPoints() == mGuestPoints) {
                 if (TeamType.HOME.equals(teamType)) {
                     mHomeRemainingTimeouts++;

@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.TeamSummaryDto;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
-public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummary> {
+public class StoredTeamsListAdapter extends SelectableArrayAdapter<TeamSummaryDto> {
 
     static class ViewHolder {
         MaterialCardView listItemCard;
@@ -27,11 +27,11 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
     }
 
     private final LayoutInflater       mLayoutInflater;
-    private final List<ApiTeamSummary> mStoredTeamsList;
-    private final List<ApiTeamSummary> mFilteredStoredTeamsList;
+    private final List<TeamSummaryDto> mStoredTeamsList;
+    private final List<TeamSummaryDto> mFilteredStoredTeamsList;
     private final NameFilter           mNameFilter;
 
-    StoredTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<ApiTeamSummary> storedTeamsList) {
+    StoredTeamsListAdapter(Context context, LayoutInflater layoutInflater, List<TeamSummaryDto> storedTeamsList) {
         super(context, R.layout.stored_teams_list_item, storedTeamsList);
         mLayoutInflater = layoutInflater;
         mStoredTeamsList = storedTeamsList;
@@ -40,7 +40,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
         mNameFilter = new NameFilter();
     }
 
-    void updateStoredTeamsList(List<ApiTeamSummary> storedTeamsList) {
+    void updateStoredTeamsList(List<TeamSummaryDto> storedTeamsList) {
         mStoredTeamsList.clear();
         mFilteredStoredTeamsList.clear();
         mStoredTeamsList.addAll(storedTeamsList);
@@ -54,7 +54,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
     }
 
     @Override
-    public ApiTeamSummary getItem(int index) {
+    public TeamSummaryDto getItem(int index) {
         return mFilteredStoredTeamsList.get(index);
     }
 
@@ -80,7 +80,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
             viewHolder = (ViewHolder) teamView.getTag();
         }
 
-        ApiTeamSummary team = mFilteredStoredTeamsList.get(index);
+        TeamSummaryDto team = mFilteredStoredTeamsList.get(index);
         viewHolder.nameText.setText(team.getName());
 
         switch (team.getGender()) {
@@ -120,9 +120,9 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiTeamSummary> matchValues = new ArrayList<>();
+                List<TeamSummaryDto> matchValues = new ArrayList<>();
 
-                for (ApiTeamSummary team : mStoredTeamsList) {
+                for (TeamSummaryDto team : mStoredTeamsList) {
                     if (lowerCaseText.isEmpty() || team.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(team);
                     }
@@ -140,7 +140,7 @@ public class StoredTeamsListAdapter extends SelectableArrayAdapter<ApiTeamSummar
             mFilteredStoredTeamsList.clear();
 
             if (results.values != null) {
-                mFilteredStoredTeamsList.addAll((Collection<? extends ApiTeamSummary>) results.values);
+                mFilteredStoredTeamsList.addAll((Collection<? extends TeamSummaryDto>) results.values);
             }
 
             if (results.count > 0) {

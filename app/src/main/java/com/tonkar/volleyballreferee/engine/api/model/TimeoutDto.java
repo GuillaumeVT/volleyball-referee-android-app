@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiTimeout {
+public class TimeoutDto {
     @SerializedName("homePoints")
     private int homePoints;
     @SerializedName("guestPoints")

@@ -37,7 +37,7 @@ public class RussiaUsaSnowGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                        System.currentTimeMillis(), Rules.officialSnowRules());
@@ -55,7 +55,7 @@ public class RussiaUsaSnowGame {
 
     @Test
     public void playGame_matchPoint() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         SnowGame snowGame = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                        Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                        System.currentTimeMillis(), Rules.officialSnowRules());
@@ -87,7 +87,7 @@ public class RussiaUsaSnowGame {
 
         snowGame.setGender(GenderType.GENTS);
 
-        ApiLeague league = storedLeaguesService.getLeague(GameType.SNOW, "FIVB Snow Volleyball Kronplatz 2019");
+        LeagueDto league = storedLeaguesService.getLeague(GameType.SNOW, "FIVB Snow Volleyball Kronplatz 2019");
         if (league == null) {
             snowGame.getLeague().setName("FIVB Snow Volleyball Kronplatz 2019");
             snowGame.getLeague().setDivision("Final");
@@ -100,8 +100,8 @@ public class RussiaUsaSnowGame {
             snowGame.getLeague().setDivision("Final");
         }
 
-        ApiTeam teamRussia = storedTeamsService.getTeam(GameType.SNOW, "RUSSIA 1", GenderType.GENTS);
-        ApiTeam teamUsa = storedTeamsService.getTeam(GameType.SNOW, "USA 2", GenderType.GENTS);
+        TeamDto teamRussia = storedTeamsService.getTeam(GameType.SNOW, "RUSSIA 1", GenderType.GENTS);
+        TeamDto teamUsa = storedTeamsService.getTeam(GameType.SNOW, "USA 2", GenderType.GENTS);
 
         if (teamRussia == null) {
             snowGame.setTeamName(TeamType.HOME, "RUSSIA 1");

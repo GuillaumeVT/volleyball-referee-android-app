@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSanction;
+import com.tonkar.volleyballreferee.engine.api.model.SanctionDto;
 import com.tonkar.volleyballreferee.engine.game.sanction.IBaseSanction;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
@@ -98,7 +98,7 @@ public class SanctionsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) sanctionView.getTag();
         }
 
-        ApiSanction sanction;
+        SanctionDto sanction;
 
         if (mSetIndex < 0) {
             sanction = mSanctionService.getAllSanctions(mTeamType).get(index);

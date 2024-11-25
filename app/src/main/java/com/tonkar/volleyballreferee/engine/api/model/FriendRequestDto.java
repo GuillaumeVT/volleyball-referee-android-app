@@ -7,7 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ApiFriendRequest {
+public class FriendRequestDto {
     @SerializedName("id")
     private String id;
     @SerializedName("senderId")

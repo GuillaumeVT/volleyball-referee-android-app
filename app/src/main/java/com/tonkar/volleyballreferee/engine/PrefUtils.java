@@ -45,7 +45,7 @@ public class PrefUtils {
         return sharedPreferences.getString(PrefUtils.PREF_SERVER_URL, null);
     }
 
-    public static void signIn(Context context, ApiUserToken userToken) {
+    public static void signIn(Context context, UserTokenDto userToken) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         sharedPreferences
                 .edit()
@@ -55,11 +55,11 @@ public class PrefUtils {
                 .apply();
     }
 
-    public static ApiUserSummary getUser(Context context) {
+    public static UserSummaryDto getUser(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String userStr = sharedPreferences.getString(PREF_USER, null);
         if (StringUtils.isNotBlank(userStr)) {
-            return JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class);
+            return JsonConverters.GSON.fromJson(userStr, UserSummaryDto.class);
         } else {
             return null;
         }
@@ -79,16 +79,16 @@ public class PrefUtils {
                 .getTime() < sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
     }
 
-    public static ApiUserToken getUserToken(Context context) {
+    public static UserTokenDto getUserToken(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String userStr = sharedPreferences.getString(PREF_USER, null);
         String tokenStr = sharedPreferences.getString(PREF_USER_TOKEN, null);
         long tokenExpiry = sharedPreferences.getLong(PREF_USER_TOKEN_EXPIRY, 0L);
 
-        final ApiUserToken userToken;
+        final UserTokenDto userToken;
 
         if (StringUtils.isNotBlank(userStr) && StringUtils.isNotBlank(tokenStr)) {
-            userToken = new ApiUserToken(JsonConverters.GSON.fromJson(userStr, ApiUserSummary.class), tokenStr, tokenExpiry);
+            userToken = new UserTokenDto(JsonConverters.GSON.fromJson(userStr, UserSummaryDto.class), tokenStr, tokenExpiry);
         } else {
             userToken = null;
         }

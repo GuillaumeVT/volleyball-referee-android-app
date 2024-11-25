@@ -6,8 +6,8 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ApiUserToken {
-    private ApiUserSummary user;
+public class UserTokenDto {
+    private UserSummaryDto user;
     private String         token;
     private long           tokenExpiry;
 }

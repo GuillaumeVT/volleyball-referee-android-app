@@ -10,12 +10,12 @@ class LadderItem {
     private final TeamType              mTeamType;
     private final int                   mHomePoints;
     private final int                   mGuestPoints;
-    private final List<ApiSubstitution> mHomeSubstitutions;
-    private final List<ApiSubstitution> mGuestSubstitutions;
-    private final List<ApiTimeout>      mHomeTimeouts;
-    private final List<ApiTimeout>      mGuestTimeouts;
-    private final List<ApiSanction>     mHomeSanctions;
-    private final List<ApiSanction>     mGuestSanctions;
+    private final List<SubstitutionDto> mHomeSubstitutions;
+    private final List<SubstitutionDto> mGuestSubstitutions;
+    private final List<TimeoutDto>      mHomeTimeouts;
+    private final List<TimeoutDto>      mGuestTimeouts;
+    private final List<SanctionDto>     mHomeSanctions;
+    private final List<SanctionDto>     mGuestSanctions;
     private       TeamType              mFirstService;
 
     LadderItem(TeamType teamType, int homePoints, int guestPoints) {
@@ -42,31 +42,31 @@ class LadderItem {
         return mGuestPoints;
     }
 
-    List<ApiSubstitution> getHomeSubstitutions() {
+    List<SubstitutionDto> getHomeSubstitutions() {
         return mHomeSubstitutions;
     }
 
-    List<ApiSubstitution> getGuestSubstitutions() {
+    List<SubstitutionDto> getGuestSubstitutions() {
         return mGuestSubstitutions;
     }
 
-    List<ApiTimeout> getHomeTimeouts() {
+    List<TimeoutDto> getHomeTimeouts() {
         return mHomeTimeouts;
     }
 
-    List<ApiTimeout> getGuestTimeouts() {
+    List<TimeoutDto> getGuestTimeouts() {
         return mGuestTimeouts;
     }
 
-    List<ApiSanction> getHomeSanctions() {
+    List<SanctionDto> getHomeSanctions() {
         return mHomeSanctions;
     }
 
-    List<ApiSanction> getGuestSanctions() {
+    List<SanctionDto> getGuestSanctions() {
         return mGuestSanctions;
     }
 
-    void addSubstitution(TeamType teamType, ApiSubstitution substitution) {
+    void addSubstitution(TeamType teamType, SubstitutionDto substitution) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeSubstitutions.add(substitution);
         } else {
@@ -74,7 +74,7 @@ class LadderItem {
         }
     }
 
-    void addTimeout(TeamType teamType, ApiTimeout timeout) {
+    void addTimeout(TeamType teamType, TimeoutDto timeout) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeTimeouts.add(timeout);
         } else {
@@ -82,7 +82,7 @@ class LadderItem {
         }
     }
 
-    void addSanction(TeamType teamType, ApiSanction sanction) {
+    void addSanction(TeamType teamType, SanctionDto sanction) {
         if (TeamType.HOME.equals(teamType)) {
             mHomeSanctions.add(sanction);
         } else {

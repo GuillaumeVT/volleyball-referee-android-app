@@ -15,7 +15,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeam;
+import com.tonkar.volleyballreferee.engine.api.model.TeamDto;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.*;
@@ -43,7 +43,7 @@ public class StoredTeamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mStoredTeamsService = new StoredTeamsManager(this);
-        mTeamService = mStoredTeamsService.copyTeam(JsonConverters.GSON.fromJson(getIntent().getStringExtra("team"), ApiTeam.class));
+        mTeamService = mStoredTeamsService.copyTeam(JsonConverters.GSON.fromJson(getIntent().getStringExtra("team"), TeamDto.class));
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stored_team);
@@ -92,7 +92,7 @@ public class StoredTeamActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getIntent().putExtra("team", JsonConverters.GSON.toJson(mStoredTeamsService.copyTeam(mTeamService), ApiTeam.class));
+        getIntent().putExtra("team", JsonConverters.GSON.toJson(mStoredTeamsService.copyTeam(mTeamService), TeamDto.class));
     }
 
     @Override

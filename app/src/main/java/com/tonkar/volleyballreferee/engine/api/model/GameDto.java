@@ -12,7 +12,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiGame {
+public class GameDto {
     @SerializedName("id")
     private String            id;
     @SerializedName("createdBy")
@@ -36,23 +36,23 @@ public class ApiGame {
     @SerializedName("status")
     private GameStatus        status;
     @SerializedName("league")
-    private ApiSelectedLeague league;
+    private SelectedLeagueDto league;
     @SerializedName("homeTeam")
-    private ApiTeam           homeTeam;
+    private TeamDto           homeTeam;
     @SerializedName("guestTeam")
-    private ApiTeam           guestTeam;
+    private TeamDto           guestTeam;
     @SerializedName("homeSets")
     private int               homeSets;
     @SerializedName("guestSets")
     private int               guestSets;
     @SerializedName("sets")
-    private List<ApiSet>      sets;
+    private List<SetDto>      sets;
     @SerializedName("homeCards")
-    private List<ApiSanction> homeCards;
+    private List<SanctionDto> homeCards;
     @SerializedName("guestCards")
-    private List<ApiSanction> guestCards;
+    private List<SanctionDto> guestCards;
     @SerializedName("rules")
-    private ApiRules          rules;
+    private RulesDto          rules;
     @SerializedName("score")
     private String            score;
     @SerializedName("startTime")
@@ -66,7 +66,7 @@ public class ApiGame {
     @SerializedName("scorer")
     private String            scorerName;
 
-    public ApiGame() {
+    public GameDto() {
         id = UUID.randomUUID().toString();
         createdBy = null;
         createdAt = 0L;
@@ -98,7 +98,7 @@ public class ApiGame {
     public String buildScore() {
         StringBuilder builder = new StringBuilder();
 
-        for (ApiSet set : sets) {
+        for (SetDto set : sets) {
             builder.append(UiUtils.formatScoreFromLocale(set.getHomePoints(), set.getGuestPoints(), false)).append("\t\t");
         }
 

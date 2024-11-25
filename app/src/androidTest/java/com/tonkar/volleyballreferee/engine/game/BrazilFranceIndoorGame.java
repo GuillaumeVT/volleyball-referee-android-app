@@ -41,7 +41,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_complete(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -74,7 +74,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -103,7 +103,7 @@ public class BrazilFranceIndoorGame {
     }
 
     public void playGame_substitutions(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -125,7 +125,7 @@ public class BrazilFranceIndoorGame {
 
     @Test
     public void playGame_io() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         IndoorGame indoorGame = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                              Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                              System.currentTimeMillis(), Rules.officialIndoorRules());
@@ -165,7 +165,7 @@ public class BrazilFranceIndoorGame {
 
         indoorGame.setGender(GenderType.GENTS);
 
-        ApiLeague league = storedLeaguesService.getLeague(GameType.INDOOR, "FIVB Volleyball World League 2017");
+        LeagueDto league = storedLeaguesService.getLeague(GameType.INDOOR, "FIVB Volleyball World League 2017");
         if (league == null) {
             indoorGame.getLeague().setName("FIVB Volleyball World League 2017");
             indoorGame.getLeague().setDivision("Final");
@@ -178,8 +178,8 @@ public class BrazilFranceIndoorGame {
             indoorGame.getLeague().setDivision("Final");
         }
 
-        ApiTeam teamBrazil = storedTeamsService.getTeam(GameType.INDOOR, "BRAZIL", GenderType.GENTS);
-        ApiTeam teamFrance = storedTeamsService.getTeam(GameType.INDOOR, "FRANCE", GenderType.GENTS);
+        TeamDto teamBrazil = storedTeamsService.getTeam(GameType.INDOOR, "BRAZIL", GenderType.GENTS);
+        TeamDto teamFrance = storedTeamsService.getTeam(GameType.INDOOR, "FRANCE", GenderType.GENTS);
 
         if (teamBrazil == null) {
             indoorGame.setTeamName(TeamType.HOME, "BRAZIL");

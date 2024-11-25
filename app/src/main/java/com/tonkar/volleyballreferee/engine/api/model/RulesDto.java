@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiRules {
+public class RulesDto {
     @SerializedName("id")
     private String   id;
     @SerializedName("createdBy")
@@ -64,7 +64,7 @@ public class ApiRules {
     @SerializedName("customConsecutiveServesPerPlayer")
     private int      customConsecutiveServesPerPlayer;
 
-    public ApiRules() {
+    public RulesDto() {
         id = UUID.randomUUID().toString();
         createdBy = null;
         createdAt = 0L;

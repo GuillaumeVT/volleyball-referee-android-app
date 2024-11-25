@@ -83,7 +83,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
     }
 
     @Override
-    public List<ApiGameSummary> listGames() {
+    public List<GameSummaryDto> listGames() {
         return mRepository.listGames();
     }
 
@@ -274,14 +274,14 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                 .getLeague()
                 .getName()
                 .length() > 1 && mGame.getLeague().getDivision().length() > 1) {
-            ApiSelectedLeague league = new ApiSelectedLeague();
+            SelectedLeagueDto league = new SelectedLeagueDto();
             league.setAll(mGame.getLeague());
             mStoredGame.setLeague(league);
         } else {
             mStoredGame.setLeague(null);
         }
 
-        ApiTeam homeTeam = mStoredGame.getTeam(TeamType.HOME);
+        TeamDto homeTeam = mStoredGame.getTeam(TeamType.HOME);
         homeTeam.setId(mGame.getTeamId(TeamType.HOME));
         homeTeam.setCreatedBy(mGame.getCreatedBy(TeamType.HOME));
         homeTeam.setCreatedAt(mGame.getCreatedAt(TeamType.HOME));
@@ -294,7 +294,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         homeTeam.setCaptain(mGame.getCaptain(TeamType.HOME));
         homeTeam.setCoach(mGame.getCoachName(TeamType.HOME));
 
-        for (ApiPlayer player : mGame.getPlayers(TeamType.HOME)) {
+        for (PlayerDto player : mGame.getPlayers(TeamType.HOME)) {
             if (mGame.isLibero(TeamType.HOME, player.getNum())) {
                 homeTeam.getLiberos().add(player);
             } else {
@@ -302,7 +302,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
             }
         }
 
-        ApiTeam guestTeam = mStoredGame.getTeam(TeamType.GUEST);
+        TeamDto guestTeam = mStoredGame.getTeam(TeamType.GUEST);
         guestTeam.setId(mGame.getTeamId(TeamType.GUEST));
         guestTeam.setCreatedBy(mGame.getCreatedBy(TeamType.GUEST));
         guestTeam.setCreatedAt(mGame.getCreatedAt(TeamType.GUEST));
@@ -315,7 +315,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         guestTeam.setCaptain(mGame.getCaptain(TeamType.GUEST));
         guestTeam.setCoach(mGame.getCoachName(TeamType.GUEST));
 
-        for (ApiPlayer player : mGame.getPlayers(TeamType.GUEST)) {
+        for (PlayerDto player : mGame.getPlayers(TeamType.GUEST)) {
             if (mGame.isLibero(TeamType.GUEST, player.getNum())) {
                 guestTeam.getLiberos().add(player);
             } else {
@@ -341,7 +341,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
             mStoredGame.getSets().clear();
 
             for (int setIndex = 0; setIndex < mGame.getNumberOfSets(); setIndex++) {
-                ApiSet set = new ApiSet();
+                SetDto set = new SetDto();
 
                 set.setDuration(mGame.getSetDuration(setIndex));
                 set.setStartTime(mGame.getSetStartTime(setIndex));
@@ -353,52 +353,52 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                 set.setPoints(TeamType.HOME, mGame.getPoints(TeamType.HOME, setIndex));
                 set.setTimeouts(TeamType.HOME, mGame.countRemainingTimeouts(TeamType.HOME, setIndex));
 
-                ApiCourt homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
+                CourtDto homeCurrentPlayers = set.getCurrentPlayers(TeamType.HOME);
                 for (PositionType position : PositionType.listPositions(mGame.getKind())) {
                     homeCurrentPlayers.setPlayerAt(mGame.getPlayerAtPosition(TeamType.HOME, position, setIndex), position);
                 }
 
-                for (ApiTimeout timeout : mGame.getCalledTimeouts(TeamType.HOME, setIndex)) {
-                    set.getCalledTimeouts(TeamType.HOME).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
+                for (TimeoutDto timeout : mGame.getCalledTimeouts(TeamType.HOME, setIndex)) {
+                    set.getCalledTimeouts(TeamType.HOME).add(new TimeoutDto(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
                 set.setPoints(TeamType.GUEST, mGame.getPoints(TeamType.GUEST, setIndex));
                 set.setTimeouts(TeamType.GUEST, mGame.countRemainingTimeouts(TeamType.GUEST, setIndex));
 
-                ApiCourt guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
+                CourtDto guestCurrentPlayers = set.getCurrentPlayers(TeamType.GUEST);
                 for (PositionType position : PositionType.listPositions(mGame.getKind())) {
                     guestCurrentPlayers.setPlayerAt(mGame.getPlayerAtPosition(TeamType.GUEST, position, setIndex), position);
                 }
 
-                for (ApiTimeout timeout : mGame.getCalledTimeouts(TeamType.GUEST, setIndex)) {
-                    set.getCalledTimeouts(TeamType.GUEST).add(new ApiTimeout(timeout.getHomePoints(), timeout.getGuestPoints()));
+                for (TimeoutDto timeout : mGame.getCalledTimeouts(TeamType.GUEST, setIndex)) {
+                    set.getCalledTimeouts(TeamType.GUEST).add(new TimeoutDto(timeout.getHomePoints(), timeout.getGuestPoints()));
                 }
 
                 if (mGame instanceof IClassicTeam indoorTeam) {
 
-                    ApiCourt homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
+                    CourtDto homeStartingPlayers = set.getStartingPlayers(TeamType.HOME);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {
                         homeStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.HOME, position, setIndex),
                                                         position);
                     }
 
-                    for (ApiSubstitution substitution : indoorTeam.getSubstitutions(TeamType.HOME, setIndex)) {
+                    for (SubstitutionDto substitution : indoorTeam.getSubstitutions(TeamType.HOME, setIndex)) {
                         set
                                 .getSubstitutions(TeamType.HOME)
-                                .add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(),
+                                .add(new SubstitutionDto(substitution.getPlayerIn(), substitution.getPlayerOut(),
                                                          substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
-                    ApiCourt guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
+                    CourtDto guestStartingPlayers = set.getStartingPlayers(TeamType.GUEST);
                     for (PositionType position : PositionType.listPositions(mGame.getKind())) {
                         guestStartingPlayers.setPlayerAt(mGame.getPlayerAtPositionInStartingLineup(TeamType.GUEST, position, setIndex),
                                                          position);
                     }
 
-                    for (ApiSubstitution substitution : indoorTeam.getSubstitutions(TeamType.GUEST, setIndex)) {
+                    for (SubstitutionDto substitution : indoorTeam.getSubstitutions(TeamType.GUEST, setIndex)) {
                         set
                                 .getSubstitutions(TeamType.GUEST)
-                                .add(new ApiSubstitution(substitution.getPlayerIn(), substitution.getPlayerOut(),
+                                .add(new SubstitutionDto(substitution.getPlayerIn(), substitution.getPlayerOut(),
                                                          substitution.getHomePoints(), substitution.getGuestPoints()));
                     }
 
@@ -411,19 +411,19 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
 
             mStoredGame.getAllSanctions(TeamType.HOME).clear();
 
-            for (ApiSanction sanction : mGame.getAllSanctions(TeamType.HOME)) {
+            for (SanctionDto sanction : mGame.getAllSanctions(TeamType.HOME)) {
                 mStoredGame
                         .getAllSanctions(TeamType.HOME)
-                        .add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
+                        .add(new SanctionDto(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
                                              sanction.getGuestPoints()));
             }
 
             mStoredGame.getAllSanctions(TeamType.GUEST).clear();
 
-            for (ApiSanction sanction : mGame.getAllSanctions(TeamType.GUEST)) {
+            for (SanctionDto sanction : mGame.getAllSanctions(TeamType.GUEST)) {
                 mStoredGame
                         .getAllSanctions(TeamType.GUEST)
-                        .add(new ApiSanction(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
+                        .add(new SanctionDto(sanction.getCard(), sanction.getNum(), sanction.getSet(), sanction.getHomePoints(),
                                              sanction.getGuestPoints()));
             }
         }
@@ -494,8 +494,8 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            List<ApiGameSummary> games = JsonConverters.GSON.fromJson(body.string(),
-                                                                                      new TypeToken<List<ApiGameSummary>>() {}.getType());
+                            List<GameSummaryDto> games = JsonConverters.GSON.fromJson(body.string(),
+                                                                                      new TypeToken<List<GameSummaryDto>>() {}.getType());
                             listener.onAvailableGamesReceived(games);
                         }
                     } else {
@@ -511,7 +511,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
     }
 
     @Override
-    public void scheduleGame(ApiGameSummary gameDescription, final boolean create, final DataSynchronizationListener listener) {
+    public void scheduleGame(GameSummaryDto gameDescription, final boolean create, final DataSynchronizationListener listener) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).scheduleGame(gameDescription, create, mContext, new Callback() {
                 @Override
@@ -587,7 +587,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         if (PrefUtils.canSync(mContext) && storedGame != null && !storedGame
                 .getTeamId(TeamType.HOME)
                 .equals(storedGame.getTeamId(TeamType.GUEST))) {
-            ApiGame game = (ApiGame) storedGame;
+            GameDto game = (GameDto) storedGame;
 
             VbrApi.getInstance(mContext).upsertGame(game, mContext, new Callback() {
                 @Override
@@ -651,7 +651,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         }
     }
 
-    private void syncGames(List<ApiGameSummary> remoteGameList, int page, int size, DataSynchronizationListener listener) {
+    private void syncGames(List<GameSummaryDto> remoteGameList, int page, int size, DataSynchronizationListener listener) {
         VbrApi.getInstance(mContext).getCompletedGames(page, size, mContext, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -665,8 +665,8 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     try (ResponseBody body = response.body()) {
-                        ApiPage<ApiGameSummary> gamesPage = JsonConverters.GSON.fromJson(body.string(),
-                                                                                         new TypeToken<ApiPage<ApiGameSummary>>() {}.getType());
+                        PageDto<GameSummaryDto> gamesPage = JsonConverters.GSON.fromJson(body.string(),
+                                                                                         new TypeToken<PageDto<GameSummaryDto>>() {}.getType());
                         remoteGameList.addAll(gamesPage.getContent());
                         if (gamesPage.isLast()) {
                             syncGames(remoteGameList, listener);
@@ -684,14 +684,14 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         });
     }
 
-    private void syncGames(List<ApiGameSummary> remoteGameList, DataSynchronizationListener listener) {
-        ApiUserSummary user = PrefUtils.getUser(mContext);
-        List<ApiGameSummary> localGameList = listGames();
-        Queue<ApiGameSummary> remoteGamesToDownload = new LinkedList<>();
+    private void syncGames(List<GameSummaryDto> remoteGameList, DataSynchronizationListener listener) {
+        UserSummaryDto user = PrefUtils.getUser(mContext);
+        List<GameSummaryDto> localGameList = listGames();
+        Queue<GameSummaryDto> remoteGamesToDownload = new LinkedList<>();
         boolean afterPurchase = false;
 
         // User purchased web services, write his user id
-        for (ApiGameSummary localGame : localGameList) {
+        for (GameSummaryDto localGame : localGameList) {
             if (StringUtils.isBlank(localGame.getCreatedBy())) {
                 StoredGame game = (StoredGame) getGame(localGame.getId());
                 game.setCreatedBy(user.getId());
@@ -707,10 +707,10 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
             localGameList = listGames();
         }
 
-        for (ApiGameSummary localGame : localGameList) {
+        for (GameSummaryDto localGame : localGameList) {
             boolean foundRemoteVersion = false;
 
-            for (ApiGameSummary remoteGame : remoteGameList) {
+            for (GameSummaryDto remoteGame : remoteGameList) {
                 if (localGame.getId().equals(remoteGame.getId())) {
                     foundRemoteVersion = true;
 
@@ -735,10 +735,10 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
             }
         }
 
-        for (ApiGameSummary remoteGame : remoteGameList) {
+        for (GameSummaryDto remoteGame : remoteGameList) {
             boolean foundLocalVersion = false;
 
-            for (ApiGameSummary localGame : localGameList) {
+            for (GameSummaryDto localGame : localGameList) {
                 if (localGame.getId().equals(remoteGame.getId())) {
                     foundLocalVersion = true;
                     break;
@@ -753,13 +753,13 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
         downloadGamesRecursive(remoteGamesToDownload, listener);
     }
 
-    private void downloadGamesRecursive(final Queue<ApiGameSummary> remoteGames, final DataSynchronizationListener listener) {
+    private void downloadGamesRecursive(final Queue<GameSummaryDto> remoteGames, final DataSynchronizationListener listener) {
         if (remoteGames.isEmpty()) {
             if (listener != null) {
                 listener.onSynchronizationSucceeded();
             }
         } else {
-            ApiGameSummary remoteGame = remoteGames.poll();
+            GameSummaryDto remoteGame = remoteGames.poll();
             VbrApi.getInstance(mContext).getGame(remoteGame.getId(), mContext, new Callback() {
                 @Override
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -773,7 +773,7 @@ public class StoredGamesManager implements StoredGamesService, ScoreListener, Te
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiGame game = JsonConverters.GSON.fromJson(body.string(), ApiGame.class);
+                            GameDto game = JsonConverters.GSON.fromJson(body.string(), GameDto.class);
                             mRepository.insertGame(game, true, false);
                             downloadGamesRecursive(remoteGames, listener);
                         }

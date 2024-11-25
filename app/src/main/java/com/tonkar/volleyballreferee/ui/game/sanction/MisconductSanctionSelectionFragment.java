@@ -159,7 +159,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
         private final Context         mContext;
         private final IBaseTeam       mTeamService;
         private final TeamType        mTeamType;
-        private final List<ApiPlayer> mPlayers;
+        private final List<PlayerDto> mPlayers;
         private       int             mSelectedPlayer;
 
         private MisconductPlayerAdapter(LayoutInflater layoutInflater, Context context, IBaseTeam teamService, TeamType teamType) {
@@ -208,7 +208,7 @@ public class MisconductSanctionSelectionFragment extends Fragment {
                     button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
                 }
             } else {
-                player = ApiSanction.COACH;
+                player = SanctionDto.COACH;
                 button.setText(mContext.getString(R.string.coach_abbreviation));
                 button.setColor(mContext, mTeamService.getTeamColor(mTeamType));
             }

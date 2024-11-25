@@ -5,7 +5,7 @@ import android.view.*;
 import android.widget.*;
 
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.SubstitutionDto;
 import com.tonkar.volleyballreferee.engine.team.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -88,7 +88,7 @@ public class SubstitutionsListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) substitutionView.getTag();
         }
 
-        ApiSubstitution substitution;
+        SubstitutionDto substitution;
 
         if (mSetIndex < 0) {
             substitution = mTeamService.getSubstitutions(mTeamType).get(index);

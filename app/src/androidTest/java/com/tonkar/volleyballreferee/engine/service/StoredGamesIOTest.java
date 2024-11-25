@@ -74,7 +74,7 @@ public class StoredGamesIOTest {
         game.setKind(GameType.INDOOR);
         game.setGender(GenderType.LADIES);
         game.setRules(Rules.officialIndoorRules());
-        game.setLeague(new ApiSelectedLeague());
+        game.setLeague(new SelectedLeagueDto());
         game.getLeague().setName("VBR League");
         game.getLeague().setDivision("VBR Division");
         game.setRefereedBy(null);
@@ -84,7 +84,7 @@ public class StoredGamesIOTest {
         game.setSets(TeamType.GUEST, 2);
         game.setScore("2-1");
 
-        ApiTeam team1 = game.getTeam(TeamType.HOME);
+        TeamDto team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
         team1.setCreatedBy(null);
         team1.setCreatedAt(4869434L);
@@ -92,13 +92,13 @@ public class StoredGamesIOTest {
         team1.setName("Team 1");
         team1.setColorInt(Color.parseColor("#123456"));
         team1.setLiberoColorInt(Color.parseColor("#ffffff"));
-        Collections.addAll(team1.getPlayers(), new ApiPlayer(1), new ApiPlayer(3), new ApiPlayer(5), new ApiPlayer(7), new ApiPlayer(9),
-                           new ApiPlayer(11), new ApiPlayer(13));
-        Collections.addAll(team1.getLiberos(), new ApiPlayer(2));
+        Collections.addAll(team1.getPlayers(), new PlayerDto(1), new PlayerDto(3), new PlayerDto(5), new PlayerDto(7), new PlayerDto(9),
+                           new PlayerDto(11), new PlayerDto(13));
+        Collections.addAll(team1.getLiberos(), new PlayerDto(2));
         team1.setCaptain(11);
         team1.setKind(GameType.INDOOR);
 
-        ApiTeam team2 = game.getTeam(TeamType.GUEST);
+        TeamDto team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
         team2.setCreatedBy(null);
         team2.setCreatedAt(58594L);
@@ -106,12 +106,12 @@ public class StoredGamesIOTest {
         team2.setName("Team 2");
         team2.setColorInt(Color.parseColor("#a1b2c3"));
         team2.setLiberoColorInt(Color.parseColor("#000000"));
-        Collections.addAll(team2.getPlayers(), new ApiPlayer(2), new ApiPlayer(4), new ApiPlayer(6), new ApiPlayer(8), new ApiPlayer(10),
-                           new ApiPlayer(12), new ApiPlayer(14), new ApiPlayer(16), new ApiPlayer(18));
+        Collections.addAll(team2.getPlayers(), new PlayerDto(2), new PlayerDto(4), new PlayerDto(6), new PlayerDto(8), new PlayerDto(10),
+                           new PlayerDto(12), new PlayerDto(14), new PlayerDto(16), new PlayerDto(18));
         team2.setCaptain(2);
         team2.setKind(GameType.INDOOR);
 
-        ApiSet set1 = new ApiSet();
+        SetDto set1 = new SetDto();
         game.getSets().add(set1);
         set1.setDuration(5555L);
         set1.setPoints(TeamType.HOME, 3);
@@ -133,11 +133,11 @@ public class StoredGamesIOTest {
         for (int index = 1; index <= 2; index++) {
             set1.getStartingPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
-        Collections.addAll(set1.getSubstitutions(TeamType.HOME), new ApiSubstitution(1, 5, 12, 10), new ApiSubstitution(7, 2, 37, 1));
+        Collections.addAll(set1.getSubstitutions(TeamType.HOME), new SubstitutionDto(1, 5, 12, 10), new SubstitutionDto(7, 2, 37, 1));
         set1.setGameCaptain(TeamType.HOME, 1);
         set1.setGameCaptain(TeamType.GUEST, 2);
 
-        ApiSet set2 = new ApiSet();
+        SetDto set2 = new SetDto();
         game.getSets().add(set2);
         set2.setDuration(4540L);
         set2.setPoints(TeamType.HOME, 4);
@@ -154,13 +154,13 @@ public class StoredGamesIOTest {
             set2.getCurrentPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
             set2.getStartingPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
-        Collections.addAll(set2.getSubstitutions(TeamType.HOME), new ApiSubstitution(7, 1, 1, 53), new ApiSubstitution(4, 2, 0, 32));
-        Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new ApiSubstitution(10, 50, 1, 1));
+        Collections.addAll(set2.getSubstitutions(TeamType.HOME), new SubstitutionDto(7, 1, 1, 53), new SubstitutionDto(4, 2, 0, 32));
+        Collections.addAll(set2.getSubstitutions(TeamType.GUEST), new SubstitutionDto(10, 50, 1, 1));
         set2.setGameCaptain(TeamType.HOME, 1);
         set2.setGameCaptain(TeamType.GUEST, 2);
 
-        game.getAllSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.YELLOW, 5, 1, 12, 14));
-        game.getAllSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED, 8, 3, 20, 1));
+        game.getAllSanctions(TeamType.HOME).add(new SanctionDto(SanctionType.YELLOW, 5, 1, 12, 14));
+        game.getAllSanctions(TeamType.GUEST).add(new SanctionDto(SanctionType.RED, 8, 3, 20, 1));
 
         return game;
     }
@@ -175,7 +175,7 @@ public class StoredGamesIOTest {
         game.setKind(GameType.BEACH);
         game.setGender(GenderType.GENTS);
         game.setRules(Rules.officialBeachRules());
-        game.setLeague(new ApiSelectedLeague());
+        game.setLeague(new SelectedLeagueDto());
         game.getLeague().setName("VBR Beach League");
         game.getLeague().setDivision("VBR Beach Division");
         game.setRefereedBy(null);
@@ -185,27 +185,27 @@ public class StoredGamesIOTest {
         game.setSets(TeamType.GUEST, 0);
         game.setScore("21-19 5-2");
 
-        ApiTeam team1 = game.getTeam(TeamType.HOME);
+        TeamDto team1 = game.getTeam(TeamType.HOME);
         team1.setId(UUID.randomUUID().toString());
         team1.setCreatedBy(null);
         team1.setCreatedAt(5386831L);
         team1.setUpdatedAt(7069493L);
         team1.setName("Player A / Player B");
         team1.setColorInt(Color.parseColor("#1234ab"));
-        Collections.addAll(team1.getPlayers(), new ApiPlayer(1), new ApiPlayer(2));
+        Collections.addAll(team1.getPlayers(), new PlayerDto(1), new PlayerDto(2));
         team1.setKind(GameType.BEACH);
 
-        ApiTeam team2 = game.getTeam(TeamType.GUEST);
+        TeamDto team2 = game.getTeam(TeamType.GUEST);
         team2.setId(UUID.randomUUID().toString());
         team2.setCreatedBy(null);
         team2.setCreatedAt(794302L);
         team2.setUpdatedAt(149593L);
         team2.setName("Player C / Player D");
         team2.setColorInt(Color.parseColor("#efa1c3"));
-        Collections.addAll(team2.getPlayers(), new ApiPlayer(1), new ApiPlayer(2));
+        Collections.addAll(team2.getPlayers(), new PlayerDto(1), new PlayerDto(2));
         team2.setKind(GameType.BEACH);
 
-        ApiSet set1 = new ApiSet();
+        SetDto set1 = new SetDto();
         game.getSets().add(set1);
         set1.setDuration(12L);
         set1.setPoints(TeamType.HOME, 0);
@@ -222,7 +222,7 @@ public class StoredGamesIOTest {
             set1.getCurrentPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
 
-        ApiSet set2 = new ApiSet();
+        SetDto set2 = new SetDto();
         game.getSets().add(set2);
         set2.setDuration(0L);
         set2.setPoints(TeamType.HOME, 6);
@@ -238,8 +238,8 @@ public class StoredGamesIOTest {
             set2.getCurrentPlayers(TeamType.GUEST).setPlayerAt(index, PositionType.fromInt(index));
         }
 
-        game.getAllSanctions(TeamType.HOME).add(new ApiSanction(SanctionType.RED_DISQUALIFICATION, 200, 2, 4, 8));
-        game.getAllSanctions(TeamType.GUEST).add(new ApiSanction(SanctionType.RED_EXPULSION, 100, 0, 5, 6));
+        game.getAllSanctions(TeamType.HOME).add(new SanctionDto(SanctionType.RED_DISQUALIFICATION, 200, 2, 4, 8));
+        game.getAllSanctions(TeamType.GUEST).add(new SanctionDto(SanctionType.RED_EXPULSION, 100, 0, 5, 6));
 
         return game;
     }

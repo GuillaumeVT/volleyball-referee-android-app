@@ -116,7 +116,7 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
-    protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
+    protected void undoSubstitution(TeamType teamType, SubstitutionDto substitution) {
         Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
         if (!evictedPlayers.contains(substitution.getPlayerIn()) && !evictedPlayers.contains(
                 substitution.getPlayerOut()) && getIndoorTeamComposition(teamType).undoSubstitution(substitution)) {
@@ -216,8 +216,8 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
-        ApiCourt startingLineup = new ApiCourt();
+    public CourtDto getStartingLineup(TeamType teamType, int setIndex) {
+        CourtDto startingLineup = new CourtDto();
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
@@ -288,18 +288,18 @@ public class IndoorGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public Set<PlayerDto> getLiberos(TeamType teamType) {
         return new TreeSet<>(getTeamDefinition(teamType).getLiberos());
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
         return getIndoorTeamComposition(teamType).getSubstitutionsCopy();
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
-        List<ApiSubstitution> substitutions = new ArrayList<>();
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex) {
+        List<SubstitutionDto> substitutions = new ArrayList<>();
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
@@ -315,7 +315,7 @@ public class IndoorGame extends Game implements IClassicTeam {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (ApiSanction.isPlayer(number) && (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard())) {
+        if (SanctionDto.isPlayer(number) && (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard())) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 
@@ -331,22 +331,22 @@ public class IndoorGame extends Game implements IClassicTeam {
             }
         }
 
-        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
+        if (SanctionDto.isPlayer(number) && sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
             // copy the list of players
-            List<ApiPlayer> players = new ArrayList<>(getTeamDefinition(teamType).getPlayers());
+            List<PlayerDto> players = new ArrayList<>(getTeamDefinition(teamType).getPlayers());
 
             // first remove the liberos
 
-            for (ApiPlayer libero : getTeamDefinition(teamType).getLiberos()) {
+            for (PlayerDto libero : getTeamDefinition(teamType).getLiberos()) {
                 players.remove(libero);
             }
 
             // then remove the disqualified players
 
-            for (ApiSanction sanction : getAllSanctions(teamType)) {
+            for (SanctionDto sanction : getAllSanctions(teamType)) {
                 if (sanction.getCard().isMisconductDisqualificationCard()) {
-                    players.remove(new ApiPlayer(sanction.getNum()));
+                    players.remove(new PlayerDto(sanction.getNum()));
                 }
             }
 
@@ -372,7 +372,7 @@ public class IndoorGame extends Game implements IClassicTeam {
         super.restoreTeam(storedGame, teamType);
         setLiberoColor(teamType, storedGame.getLiberoColor(teamType));
 
-        for (ApiPlayer player : storedGame.getLiberos(teamType)) {
+        for (PlayerDto player : storedGame.getLiberos(teamType)) {
             addPlayer(teamType, player.getNum());
             addLibero(teamType, player.getNum());
             if (!player.getName().trim().isEmpty()) {
@@ -392,7 +392,7 @@ public class IndoorGame extends Game implements IClassicTeam {
                 List<TeamType> pointsLadder = storedGame.getPointsLadder(setIndex);
 
                 if (storedGame.isStartingLineupConfirmed(TeamType.HOME)) {
-                    ApiCourt homeStartingLineup = storedGame.getStartingLineup(TeamType.HOME, setIndex);
+                    CourtDto homeStartingLineup = storedGame.getStartingLineup(TeamType.HOME, setIndex);
 
                     for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.HOME, homeStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
@@ -402,7 +402,7 @@ public class IndoorGame extends Game implements IClassicTeam {
                 }
 
                 if (storedGame.isStartingLineupConfirmed(TeamType.GUEST)) {
-                    ApiCourt guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
+                    CourtDto guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
 
                     for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.GUEST, guestStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
@@ -417,37 +417,37 @@ public class IndoorGame extends Game implements IClassicTeam {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<ApiTimeout> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : homeTimeouts) {
+                    List<TimeoutDto> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<ApiTimeout> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : guestTimeouts) {
+                    List<TimeoutDto> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
+                    List<SubstitutionDto> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
                                                                                                  guestPoints);
-                    for (ApiSubstitution substitution : homeSubstitutions) {
+                    for (SubstitutionDto substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
+                    List<SubstitutionDto> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
                                                                                                   guestPoints);
-                    for (ApiSubstitution substitution : guestSubstitutions) {
+                    for (SubstitutionDto substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSanction> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : homeSanctions) {
+                    List<SanctionDto> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : homeSanctions) {
                         giveSanction(TeamType.HOME, sanction.getCard(), sanction.getNum());
                     }
 
-                    List<ApiSanction> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : guestSanctions) {
+                    List<SanctionDto> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : guestSanctions) {
                         giveSanction(TeamType.GUEST, sanction.getCard(), sanction.getNum());
                     }
 

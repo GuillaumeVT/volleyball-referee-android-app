@@ -30,7 +30,7 @@ public class StoredLeaguesIOTest {
 
     @Test
     public void save() {
-        ApiSelectedLeague selectedLeague1 = new ApiSelectedLeague();
+        SelectedLeagueDto selectedLeague1 = new SelectedLeagueDto();
         selectedLeague1.setId(UUID.randomUUID().toString());
         selectedLeague1.setCreatedBy(null);
         selectedLeague1.setCreatedAt(System.currentTimeMillis());
@@ -39,7 +39,7 @@ public class StoredLeaguesIOTest {
         selectedLeague1.setName("Test League");
         selectedLeague1.setDivision("Test division");
 
-        ApiSelectedLeague selectedLeague2 = new ApiSelectedLeague();
+        SelectedLeagueDto selectedLeague2 = new SelectedLeagueDto();
         selectedLeague2.setId(UUID.randomUUID().toString());
         selectedLeague2.setCreatedBy(null);
         selectedLeague2.setCreatedAt(System.currentTimeMillis());
@@ -57,10 +57,10 @@ public class StoredLeaguesIOTest {
     public void writeThenRead() {
         StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(mContext.getApplicationContext());
 
-        List<ApiLeague> expectedList = new ArrayList<>();
+        List<LeagueDto> expectedList = new ArrayList<>();
         expectedList.add(storedLeaguesService.getLeague(GameType.INDOOR, "Test League"));
         expectedList.add(storedLeaguesService.getLeague(GameType.INDOOR, "Test League Bis"));
-        List<ApiLeague> actualList = new ArrayList<>();
+        List<LeagueDto> actualList = new ArrayList<>();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {

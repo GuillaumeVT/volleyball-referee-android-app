@@ -53,11 +53,11 @@ public class VbrRepository {
         VbrDatabase.sDatabaseWriteExecutor.execute(() -> mFriendDao.deleteById(friendId));
     }
 
-    public void insertFriends(final List<ApiFriend> friends, boolean syncInsertion) {
+    public void insertFriends(final List<FriendDto> friends, boolean syncInsertion) {
         Runnable runnable = () -> {
             mFriendDao.deleteAll();
             List<FriendEntity> friendEntities = new ArrayList<>();
-            for (ApiFriend friend : friends) {
+            for (FriendDto friend : friends) {
                 FriendEntity friendEntity = new FriendEntity();
                 friendEntity.setId(friend.getId());
                 friendEntity.setPseudo(friend.getPseudo());
@@ -73,17 +73,17 @@ public class VbrRepository {
         }
     }
 
-    public List<ApiLeagueSummary> listLeagues() {
+    public List<LeagueSummaryDto> listLeagues() {
         return mLeagueDao.listLeagues();
     }
 
-    public List<ApiLeagueSummary> listLeagues(GameType kind) {
+    public List<LeagueSummaryDto> listLeagues(GameType kind) {
         return mLeagueDao.listLeaguesByKind(kind);
     }
 
-    public ApiLeague getLeague(String id) {
+    public LeagueDto getLeague(String id) {
         String json = mLeagueDao.findContentById(id);
-        return JsonConverters.GSON.fromJson(json, ApiLeague.class);
+        return JsonConverters.GSON.fromJson(json, LeagueDto.class);
     }
 
     public int countLeagues(String name, GameType kind) {
@@ -94,14 +94,14 @@ public class VbrRepository {
         return mLeagueDao.countById(id);
     }
 
-    public ApiLeague getLeague(String name, GameType kind) {
+    public LeagueDto getLeague(String name, GameType kind) {
         String json = mLeagueDao.findContentByNameAndKind(name, kind);
-        return JsonConverters.GSON.fromJson(json, ApiLeague.class);
+        return JsonConverters.GSON.fromJson(json, LeagueDto.class);
     }
 
-    public void insertLeague(final ApiLeague league, boolean synced, boolean syncInsertion) {
+    public void insertLeague(final LeagueDto league, boolean synced, boolean syncInsertion) {
         Runnable runnable = () -> {
-            String json = JsonConverters.GSON.toJson(league, ApiLeague.class);
+            String json = JsonConverters.GSON.toJson(league, LeagueDto.class);
             LeagueEntity leagueEntity = new LeagueEntity();
             leagueEntity.setId(league.getId());
             leagueEntity.setCreatedBy(league.getCreatedBy());
@@ -125,25 +125,25 @@ public class VbrRepository {
         VbrDatabase.sDatabaseWriteExecutor.execute(() -> mLeagueDao.deleteById(id));
     }
 
-    public List<ApiRulesSummary> listRules() {
+    public List<RulesSummaryDto> listRules() {
         return mRulesDao.listRules();
     }
 
-    public List<ApiRulesSummary> listRules(GameType kind) {
+    public List<RulesSummaryDto> listRules(GameType kind) {
         return mRulesDao.listRulesByKind(kind);
     }
 
-    public ApiRules getRules(String id) {
+    public RulesDto getRules(String id) {
         String json = mRulesDao.findContentById(id);
-        return JsonConverters.GSON.fromJson(json, ApiRules.class);
+        return JsonConverters.GSON.fromJson(json, RulesDto.class);
     }
 
-    public ApiRules getRules(String name, GameType kind) {
+    public RulesDto getRules(String name, GameType kind) {
         String json = mRulesDao.findContentByNameAndKind(name, kind);
-        return JsonConverters.GSON.fromJson(json, ApiRules.class);
+        return JsonConverters.GSON.fromJson(json, RulesDto.class);
     }
 
-    public void insertRules(final ApiRules rules, boolean synced, boolean syncInsertion) {
+    public void insertRules(final RulesDto rules, boolean synced, boolean syncInsertion) {
         Runnable runnable = () -> {
             String json = JsonConverters.GSON.toJson(rules);
             RulesEntity rulesEntity = new RulesEntity();
@@ -181,31 +181,31 @@ public class VbrRepository {
         return mRulesDao.countByNameAndKind(name, kind);
     }
 
-    public List<ApiTeamSummary> listTeams() {
+    public List<TeamSummaryDto> listTeams() {
         return mTeamDao.listTeams();
     }
 
-    public List<ApiTeamSummary> listTeams(GameType kind) {
+    public List<TeamSummaryDto> listTeams(GameType kind) {
         return mTeamDao.listTeamsByKind(kind);
     }
 
-    public List<ApiTeamSummary> listTeams(GenderType genderType, GameType kind) {
+    public List<TeamSummaryDto> listTeams(GenderType genderType, GameType kind) {
         return mTeamDao.listTeamsByGenderAndKind(genderType, kind);
     }
 
-    public ApiTeam getTeam(String id) {
+    public TeamDto getTeam(String id) {
         String json = mTeamDao.findContentById(id);
-        return JsonConverters.GSON.fromJson(json, ApiTeam.class);
+        return JsonConverters.GSON.fromJson(json, TeamDto.class);
     }
 
-    public ApiTeam getTeam(String name, GenderType genderType, GameType kind) {
+    public TeamDto getTeam(String name, GenderType genderType, GameType kind) {
         String json = mTeamDao.findContentByNameAndGenderAndKind(name, genderType, kind);
-        return JsonConverters.GSON.fromJson(json, ApiTeam.class);
+        return JsonConverters.GSON.fromJson(json, TeamDto.class);
     }
 
-    public void insertTeam(final ApiTeam team, boolean synced, boolean syncInsertion) {
+    public void insertTeam(final TeamDto team, boolean synced, boolean syncInsertion) {
         Runnable runnable = () -> {
-            String json = JsonConverters.GSON.toJson(team, ApiTeam.class);
+            String json = JsonConverters.GSON.toJson(team, TeamDto.class);
             TeamEntity teamEntity = new TeamEntity();
             teamEntity.setId(team.getId());
             teamEntity.setCreatedBy(team.getCreatedBy());
@@ -242,7 +242,7 @@ public class VbrRepository {
         return mTeamDao.countById(id);
     }
 
-    public List<ApiGameSummary> listGames() {
+    public List<GameSummaryDto> listGames() {
         return mGameDao.listGames();
     }
 
@@ -251,7 +251,7 @@ public class VbrRepository {
         return JsonConverters.GSON.fromJson(json, StoredGame.class);
     }
 
-    public void insertGame(final ApiGame game, boolean synced, boolean syncInsertion) {
+    public void insertGame(final GameDto game, boolean synced, boolean syncInsertion) {
         Runnable runnable = () -> {
             game.setScore(game.buildScore());
             GameEntity gameEntity = new GameEntity();
@@ -261,10 +261,6 @@ public class VbrRepository {
             gameEntity.setUpdatedAt(game.getUpdatedAt());
             gameEntity.setScheduledAt(game.getScheduledAt());
             gameEntity.setRefereedBy(game.getRefereedBy());
-            gameEntity.setRefereeName(game.getRefereeName());
-            gameEntity.setReferee1Name(game.getReferee1Name());
-            gameEntity.setReferee2Name(game.getReferee2Name());
-            gameEntity.setScorerName(game.getScorerName());
             gameEntity.setKind(game.getKind());
             gameEntity.setGender(game.getGender());
             gameEntity.setUsage(game.getUsage());
@@ -281,7 +277,7 @@ public class VbrRepository {
             gameEntity.setHomeSets(game.getHomeSets());
             gameEntity.setGuestSets(game.getGuestSets());
             gameEntity.setScore(game.getScore());
-            gameEntity.setContent(JsonConverters.GSON.toJson(game, ApiGame.class));
+            gameEntity.setContent(JsonConverters.GSON.toJson(game, GameDto.class));
             mGameDao.insert(gameEntity);
         };
 

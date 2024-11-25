@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.RulesSummaryDto;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.service.*;
@@ -405,7 +405,7 @@ public class RulesSetupFragment extends Fragment implements RulesHandler {
             mRulesNameInput.setAdapter(
                     new AutocompleteRulesListAdapter(getContext(), getLayoutInflater(), storedRulesService.listRules(mRules.getKind())));
             mRulesNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiRulesSummary rulesDescription = (ApiRulesSummary) mRulesNameInput.getAdapter().getItem(index);
+                RulesSummaryDto rulesDescription = (RulesSummaryDto) mRulesNameInput.getAdapter().getItem(index);
                 mRulesNameInput.setText(rulesDescription.getName());
                 mRules.setAll(storedRulesService.getRules(rulesDescription.getId()));
                 initValues();

@@ -36,7 +36,7 @@ public class ItalyUsaBeachGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                           Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                           System.currentTimeMillis(), Rules.officialBeachRules());
@@ -57,7 +57,7 @@ public class ItalyUsaBeachGame {
     }
 
     public void playGame_lastSetEnd(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                           Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                           System.currentTimeMillis(), Rules.officialBeachRules());
@@ -88,7 +88,7 @@ public class ItalyUsaBeachGame {
     }
 
     public void playGame_technicalTimeout(Context context, StoredGamesService storedGamesService) {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         BeachGame beachGame = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                           Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                           System.currentTimeMillis(), Rules.officialBeachRules());
@@ -104,7 +104,7 @@ public class ItalyUsaBeachGame {
 
         beachGame.setGender(GenderType.GENTS);
 
-        ApiLeague league = storedLeaguesService.getLeague(GameType.BEACH, "FIVB Beach Volleyball World Championship 2017");
+        LeagueDto league = storedLeaguesService.getLeague(GameType.BEACH, "FIVB Beach Volleyball World Championship 2017");
         if (league == null) {
             beachGame.getLeague().setName("FIVB Beach Volleyball World Championship 2017");
             beachGame.getLeague().setDivision("Final");
@@ -117,8 +117,8 @@ public class ItalyUsaBeachGame {
             beachGame.getLeague().setDivision("Final");
         }
 
-        ApiTeam teamUsa = storedTeamsService.getTeam(GameType.BEACH, "USA", GenderType.GENTS);
-        ApiTeam teamItaly = storedTeamsService.getTeam(GameType.BEACH, "ITALY", GenderType.GENTS);
+        TeamDto teamUsa = storedTeamsService.getTeam(GameType.BEACH, "USA", GenderType.GENTS);
+        TeamDto teamItaly = storedTeamsService.getTeam(GameType.BEACH, "ITALY", GenderType.GENTS);
 
         if (teamUsa == null) {
             beachGame.setTeamName(TeamType.HOME, "USA");

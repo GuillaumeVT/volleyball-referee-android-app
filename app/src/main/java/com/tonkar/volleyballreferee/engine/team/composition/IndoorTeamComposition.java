@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.PlayerDto;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.rules.Rules;
 import com.tonkar.volleyballreferee.engine.team.definition.*;
@@ -143,7 +143,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
                 }
                 // If no libero is on the court, they can replace the player if he is at the back
                 if (!hasLiberoOnCourt() && positionType.isAtTheBack()) {
-                    for (ApiPlayer player : getTeamDefinition().getLiberos()) {
+                    for (PlayerDto player : getTeamDefinition().getLiberos()) {
                         availablePlayers.add(player.getNum());
                     }
                 }
@@ -178,7 +178,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     protected List<Integer> getFreePlayersOnBench() {
         List<Integer> players = new ArrayList<>();
 
-        for (ApiPlayer player : getTeamDefinition().getPlayers()) {
+        for (PlayerDto player : getTeamDefinition().getPlayers()) {
             if (PositionType.BENCH.equals(getPlayerPosition(player.getNum())) && !isInvolvedInPastSubstitution(
                     player.getNum()) && !getTeamDefinition().isLibero(player.getNum())) {
                 players.add(player.getNum());
@@ -191,7 +191,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     private boolean hasLiberoOnCourt() {
         boolean result = false;
 
-        for (ApiPlayer player : getTeamDefinition().getLiberos()) {
+        for (PlayerDto player : getTeamDefinition().getLiberos()) {
             if (!PositionType.BENCH.equals(getPlayerPosition(player.getNum()))) {
                 result = true;
             }
@@ -211,7 +211,7 @@ public class IndoorTeamComposition extends ClassicTeamComposition {
     private int getSecondLibero() {
         int secondLibero = -1;
 
-        for (ApiPlayer player : getTeamDefinition().getLiberos()) {
+        for (PlayerDto player : getTeamDefinition().getLiberos()) {
             if (player.getNum() != mActingLibero) {
                 secondLibero = player.getNum();
             }

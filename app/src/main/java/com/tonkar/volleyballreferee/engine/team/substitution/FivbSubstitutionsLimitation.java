@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.team.substitution;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.SubstitutionDto;
 
 import java.util.*;
 
@@ -11,10 +11,10 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public boolean isInvolvedInPastSubstitution(List<ApiSubstitution> substitutions, int number) {
+    public boolean isInvolvedInPastSubstitution(List<SubstitutionDto> substitutions, int number) {
         boolean involved = false;
 
-        for (ApiSubstitution substitution : substitutions) {
+        for (SubstitutionDto substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 involved = true;
                 break;
@@ -25,11 +25,11 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public boolean canSubstitute(List<ApiSubstitution> substitutions, int number) {
+    public boolean canSubstitute(List<SubstitutionDto> substitutions, int number) {
         // A player can only do one return trip in each set
         int count = 0;
 
-        for (ApiSubstitution substitution : substitutions) {
+        for (SubstitutionDto substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 count++;
             }
@@ -39,10 +39,10 @@ public class FivbSubstitutionsLimitation extends SubstitutionsLimitation {
     }
 
     @Override
-    public Set<Integer> getSubstitutePlayers(List<ApiSubstitution> substitutions, int number, List<Integer> freePlayersOnBench) {
+    public Set<Integer> getSubstitutePlayers(List<SubstitutionDto> substitutions, int number, List<Integer> freePlayersOnBench) {
         Set<Integer> substituteNumbers = new HashSet<>();
 
-        for (ApiSubstitution substitution : substitutions) {
+        for (SubstitutionDto substitution : substitutions) {
             if (substitution.getPlayerIn() == number) {
                 substituteNumbers.add(substitution.getPlayerOut());
             } else if (substitution.getPlayerOut() == number) {

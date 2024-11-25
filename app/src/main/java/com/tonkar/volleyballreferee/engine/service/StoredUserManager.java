@@ -31,7 +31,7 @@ public class StoredUserManager implements StoredUserService {
 
     @Override
     public void signInUser(String pseudo, String password, AsyncUserRequestListener listener) {
-        ApiLoginCredentials loginCredentials = new ApiLoginCredentials(pseudo, password);
+        LoginCredentialsDto loginCredentials = new LoginCredentialsDto(pseudo, password);
 
         VbrApi.getInstance(mContext).signInUser(loginCredentials, mContext, new Callback() {
             @Override
@@ -44,7 +44,7 @@ public class StoredUserManager implements StoredUserService {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     try (ResponseBody body = response.body()) {
-                        ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                        UserTokenDto userToken = JsonConverters.GSON.fromJson(body.string(), UserTokenDto.class);
                         PrefUtils.signIn(mContext, userToken);
                         listener.onUserTokenReceived(userToken);
                         syncAll();
@@ -58,7 +58,7 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public void updateUserPassword(ApiUserPasswordUpdate passwordUpdate, AsyncUserRequestListener listener) {
+    public void updateUserPassword(UserPasswordUpdateDto passwordUpdate, AsyncUserRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).updateUserPassword(passwordUpdate, mContext, new Callback() {
                 @Override
@@ -71,7 +71,7 @@ public class StoredUserManager implements StoredUserService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiUserToken userToken = JsonConverters.GSON.fromJson(body.string(), ApiUserToken.class);
+                            UserTokenDto userToken = JsonConverters.GSON.fromJson(body.string(), UserTokenDto.class);
                             PrefUtils.signIn(mContext, userToken);
                             listener.onUserTokenReceived(userToken);
                             syncAll();
@@ -109,8 +109,8 @@ public class StoredUserManager implements StoredUserService {
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     if (response.code() == HttpURLConnection.HTTP_OK) {
                         try (ResponseBody body = response.body()) {
-                            ApiFriendsAndRequests friendsAndRequests = JsonConverters.GSON.fromJson(body.string(),
-                                                                                                    new TypeToken<ApiFriendsAndRequests>() {}.getType());
+                            FriendsAndRequestsDto friendsAndRequests = JsonConverters.GSON.fromJson(body.string(),
+                                                                                                    new TypeToken<FriendsAndRequestsDto>() {}.getType());
 
                             mRepository.insertFriends(friendsAndRequests.getFriends(), false);
                             if (listener != null) {
@@ -134,15 +134,15 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public List<ApiFriend> listReferees() {
-        List<ApiFriend> referees = new ArrayList<>();
+    public List<FriendDto> listReferees() {
+        List<FriendDto> referees = new ArrayList<>();
 
         if (PrefUtils.canSync(mContext)) {
-            ApiUserSummary user = PrefUtils.getUser(mContext);
-            referees.add(new ApiFriend(user.getId(), user.getPseudo()));
+            UserSummaryDto user = PrefUtils.getUser(mContext);
+            referees.add(new FriendDto(user.getId(), user.getPseudo()));
 
             for (FriendEntity friendEntity : VbrDatabase.getInstance(mContext).friendDao().listFriends()) {
-                referees.add(new ApiFriend(friendEntity.getId(), friendEntity.getPseudo()));
+                referees.add(new FriendDto(friendEntity.getId(), friendEntity.getPseudo()));
             }
         }
 
@@ -176,7 +176,7 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public void acceptFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
+    public void acceptFriendRequest(FriendRequestDto friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).acceptFriendRequest(friendRequest, mContext, new Callback() {
                 @Override
@@ -203,7 +203,7 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public void rejectFriendRequest(ApiFriendRequest friendRequest, AsyncFriendRequestListener listener) {
+    public void rejectFriendRequest(FriendRequestDto friendRequest, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).rejectFriendRequest(friendRequest, mContext, new Callback() {
                 @Override
@@ -229,7 +229,7 @@ public class StoredUserManager implements StoredUserService {
     }
 
     @Override
-    public void removeFriend(ApiFriend friend, AsyncFriendRequestListener listener) {
+    public void removeFriend(FriendDto friend, AsyncFriendRequestListener listener) {
         if (PrefUtils.canSync(mContext)) {
             VbrApi.getInstance(mContext).removeFriend(friend, mContext, new Callback() {
                 @Override

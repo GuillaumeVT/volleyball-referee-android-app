@@ -35,7 +35,7 @@ public class Indoor4x4CompleteGame {
 
     @Test
     public void playGame_complete() {
-        ApiUserSummary user = new ApiUserSummary(UUID.randomUUID().toString(), "user-pseudo");
+        UserSummaryDto user = new UserSummaryDto(UUID.randomUUID().toString(), "user-pseudo");
         Indoor4x4Game indoor4x4Game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
                                                                       Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime(),
                                                                       System.currentTimeMillis(), Rules.defaultIndoor4x4Rules());
@@ -62,7 +62,7 @@ public class Indoor4x4CompleteGame {
 
         indoor4x4Game.setGender(GenderType.MIXED);
 
-        ApiLeague league = storedLeaguesService.getLeague(GameType.INDOOR_4X4, "4x4");
+        LeagueDto league = storedLeaguesService.getLeague(GameType.INDOOR_4X4, "4x4");
         if (league == null) {
             indoor4x4Game.getLeague().setName("4x4");
             indoor4x4Game.getLeague().setDivision("Division 1");
@@ -75,8 +75,8 @@ public class Indoor4x4CompleteGame {
             indoor4x4Game.getLeague().setDivision("Division 1");
         }
 
-        ApiTeam homeTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Home Team", GenderType.MIXED);
-        ApiTeam guestTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Guest Team", GenderType.MIXED);
+        TeamDto homeTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Home Team", GenderType.MIXED);
+        TeamDto guestTeam = storedTeamsService.getTeam(GameType.INDOOR_4X4, "Guest Team", GenderType.MIXED);
 
         if (homeTeam == null) {
             indoor4x4Game.setTeamName(TeamType.HOME, "Home Team");

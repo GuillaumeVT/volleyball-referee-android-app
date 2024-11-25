@@ -15,16 +15,16 @@ public class ColleagueItem {
     }
 
     private final ItemType         itemType;
-    private final ApiFriend        friend;
-    private final ApiFriendRequest friendRequest;
+    private final FriendDto        friend;
+    private final FriendRequestDto friendRequest;
 
-    ColleagueItem(ItemType itemType, ApiFriend friend) {
+    ColleagueItem(ItemType itemType, FriendDto friend) {
         this.itemType = itemType;
         this.friend = friend;
         this.friendRequest = null;
     }
 
-    ColleagueItem(ItemType itemType, ApiFriendRequest friendRequest) {
+    ColleagueItem(ItemType itemType, FriendRequestDto friendRequest) {
         this.itemType = itemType;
         this.friend = null;
         this.friendRequest = friendRequest;

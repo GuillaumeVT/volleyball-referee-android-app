@@ -94,16 +94,37 @@ public abstract class VbrDatabase extends RoomDatabase {
         @Override
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE `games` RENAME TO `games_old`");
+            database.execSQL("ALTER TABLE `leagues` RENAME TO `leagues_old`");
+            database.execSQL("ALTER TABLE `rules` RENAME TO `rules_old`");
+            database.execSQL("ALTER TABLE `teams` RENAME TO `teams_old`");
+
             database.execSQL(
-                    "CREATE TABLE `games` (`id` TEXT NOT NULL, `createdBy` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `scheduledAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `kind` TEXT NOT NULL, `gender` TEXT NOT NULL, `usage` TEXT NOT NULL, `leagueName` TEXT, `divisionName` TEXT, `homeTeamName` TEXT NOT NULL, `guestTeamName` TEXT NOT NULL, `homeSets` INTEGER NOT NULL, `guestSets` INTEGER NOT NULL, `score` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+                    "CREATE TABLE `games` (`id` TEXT NOT NULL, `createdBy` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `scheduledAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `kind` TEXT NOT NULL, `gender` TEXT NOT NULL, `usage` TEXT NOT NULL, `leagueName` TEXT, `divisionName` TEXT, `homeTeamName` TEXT NOT NULL, `guestTeamName` TEXT NOT NULL, `homeSets` INTEGER NOT NULL, `guestSets` INTEGER NOT NULL, `score` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+            database.execSQL(
+                    "CREATE TABLE `leagues` (`id` TEXT NOT NULL, `createdBy` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `name` TEXT NOT NULL, `kind` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+            database.execSQL(
+                    "CREATE TABLE `rules` (`id` TEXT NOT NULL, `createdBy` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `name` TEXT NOT NULL, `kind` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+            database.execSQL(
+                    "CREATE TABLE `teams` (`id` TEXT NOT NULL, `createdBy` TEXT, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `synced` INTEGER NOT NULL, `name` TEXT NOT NULL, `kind` TEXT NOT NULL, `gender` TEXT NOT NULL, `content` TEXT NOT NULL, PRIMARY KEY(`id`))");
+
             database.execSQL(
                     "INSERT INTO `games` SELECT `id`, `createdBy`, `createdAt`, `updatedAt`, `scheduledAt`, `synced`, `kind`, `gender`, `usage`, `leagueName`, `divisionName`, `homeTeamName`, `guestTeamName`, `homeSets`, `guestSets`, `score`, `content` FROM `games_old`");
-            database.execSQL("DROP TABLE IF EXISTS `games_old`");
+            database.execSQL(
+                    "INSERT INTO `leagues` SELECT `id`, `createdBy`, `createdAt`, `updatedAt`, `synced`, `name`, `kind`, `content` FROM `leagues_old`");
+            database.execSQL(
+                    "INSERT INTO `rules` SELECT `id`, `createdBy`, `createdAt`, `updatedAt`, `synced`, `name`, `kind`, `content` FROM `rules_old`");
+            database.execSQL(
+                    "INSERT INTO `teams` SELECT `id`, `createdBy`, `createdAt`, `updatedAt`, `synced`, `name`, `kind`, `gender`, `content` FROM `teams_old`");
 
-            database.execSQL("UPDATE `leagues` SET `createdBy` = NULL");
             database.execSQL("UPDATE `games` SET `createdBy` = NULL");
-            database.execSQL("UPDATE `teams` SET `createdBy` = NULL");
+            database.execSQL("UPDATE `leagues` SET `createdBy` = NULL");
             database.execSQL("UPDATE `rules` SET `createdBy` = NULL");
+            database.execSQL("UPDATE `teams` SET `createdBy` = NULL");
+
+            database.execSQL("DROP TABLE IF EXISTS `games_old`");
+            database.execSQL("DROP TABLE IF EXISTS `leagues_old`");
+            database.execSQL("DROP TABLE IF EXISTS `rules_old`");
+            database.execSQL("DROP TABLE IF EXISTS `teams_old`");
         }
     };
 }

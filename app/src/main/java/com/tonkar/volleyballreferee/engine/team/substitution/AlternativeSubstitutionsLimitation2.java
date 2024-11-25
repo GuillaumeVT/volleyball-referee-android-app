@@ -1,6 +1,6 @@
 package com.tonkar.volleyballreferee.engine.team.substitution;
 
-import com.tonkar.volleyballreferee.engine.api.model.ApiSubstitution;
+import com.tonkar.volleyballreferee.engine.api.model.SubstitutionDto;
 
 import java.util.*;
 
@@ -11,10 +11,10 @@ public class AlternativeSubstitutionsLimitation2 extends SubstitutionsLimitation
     }
 
     @Override
-    public boolean isInvolvedInPastSubstitution(List<ApiSubstitution> substitutions, int number) {
+    public boolean isInvolvedInPastSubstitution(List<SubstitutionDto> substitutions, int number) {
         boolean involved = false;
 
-        for (ApiSubstitution substitution : substitutions) {
+        for (SubstitutionDto substitution : substitutions) {
             if (substitution.getPlayerIn() == number || substitution.getPlayerOut() == number) {
                 involved = true;
                 break;
@@ -25,12 +25,12 @@ public class AlternativeSubstitutionsLimitation2 extends SubstitutionsLimitation
     }
 
     @Override
-    public boolean canSubstitute(List<ApiSubstitution> substitutions, int number) {
+    public boolean canSubstitute(List<SubstitutionDto> substitutions, int number) {
         return true;
     }
 
     @Override
-    public Set<Integer> getSubstitutePlayers(List<ApiSubstitution> substitutions, int number, List<Integer> freePlayersOnBench) {
+    public Set<Integer> getSubstitutePlayers(List<SubstitutionDto> substitutions, int number, List<Integer> freePlayersOnBench) {
         Set<Integer> substituteNumbers = new HashSet<>();
         substituteNumbers.add(number);
         findSubstitutePlayers(substitutions, substituteNumbers, 2);
@@ -39,8 +39,8 @@ public class AlternativeSubstitutionsLimitation2 extends SubstitutionsLimitation
         return substituteNumbers;
     }
 
-    private void findSubstitutePlayers(List<ApiSubstitution> substitutions, Set<Integer> substituteNumbers, int numberOfRecursions) {
-        for (ApiSubstitution substitution : substitutions) {
+    private void findSubstitutePlayers(List<SubstitutionDto> substitutions, Set<Integer> substituteNumbers, int numberOfRecursions) {
+        for (SubstitutionDto substitution : substitutions) {
             if (substituteNumbers.contains(substitution.getPlayerIn())) {
                 substituteNumbers.add(substitution.getPlayerOut());
             } else if (substituteNumbers.contains(substitution.getPlayerOut())) {

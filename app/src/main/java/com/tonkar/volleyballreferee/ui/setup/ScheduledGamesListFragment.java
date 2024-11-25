@@ -63,7 +63,7 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
         scheduledGamesList.setAdapter(mScheduledGamesListAdapter);
 
         scheduledGamesList.setOnItemClickListener((adapterView, itemView, i, l) -> {
-            ApiGameSummary gameDescription = mScheduledGamesListAdapter.getItem(i);
+            GameSummaryDto gameDescription = mScheduledGamesListAdapter.getItem(i);
             switch (gameDescription.getStatus()) {
                 case SCHEDULED, LIVE -> {
                     ScheduleGameListActionMenu scheduleGameListActionMenu = ScheduleGameListActionMenu.newInstance(gameDescription);
@@ -179,7 +179,7 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
     public void onGameReceived(IStoredGame storedGame) {}
 
     @Override
-    public void onAvailableGamesReceived(List<ApiGameSummary> gameDescriptionList) {
+    public void onAvailableGamesReceived(List<GameSummaryDto> gameDescriptionList) {
         if (isAdded()) {
             requireActivity().runOnUiThread(() -> {
                 mScheduledGamesListAdapter.updateGameDescriptionList(gameDescriptionList);
@@ -216,9 +216,9 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
 
     private void scheduleGame(GameType kind, View view) {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
-        ApiUserSummary user = PrefUtils.getUser(requireContext());
+        UserSummaryDto user = PrefUtils.getUser(requireContext());
 
-        ApiGameSummary gameDescription = new ApiGameSummary();
+        GameSummaryDto gameDescription = new GameSummaryDto();
         gameDescription.setId(UUID.randomUUID().toString());
         gameDescription.setCreatedBy(user.getId());
         gameDescription.setCreatedAt(utcTime);
@@ -230,7 +230,7 @@ public class ScheduledGamesListFragment extends Fragment implements AsyncGameReq
 
         Log.i(Tags.SCHEDULE_UI, "Start activity to schedule game");
         final Intent intent = new Intent(requireContext(), ScheduledGameActivity.class);
-        intent.putExtra("game", JsonConverters.GSON.toJson(gameDescription, ApiGameSummary.class));
+        intent.putExtra("game", JsonConverters.GSON.toJson(gameDescription, GameSummaryDto.class));
         intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
     }

@@ -9,7 +9,7 @@ import com.tonkar.volleyballreferee.engine.game.GameType;
 import lombok.ToString;
 
 @ToString
-public class Rules extends ApiRules {
+public class Rules extends RulesDto {
 
     public static final int FIVB_LIMITATION          = 1;
     public static final int ALTERNATIVE_LIMITATION_1 = 2;
@@ -122,7 +122,7 @@ public class Rules extends ApiRules {
         checkSubstitutions();
     }
 
-    public void setAll(ApiRules rules) {
+    public void setAll(RulesDto rules) {
         setId(rules.getId());
         setCreatedBy(rules.getCreatedBy());
         setCreatedAt(rules.getCreatedAt());
@@ -161,7 +161,7 @@ public class Rules extends ApiRules {
         Log.i(Tags.RULES, toString());
     }
 
-    public static ApiRulesSummary getDefaultRules(GameType kind) {
+    public static RulesSummaryDto getDefaultRules(GameType kind) {
         final Rules rules = switch (kind) {
             case INDOOR -> officialIndoorRules();
             case INDOOR_4X4 -> defaultIndoor4x4Rules();
@@ -169,7 +169,7 @@ public class Rules extends ApiRules {
             case SNOW -> officialSnowRules();
         };
 
-        ApiRulesSummary rulesDescription = new ApiRulesSummary();
+        RulesSummaryDto rulesDescription = new RulesSummaryDto();
         rulesDescription.setId(rules.getId());
         rulesDescription.setCreatedBy(rules.getCreatedBy());
         rulesDescription.setCreatedAt(rules.getCreatedAt());

@@ -16,7 +16,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiTeamSummary;
+import com.tonkar.volleyballreferee.engine.api.model.TeamSummaryDto;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.engine.team.*;
@@ -166,14 +166,14 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
                 switchCaptain(TeamType.GUEST);
             });
 
-            List<ApiTeamSummary> teams = storedTeamsService.listTeams(GameType.BEACH);
+            List<TeamSummaryDto> teams = storedTeamsService.listTeams(GameType.BEACH);
             mHomeTeamAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), teams);
             mGuestTeamAutocompleteTeamListAdapter = new AutocompleteTeamListAdapter(getContext(), getLayoutInflater(), teams);
 
             homeTeamNameInput.setAdapter(mHomeTeamAutocompleteTeamListAdapter);
             homeTeamNameInput.setThreshold(1);
             homeTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamSummary teamDescription = mHomeTeamAutocompleteTeamListAdapter.getItem(index);
+                TeamSummaryDto teamDescription = mHomeTeamAutocompleteTeamListAdapter.getItem(index);
                 homeTeamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.HOME);
 
@@ -186,7 +186,7 @@ public class QuickGameSetupFragment extends Fragment implements GameServiceHandl
             guestTeamNameInput.setAdapter(mGuestTeamAutocompleteTeamListAdapter);
             guestTeamNameInput.setThreshold(1);
             guestTeamNameInput.setOnItemClickListener((parent, input, index, id) -> {
-                ApiTeamSummary teamDescription = mGuestTeamAutocompleteTeamListAdapter.getItem(index);
+                TeamSummaryDto teamDescription = mGuestTeamAutocompleteTeamListAdapter.getItem(index);
                 guestTeamNameInput.setText(teamDescription.getName());
                 storedTeamsService.copyTeam(storedTeamsService.getTeam(teamDescription.getId()), mGame, TeamType.GUEST);
 

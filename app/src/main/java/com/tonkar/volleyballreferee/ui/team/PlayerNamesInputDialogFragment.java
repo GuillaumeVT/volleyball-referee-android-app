@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.PlayerDto;
 import com.tonkar.volleyballreferee.engine.team.*;
 
 import java.util.*;
@@ -79,7 +79,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
         private final LayoutInflater  mLayoutInflater;
         private final TeamType        mTeamType;
         private final IBaseTeam       mTeam;
-        private final List<ApiPlayer> mPlayers;
+        private final List<PlayerDto> mPlayers;
 
         private PlayerNameListAdapter(LayoutInflater layoutInflater, TeamType teamType, IBaseTeam team) {
             mLayoutInflater = layoutInflater;
@@ -108,7 +108,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
             View playerNameView = view;
             final ViewHolder viewHolder;
 
-            ApiPlayer player = mPlayers.get(position);
+            PlayerDto player = mPlayers.get(position);
             TextWatcher listener = new PlayerNameTextWatcher(position);
 
             if (playerNameView == null) {
@@ -144,7 +144,7 @@ public class PlayerNamesInputDialogFragment extends DialogFragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String name = s.toString().trim();
-                ApiPlayer player = mPlayers.get(mPosition);
+                PlayerDto player = mPlayers.get(mPosition);
                 mTeam.setPlayerName(mTeamType, player.getNum(), name);
             }
 

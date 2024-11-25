@@ -3,7 +3,7 @@ package com.tonkar.volleyballreferee.engine.team.definition;
 import android.util.Log;
 
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.PlayerDto;
 import com.tonkar.volleyballreferee.engine.game.GameType;
 import com.tonkar.volleyballreferee.engine.team.TeamType;
 
@@ -34,7 +34,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     @Override
     public void setPlayerName(final int number, final String name) {
         super.setPlayerName(number, name);
-        for (ApiPlayer player : getLiberos()) {
+        for (PlayerDto player : getLiberos()) {
             if (player.getNum() == number) {
                 player.setName(name);
             }
@@ -43,7 +43,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
 
     @Override
     public boolean isLibero(int number) {
-        return getLiberos().contains(new ApiPlayer(number));
+        return getLiberos().contains(new PlayerDto(number));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void addLibero(final int number) {
         if (canAddLibero() && hasPlayer(number)) {
             Log.i(Tags.TEAM, String.format("Add player #%d as libero of %s team", number, getTeamType()));
-            ApiPlayer player = getPlayer(number);
+            PlayerDto player = getPlayer(number);
             getLiberos().add(player);
         }
     }
@@ -76,7 +76,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public void removeLibero(final int number) {
         if (hasPlayer(number) && isLibero(number)) {
             Log.i(Tags.TEAM, String.format("Remove player #%d as libero from %s team", number, getTeamType()));
-            getLiberos().remove(new ApiPlayer(number));
+            getLiberos().remove(new PlayerDto(number));
         }
     }
 
@@ -97,7 +97,7 @@ public class IndoorTeamDefinition extends TeamDefinition {
     public Set<Integer> getPossibleCaptains() {
         Set<Integer> possibleCaptains = new TreeSet<>();
 
-        for (ApiPlayer player : getPlayers()) {
+        for (PlayerDto player : getPlayers()) {
             possibleCaptains.add(player.getNum());
         }
 

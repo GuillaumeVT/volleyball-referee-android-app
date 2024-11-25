@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.card.MaterialCardView;
 import com.tonkar.volleyballreferee.R;
-import com.tonkar.volleyballreferee.engine.api.model.ApiRulesSummary;
+import com.tonkar.volleyballreferee.engine.api.model.RulesSummaryDto;
 import com.tonkar.volleyballreferee.ui.data.SelectableArrayAdapter;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
-public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSummary> {
+public class StoredRulesListAdapter extends SelectableArrayAdapter<RulesSummaryDto> {
 
     static class ViewHolder {
         MaterialCardView listItemCard;
@@ -26,11 +26,11 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
     }
 
     private final LayoutInflater        mLayoutInflater;
-    private final List<ApiRulesSummary> mStoredRulesList;
-    private final List<ApiRulesSummary> mFilteredStoredRulesList;
+    private final List<RulesSummaryDto> mStoredRulesList;
+    private final List<RulesSummaryDto> mFilteredStoredRulesList;
     private final NameFilter            mNameFilter;
 
-    StoredRulesListAdapter(Context context, LayoutInflater layoutInflater, List<ApiRulesSummary> storedRulesList) {
+    StoredRulesListAdapter(Context context, LayoutInflater layoutInflater, List<RulesSummaryDto> storedRulesList) {
         super(context, R.layout.stored_rules_list_item, storedRulesList);
         mLayoutInflater = layoutInflater;
         mStoredRulesList = storedRulesList;
@@ -39,7 +39,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
         mNameFilter = new NameFilter();
     }
 
-    void updateStoredRulesList(List<ApiRulesSummary> storedRulesList) {
+    void updateStoredRulesList(List<RulesSummaryDto> storedRulesList) {
         mStoredRulesList.clear();
         mFilteredStoredRulesList.clear();
         mStoredRulesList.addAll(storedRulesList);
@@ -53,7 +53,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
     }
 
     @Override
-    public ApiRulesSummary getItem(int index) {
+    public RulesSummaryDto getItem(int index) {
         return mFilteredStoredRulesList.get(index);
     }
 
@@ -78,7 +78,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             viewHolder = (ViewHolder) rulesView.getTag();
         }
 
-        ApiRulesSummary rules = mFilteredStoredRulesList.get(index);
+        RulesSummaryDto rules = mFilteredStoredRulesList.get(index);
         viewHolder.nameText.setText(rules.getName());
 
         switch (rules.getKind()) {
@@ -112,9 +112,9 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             } else {
                 String lowerCaseText = prefix.toString().toLowerCase(Locale.getDefault());
 
-                List<ApiRulesSummary> matchValues = new ArrayList<>();
+                List<RulesSummaryDto> matchValues = new ArrayList<>();
 
-                for (ApiRulesSummary rules : mStoredRulesList) {
+                for (RulesSummaryDto rules : mStoredRulesList) {
                     if (lowerCaseText.isEmpty() || rules.getName().toLowerCase(Locale.getDefault()).contains(lowerCaseText)) {
                         matchValues.add(rules);
                     }
@@ -132,7 +132,7 @@ public class StoredRulesListAdapter extends SelectableArrayAdapter<ApiRulesSumma
             mFilteredStoredRulesList.clear();
 
             if (results.values != null) {
-                mFilteredStoredRulesList.addAll((Collection<ApiRulesSummary>) results.values);
+                mFilteredStoredRulesList.addAll((Collection<RulesSummaryDto>) results.values);
             }
 
             if (results.count > 0) {

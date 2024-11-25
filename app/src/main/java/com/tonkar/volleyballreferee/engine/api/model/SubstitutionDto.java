@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class ApiSubstitution {
+public class SubstitutionDto {
     @SerializedName("playerIn")
     private int playerIn;
     @SerializedName("playerOut")

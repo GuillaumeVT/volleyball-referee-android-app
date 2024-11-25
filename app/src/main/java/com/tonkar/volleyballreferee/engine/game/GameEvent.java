@@ -18,10 +18,10 @@ public class GameEvent {
 
     private final TeamType        teamType;
     private final EventType       eventType;
-    private final ApiSubstitution substitution;
-    private final ApiSanction     sanction;
+    private final SubstitutionDto substitution;
+    private final SanctionDto     sanction;
 
-    private GameEvent(TeamType teamType, EventType eventType, ApiSubstitution substitution, ApiSanction sanction) {
+    private GameEvent(TeamType teamType, EventType eventType, SubstitutionDto substitution, SanctionDto sanction) {
         this.teamType = teamType;
         this.eventType = eventType;
         this.substitution = substitution;
@@ -36,11 +36,11 @@ public class GameEvent {
         return new GameEvent(teamType, EventType.TIMEOUT, null, null);
     }
 
-    public static GameEvent newSubstitutionEvent(TeamType teamType, ApiSubstitution substitution) {
+    public static GameEvent newSubstitutionEvent(TeamType teamType, SubstitutionDto substitution) {
         return new GameEvent(teamType, EventType.SUBSTITUTION, substitution, null);
     }
 
-    public static GameEvent newSanctionEvent(TeamType teamType, ApiSanction sanction) {
+    public static GameEvent newSanctionEvent(TeamType teamType, SanctionDto sanction) {
         return new GameEvent(teamType, EventType.SANCTION, null, sanction);
     }
 

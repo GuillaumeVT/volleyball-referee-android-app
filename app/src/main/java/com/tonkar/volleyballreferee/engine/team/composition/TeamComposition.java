@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 import com.tonkar.volleyballreferee.engine.Tags;
-import com.tonkar.volleyballreferee.engine.api.model.ApiPlayer;
+import com.tonkar.volleyballreferee.engine.api.model.PlayerDto;
 import com.tonkar.volleyballreferee.engine.game.ActionOriginType;
 import com.tonkar.volleyballreferee.engine.team.definition.TeamDefinition;
 import com.tonkar.volleyballreferee.engine.team.player.*;
@@ -25,7 +25,7 @@ public abstract class TeamComposition {
         mTeamDefinition = teamDefinition;
         mPlayers = new LinkedHashMap<>();
 
-        for (ApiPlayer player : mTeamDefinition.getPlayers()) {
+        for (PlayerDto player : mTeamDefinition.getPlayers()) {
             mPlayers.put(player.getNum(), createPlayer(player.getNum()));
         }
     }

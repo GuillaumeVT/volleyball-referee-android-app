@@ -20,7 +20,7 @@ import java.util.Locale;
 
 public class UserSignInFragment extends Fragment {
 
-    private ApiUserSummary mUser;
+    private UserSummaryDto mUser;
 
     public UserSignInFragment() {}
 
@@ -60,7 +60,7 @@ public class UserSignInFragment extends Fragment {
             StoredUserService storedUserService = new StoredUserManager(getContext());
             storedUserService.signInUser(mUser.getPseudo(), password, new AsyncUserRequestListener() {
                 @Override
-                public void onUserTokenReceived(ApiUserToken userToken) {
+                public void onUserTokenReceived(UserTokenDto userToken) {
                     if (isAdded()) {
                         requireActivity().runOnUiThread(() -> {
                             UiUtils

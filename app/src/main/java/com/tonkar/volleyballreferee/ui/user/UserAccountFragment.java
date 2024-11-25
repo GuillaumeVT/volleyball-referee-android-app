@@ -31,7 +31,7 @@ public class UserAccountFragment extends Fragment {
         Log.i(Tags.USER_UI, "Create user account fragment");
         View fragmentView = inflater.inflate(R.layout.fragment_user_account, container, false);
 
-        ApiUserSummary user = PrefUtils.getUser(getContext());
+        UserSummaryDto user = PrefUtils.getUser(getContext());
         if (user != null) {
             EditText pseudoText = fragmentView.findViewById(R.id.user_pseudo_input_text);
             pseudoText.setEnabled(false);
@@ -80,9 +80,9 @@ public class UserAccountFragment extends Fragment {
             confirmNewPasswordInputLayout.setError(null);
 
             StoredUserService storedUserService = new StoredUserManager(getContext());
-            storedUserService.updateUserPassword(new ApiUserPasswordUpdate(currentPassword, newPassword), new AsyncUserRequestListener() {
+            storedUserService.updateUserPassword(new UserPasswordUpdateDto(currentPassword, newPassword), new AsyncUserRequestListener() {
                 @Override
-                public void onUserTokenReceived(ApiUserToken userToken) {
+                public void onUserTokenReceived(UserTokenDto userToken) {
                     if (isAdded()) {
                         requireActivity().runOnUiThread(() -> {
                             UiUtils

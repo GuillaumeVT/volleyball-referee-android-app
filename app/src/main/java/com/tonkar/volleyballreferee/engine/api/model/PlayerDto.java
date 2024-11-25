@@ -8,13 +8,13 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ApiPlayer implements Comparable<ApiPlayer> {
+public class PlayerDto implements Comparable<PlayerDto> {
     @SerializedName("num")
     private int    num;
     @SerializedName("name")
     private String name;
 
-    public ApiPlayer(int num) {
+    public PlayerDto(int num) {
         this(num, "");
     }
 
@@ -24,7 +24,7 @@ public class ApiPlayer implements Comparable<ApiPlayer> {
 
         if (obj == this) {
             result = true;
-        } else if (obj instanceof ApiPlayer other) {
+        } else if (obj instanceof PlayerDto other) {
             result = num == other.num;
         }
 
@@ -32,7 +32,7 @@ public class ApiPlayer implements Comparable<ApiPlayer> {
     }
 
     @Override
-    public int compareTo(ApiPlayer other) {
+    public int compareTo(PlayerDto other) {
         return Integer.compare(num, other.num);
     }
 

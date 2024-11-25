@@ -105,7 +105,7 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
-    protected void undoSubstitution(TeamType teamType, ApiSubstitution substitution) {
+    protected void undoSubstitution(TeamType teamType, SubstitutionDto substitution) {
         java.util.Set<Integer> evictedPlayers = getEvictedPlayersForCurrentSet(teamType, true, true);
         if (!evictedPlayers.contains(substitution.getPlayerIn()) && !evictedPlayers.contains(
                 substitution.getPlayerOut()) && getSnowTeamComposition(teamType).undoSubstitution(substitution)) {
@@ -198,8 +198,8 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public ApiCourt getStartingLineup(TeamType teamType, int setIndex) {
-        ApiCourt startingLineup = new ApiCourt();
+    public CourtDto getStartingLineup(TeamType teamType, int setIndex) {
+        CourtDto startingLineup = new CourtDto();
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
@@ -264,18 +264,18 @@ public class SnowGame extends Game implements IClassicTeam {
     }
 
     @Override
-    public java.util.Set<ApiPlayer> getLiberos(TeamType teamType) {
+    public java.util.Set<PlayerDto> getLiberos(TeamType teamType) {
         return new HashSet<>();
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType) {
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType) {
         return getSnowTeamComposition(teamType).getSubstitutionsCopy();
     }
 
     @Override
-    public List<ApiSubstitution> getSubstitutions(TeamType teamType, int setIndex) {
-        List<ApiSubstitution> substitutions = new ArrayList<>();
+    public List<SubstitutionDto> getSubstitutions(TeamType teamType, int setIndex) {
+        List<SubstitutionDto> substitutions = new ArrayList<>();
 
         com.tonkar.volleyballreferee.engine.game.set.Set set = getSet(setIndex);
 
@@ -291,7 +291,7 @@ public class SnowGame extends Game implements IClassicTeam {
     public void giveSanction(TeamType teamType, SanctionType sanctionType, int number) {
         super.giveSanction(teamType, sanctionType, number);
 
-        if (ApiSanction.isPlayer(number) && (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard())) {
+        if (SanctionDto.isPlayer(number) && (sanctionType.isMisconductExpulsionCard() || sanctionType.isMisconductDisqualificationCard())) {
             // The player excluded for the set/match has to be legally replaced
             PositionType positionType = getPlayerPosition(teamType, number);
 
@@ -307,16 +307,16 @@ public class SnowGame extends Game implements IClassicTeam {
             }
         }
 
-        if (ApiSanction.isPlayer(number) && sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
+        if (SanctionDto.isPlayer(number) && sanctionType.isMisconductDisqualificationCard() && !isMatchCompleted()) {
             // check that the team has enough players to continue the match
             // copy the list of players
-            List<ApiPlayer> players = new ArrayList<>(getTeamDefinition(teamType).getPlayers());
+            List<PlayerDto> players = new ArrayList<>(getTeamDefinition(teamType).getPlayers());
 
             // Remove the disqualified players
 
-            for (ApiSanction sanction : getAllSanctions(teamType)) {
+            for (SanctionDto sanction : getAllSanctions(teamType)) {
                 if (sanction.getCard().isMisconductDisqualificationCard()) {
-                    players.remove(new ApiPlayer(sanction.getNum()));
+                    players.remove(new PlayerDto(sanction.getNum()));
                 }
             }
 
@@ -353,7 +353,7 @@ public class SnowGame extends Game implements IClassicTeam {
                 List<TeamType> pointsLadder = storedGame.getPointsLadder(setIndex);
 
                 if (storedGame.isStartingLineupConfirmed(TeamType.HOME)) {
-                    ApiCourt homeStartingLineup = storedGame.getStartingLineup(TeamType.HOME, setIndex);
+                    CourtDto homeStartingLineup = storedGame.getStartingLineup(TeamType.HOME, setIndex);
 
                     for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.HOME, homeStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
@@ -363,7 +363,7 @@ public class SnowGame extends Game implements IClassicTeam {
                 }
 
                 if (storedGame.isStartingLineupConfirmed(TeamType.GUEST)) {
-                    ApiCourt guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
+                    CourtDto guestStartingLineup = storedGame.getStartingLineup(TeamType.GUEST, setIndex);
 
                     for (PositionType position : PositionType.listPositions(getKind())) {
                         substitutePlayer(TeamType.GUEST, guestStartingLineup.getPlayerAt(position), position, ActionOriginType.USER);
@@ -378,37 +378,37 @@ public class SnowGame extends Game implements IClassicTeam {
                     int homePoints = getPoints(TeamType.HOME, setIndex);
                     int guestPoints = getPoints(TeamType.GUEST, setIndex);
 
-                    List<ApiTimeout> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : homeTimeouts) {
+                    List<TimeoutDto> homeTimeouts = storedGame.getTimeoutsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : homeTimeouts) {
                         callTimeout(TeamType.HOME);
                     }
 
-                    List<ApiTimeout> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiTimeout timeout : guestTimeouts) {
+                    List<TimeoutDto> guestTimeouts = storedGame.getTimeoutsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (TimeoutDto timeout : guestTimeouts) {
                         callTimeout(TeamType.GUEST);
                     }
 
-                    List<ApiSubstitution> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
+                    List<SubstitutionDto> homeSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.HOME, setIndex, homePoints,
                                                                                                  guestPoints);
-                    for (ApiSubstitution substitution : homeSubstitutions) {
+                    for (SubstitutionDto substitution : homeSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.HOME, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.HOME, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSubstitution> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
+                    List<SubstitutionDto> guestSubstitutions = storedGame.getSubstitutionsIfExist(TeamType.GUEST, setIndex, homePoints,
                                                                                                   guestPoints);
-                    for (ApiSubstitution substitution : guestSubstitutions) {
+                    for (SubstitutionDto substitution : guestSubstitutions) {
                         PositionType positionType = getPlayerPosition(TeamType.GUEST, substitution.getPlayerOut(), setIndex);
                         substitutePlayer(TeamType.GUEST, substitution.getPlayerIn(), positionType, ActionOriginType.USER);
                     }
 
-                    List<ApiSanction> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : homeSanctions) {
+                    List<SanctionDto> homeSanctions = storedGame.getSanctionsIfExist(TeamType.HOME, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : homeSanctions) {
                         giveSanction(TeamType.HOME, sanction.getCard(), sanction.getNum());
                     }
 
-                    List<ApiSanction> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
-                    for (ApiSanction sanction : guestSanctions) {
+                    List<SanctionDto> guestSanctions = storedGame.getSanctionsIfExist(TeamType.GUEST, setIndex, homePoints, guestPoints);
+                    for (SanctionDto sanction : guestSanctions) {
                         giveSanction(TeamType.GUEST, sanction.getCard(), sanction.getNum());
                     }
 
@@ -427,7 +427,7 @@ public class SnowGame extends Game implements IClassicTeam {
     public java.util.Set<SanctionType> getPossibleMisconductSanctions(TeamType teamType, int number) {
         boolean teamHasReachedPenalty = false;
 
-        for (ApiSanction sanction : getAllSanctions(teamType)) {
+        for (SanctionDto sanction : getAllSanctions(teamType)) {
             if (sanction.getCard().isMisconductSanctionType()) {
                 teamHasReachedPenalty = true;
             }
@@ -449,7 +449,7 @@ public class SnowGame extends Game implements IClassicTeam {
 
         // A player can have 2 red cards in the same set. On the third rude conduct the player is at least expulsed
 
-        for (ApiSanction sanction : getPlayerSanctions(teamType, number)) {
+        for (SanctionDto sanction : getPlayerSanctions(teamType, number)) {
             if (sanction.getSet() == currentSetIndex && sanction.getCard().isMisconductRedCard()) {
                 numberOfRedCards++;
             }

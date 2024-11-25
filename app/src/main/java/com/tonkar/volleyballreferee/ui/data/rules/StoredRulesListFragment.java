@@ -50,7 +50,7 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mStoredRulesService = new StoredRulesManager(requireContext());
 
-        List<ApiRulesSummary> storedRules = mStoredRulesService.listRules();
+        List<RulesSummaryDto> storedRules = mStoredRulesService.listRules();
 
         Log.i(Tags.STORED_RULES, "Create rules list fragment");
 
@@ -67,19 +67,19 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
         storedRulesList.setAdapter(mStoredRulesListAdapter);
 
         storedRulesList.setOnItemClickListener((adapterView, itemView, position, l) -> {
-            ApiRulesSummary rulesDescription = mStoredRulesListAdapter.getItem(position);
+            RulesSummaryDto rulesDescription = mStoredRulesListAdapter.getItem(position);
 
             if (mStoredRulesListAdapter.hasSelectedItems()) {
                 onRulesSelected(rulesDescription);
             } else {
                 computeOnBackPressedCallbackState();
-                ApiRules rules = mStoredRulesService.getRules(rulesDescription.getId());
+                RulesDto rules = mStoredRulesService.getRules(rulesDescription.getId());
 
                 if (rules != null) {
                     Log.i(Tags.STORED_RULES, String.format("Start activity to view stored rules %s", rules.getName()));
 
                     final Intent intent = new Intent(requireContext(), StoredRulesViewActivity.class);
-                    intent.putExtra("rules", JsonConverters.GSON.toJson(rules, ApiRules.class));
+                    intent.putExtra("rules", JsonConverters.GSON.toJson(rules, RulesDto.class));
                     startActivity(intent, ActivityOptionsCompat
                             .makeSceneTransitionAnimation(requireActivity(), itemView, "listItemToDetails")
                             .toBundle());
@@ -88,7 +88,7 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
         });
 
         storedRulesList.setOnItemLongClickListener((adapterView, itemView, position, id) -> {
-            ApiRulesSummary rulesDescription = mStoredRulesListAdapter.getItem(position);
+            RulesSummaryDto rulesDescription = mStoredRulesListAdapter.getItem(position);
             onRulesSelected(rulesDescription);
             return true;
         });
@@ -215,7 +215,7 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
 
     private void addRules(GameType gameType, View view) {
         final Intent intent = new Intent(requireContext(), StoredRulesActivity.class);
-        intent.putExtra("rules", JsonConverters.GSON.toJson(mStoredRulesService.createRules(gameType), ApiRules.class));
+        intent.putExtra("rules", JsonConverters.GSON.toJson(mStoredRulesService.createRules(gameType), RulesDto.class));
         intent.putExtra("create", true);
         startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view, "gameKindToToolbar").toBundle());
     }
@@ -224,7 +224,7 @@ public class StoredRulesListFragment extends Fragment implements DataSynchroniza
         mBackPressedCallback.setEnabled(mStoredRulesListAdapter.hasSelectedItems() || mIsFabOpen);
     }
 
-    private void onRulesSelected(ApiRulesSummary rulesDescription) {
+    private void onRulesSelected(RulesSummaryDto rulesDescription) {
         mStoredRulesListAdapter.toggleItemSelection(rulesDescription.getId());
         mDeleteSelectedRulesItem.setVisible(mStoredRulesListAdapter.hasSelectedItems());
         computeOnBackPressedCallbackState();
