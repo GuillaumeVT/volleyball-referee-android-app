@@ -137,7 +137,7 @@ public class StoredLeaguesManager implements StoredLeaguesService {
     }
 
     private void syncLeagues(List<LeagueSummaryDto> remoteLeagueList, DataSynchronizationListener listener) {
-        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null);
+        String userId = PrefUtils.getUserId(mContext);
         List<LeagueSummaryDto> localLeagueList = listLeagues();
         Queue<LeagueSummaryDto> remoteLeaguesToDownload = new LinkedList<>();
         boolean afterPurchase = false;

@@ -25,6 +25,8 @@ import com.tonkar.volleyballreferee.ui.interfaces.*;
 import com.tonkar.volleyballreferee.ui.rules.RulesSetupFragment;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import java.util.Objects;
+
 public class QuickGameSetupActivity extends AppCompatActivity {
 
     private IGame mGame;
@@ -126,7 +128,7 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveTeams() {
-        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+        if (Objects.equals(mGame.getCreatedBy(), PrefUtils.getUserId(this))) {
             StoredTeamsService storedTeamsService = new StoredTeamsManager(this);
             GameType gameType = mGame.getTeamsKind();
             storedTeamsService.createAndSaveTeamFrom(gameType, mGame, TeamType.HOME);
@@ -135,14 +137,14 @@ public class QuickGameSetupActivity extends AppCompatActivity {
     }
 
     private void saveRules() {
-        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+        if (Objects.equals(mGame.getCreatedBy(), PrefUtils.getUserId(this))) {
             StoredRulesService storedRulesService = new StoredRulesManager(this);
             storedRulesService.createAndSaveRulesFrom(mGame.getRules());
         }
     }
 
     private void saveLeague() {
-        if (mGame.getCreatedBy().equals(PrefUtils.getUser(this).getId())) {
+        if (Objects.equals(mGame.getCreatedBy(), PrefUtils.getUserId(this))) {
             StoredLeaguesService storedLeaguesService = new StoredLeaguesManager(this);
             storedLeaguesService.createAndSaveLeagueFrom(mGame.getLeague());
         }

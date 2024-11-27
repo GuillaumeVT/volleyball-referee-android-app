@@ -14,13 +14,13 @@ import com.google.android.material.bottomsheet.*;
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.*;
 import com.tonkar.volleyballreferee.engine.api.JsonConverters;
-import com.tonkar.volleyballreferee.engine.api.model.*;
+import com.tonkar.volleyballreferee.engine.api.model.GameSummaryDto;
 import com.tonkar.volleyballreferee.engine.game.*;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.game.GameActivity;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
-import java.util.List;
+import java.util.*;
 
 public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implements AsyncGameRequestListener {
 
@@ -58,9 +58,7 @@ public class ScheduleGameListActionMenu extends BottomSheetDialogFragment implem
             TextView editAndStartGameText = view.findViewById(R.id.action_edit_start_match);
             TextView deleteGameText = view.findViewById(R.id.action_delete_match);
 
-            UserSummaryDto user = PrefUtils.getUser(mActivity);
-
-            if (!mGameDescription.getCreatedBy().equals(user.getId())) {
+            if (!Objects.equals(mGameDescription.getCreatedBy(), PrefUtils.getUserId(mActivity))) {
                 rescheduleGameText.setVisibility(View.GONE);
                 rescheduleGameSeparator.setVisibility(View.GONE);
                 deleteGameText.setVisibility(View.GONE);

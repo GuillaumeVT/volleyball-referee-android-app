@@ -42,8 +42,8 @@ public abstract class StoredGameActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_stored_game, menu);
 
         MenuItem deleteMenu = menu.findItem(R.id.action_delete_game);
-        String userId = PrefUtils.getUser(this).getId();
-        deleteMenu.setVisible(mStoredGame.getCreatedBy().equals(userId));
+        String userId = PrefUtils.getUserId(this);
+        deleteMenu.setVisible(Objects.equals(mStoredGame.getCreatedBy(), userId));
 
         return true;
     }

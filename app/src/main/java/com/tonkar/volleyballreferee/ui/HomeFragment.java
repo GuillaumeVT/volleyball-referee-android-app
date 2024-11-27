@@ -104,7 +104,9 @@ public class HomeFragment extends Fragment {
     private void startIndoorGame(View view) {
         Log.i(Tags.GAME_UI, "Start an indoor game");
         UserSummaryDto user = PrefUtils.getUser(requireContext());
-        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
+        IndoorGame game = GameFactory.createIndoorGame(UUID.randomUUID().toString(),
+                                                       Optional.ofNullable(user).map(UserSummaryDto::getId).orElse(null),
+                                                       Optional.ofNullable(user).map(UserSummaryDto::getPseudo).orElse(null),
                                                        System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -116,7 +118,9 @@ public class HomeFragment extends Fragment {
     private void startBeachGame(View view) {
         Log.i(Tags.GAME_UI, "Start a beach game");
         UserSummaryDto user = PrefUtils.getUser(requireContext());
-        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
+        BeachGame game = GameFactory.createBeachGame(UUID.randomUUID().toString(),
+                                                     Optional.ofNullable(user).map(UserSummaryDto::getId).orElse(null),
+                                                     Optional.ofNullable(user).map(UserSummaryDto::getPseudo).orElse(null),
                                                      System.currentTimeMillis(), 0L, Rules.officialBeachRules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -128,8 +132,10 @@ public class HomeFragment extends Fragment {
     private void startSnowGame(View view) {
         Log.i(Tags.GAME_UI, "Start a snow game");
         UserSummaryDto user = PrefUtils.getUser(requireContext());
-        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(), System.currentTimeMillis(),
-                                                   0L, Rules.officialSnowRules());
+        SnowGame game = GameFactory.createSnowGame(UUID.randomUUID().toString(),
+                                                   Optional.ofNullable(user).map(UserSummaryDto::getId).orElse(null),
+                                                   Optional.ofNullable(user).map(UserSummaryDto::getPseudo).orElse(null),
+                                                   System.currentTimeMillis(), 0L, Rules.officialSnowRules());
         mStoredGamesService.saveSetupGame(game);
 
         Log.i(Tags.GAME_UI, "Start activity to setup game");
@@ -140,7 +146,9 @@ public class HomeFragment extends Fragment {
     private void startIndoor4x4Game(View view) {
         Log.i(Tags.GAME_UI, "Start a 4x4 indoor game");
         UserSummaryDto user = PrefUtils.getUser(requireContext());
-        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
+        Indoor4x4Game game = GameFactory.createIndoor4x4Game(UUID.randomUUID().toString(),
+                                                             Optional.ofNullable(user).map(UserSummaryDto::getId).orElse(null),
+                                                             Optional.ofNullable(user).map(UserSummaryDto::getPseudo).orElse(null),
                                                              System.currentTimeMillis(), 0L, Rules.defaultIndoor4x4Rules());
         mStoredGamesService.saveSetupGame(game);
 
@@ -152,7 +160,9 @@ public class HomeFragment extends Fragment {
     private void startScoreBasedGame(View view) {
         Log.i(Tags.GAME_UI, "Start a score-based game");
         UserSummaryDto user = PrefUtils.getUser(requireContext());
-        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(), user.getId(), user.getPseudo(),
+        IndoorGame game = GameFactory.createPointBasedGame(UUID.randomUUID().toString(),
+                                                           Optional.ofNullable(user).map(UserSummaryDto::getId).orElse(null),
+                                                           Optional.ofNullable(user).map(UserSummaryDto::getPseudo).orElse(null),
                                                            System.currentTimeMillis(), 0L, Rules.officialIndoorRules());
         mStoredGamesService.saveSetupGame(game);
 

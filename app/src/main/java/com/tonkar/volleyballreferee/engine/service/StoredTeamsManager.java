@@ -62,7 +62,7 @@ public class StoredTeamsManager implements StoredTeamsService {
 
     private WrappedTeam createWrappedTeam(GameType kind) {
         String id = UUID.randomUUID().toString();
-        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null);
+        String userId = PrefUtils.getUserId(mContext);
 
         TeamDefinition teamDefinition = switch (kind) {
             case INDOOR, INDOOR_4X4 -> new IndoorTeamDefinition(kind, id, userId, TeamType.HOME);
@@ -281,7 +281,7 @@ public class StoredTeamsManager implements StoredTeamsService {
     }
 
     private void syncTeams(List<TeamSummaryDto> remoteTeamList, DataSynchronizationListener listener) {
-        String userId = PrefUtils.getUser(mContext).getId();
+        String userId = Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null);
         List<TeamSummaryDto> localTeamList = listTeams();
         Queue<TeamSummaryDto> remoteTeamsToDownload = new LinkedList<>();
         boolean afterPurchase = false;

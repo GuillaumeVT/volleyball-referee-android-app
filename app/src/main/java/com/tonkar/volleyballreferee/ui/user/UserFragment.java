@@ -4,14 +4,11 @@ import android.os.Bundle;
 import android.view.*;
 
 import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
 
 public class UserFragment extends Fragment {
-
-    protected SwipeRefreshLayout mSyncLayout;
 
     public UserFragment() {}
 

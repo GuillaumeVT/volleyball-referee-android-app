@@ -9,6 +9,7 @@ import androidx.preference.*;
 
 import com.tonkar.volleyballreferee.R;
 import com.tonkar.volleyballreferee.engine.PrefUtils;
+import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -33,6 +34,12 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         mPrefListener = (prefs, key) -> {
             if (PrefUtils.PREF_NIGHT_MODE.equals(key)) {
                 PrefUtils.applyNightMode(requireContext());
+            }
+
+            if (PrefUtils.PREF_SERVER_URL.equals(key)) {
+                if (PrefUtils.hasServerUrl(requireContext())) {
+                    UiUtils.navigateToMain(requireActivity(), R.id.user_fragment);
+                }
             }
         };
 

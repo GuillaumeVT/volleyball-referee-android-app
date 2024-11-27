@@ -75,7 +75,7 @@ public class StoredRulesManager implements StoredRulesService {
         long utcTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTime().getTime();
 
         rules.setId(UUID.randomUUID().toString());
-        rules.setCreatedBy(Optional.ofNullable(PrefUtils.getUser(mContext)).map(UserSummaryDto::getId).orElse(null));
+        rules.setCreatedBy(PrefUtils.getUserId(mContext));
         rules.setCreatedAt(utcTime);
         rules.setUpdatedAt(utcTime);
         rules.setName("");
@@ -180,7 +180,7 @@ public class StoredRulesManager implements StoredRulesService {
     }
 
     private void syncRules(List<RulesSummaryDto> remoteRulesList, DataSynchronizationListener listener) {
-        String userId = PrefUtils.getUser(mContext).getId();
+        String userId = PrefUtils.getUserId(mContext);
         List<RulesSummaryDto> localRulesList = listRules();
         Queue<RulesSummaryDto> remoteRulesToDownload = new LinkedList<>();
         boolean afterPurchase = false;

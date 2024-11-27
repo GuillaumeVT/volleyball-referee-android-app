@@ -15,6 +15,8 @@ import com.tonkar.volleyballreferee.engine.api.model.*;
 import com.tonkar.volleyballreferee.engine.service.*;
 import com.tonkar.volleyballreferee.ui.util.UiUtils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.net.HttpURLConnection;
 import java.util.Locale;
 
@@ -60,9 +62,9 @@ public class UserAccountFragment extends Fragment {
         EditText newPasswordInputText = fragmentView.findViewById(R.id.user_new_password_input_text);
         EditText confirmNewPasswordInputText = fragmentView.findViewById(R.id.user_confirm_new_password_input_text);
 
-        final String currentPassword = currentPasswordInputText.getText().toString().trim();
-        final String newPassword = newPasswordInputText.getText().toString().trim();
-        final String confirmedNewPassword = confirmNewPasswordInputText.getText().toString().trim();
+        final String currentPassword = StringUtils.trimToEmpty(currentPasswordInputText.getText().toString());
+        final String newPassword = StringUtils.trimToEmpty(newPasswordInputText.getText().toString());
+        final String confirmedNewPassword = StringUtils.trimToEmpty(confirmNewPasswordInputText.getText().toString());
 
         currentPasswordInputLayout.setErrorEnabled(currentPassword.isEmpty());
         newPasswordInputLayout.setErrorEnabled(newPassword.isEmpty());

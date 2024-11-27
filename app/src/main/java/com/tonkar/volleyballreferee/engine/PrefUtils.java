@@ -19,9 +19,9 @@ public class PrefUtils {
     public static final String PREF_NIGHT_MODE     = "pref_night_mode";
     public static final String PREF_SERVER_URL     = "pref_server_url";
 
-    private static final String PREF_USER              = "pref_user";
-    private static final String PREF_USER_TOKEN        = "pref_user_token";
-    private static final String PREF_USER_TOKEN_EXPIRY = "pref_user_token_expiry";
+    private static final String PREF_USER              = "pref_user_4.3";
+    private static final String PREF_USER_TOKEN        = "pref_user_token_4.3";
+    private static final String PREF_USER_TOKEN_EXPIRY = "pref_user_token_expiry_4.3";
 
     public static final String PREF_ONBOARDING_MAIN = "pref_onboarding_main";
 
@@ -63,6 +63,10 @@ public class PrefUtils {
         } else {
             return null;
         }
+    }
+
+    public static String getUserId(Context context) {
+        return Optional.ofNullable(getUser(context)).map(UserSummaryDto::getId).orElse(null);
     }
 
     public static void signOut(Context context) {

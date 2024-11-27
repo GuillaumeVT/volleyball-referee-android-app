@@ -23,6 +23,7 @@ public class Rules extends RulesDto {
     public static final String DEFAULT_INDOOR_4X4_ID = "375dd005-08b6-45f8-a60f-7e04e1e5ba71";
     public static final String DEFAULT_BEACH_ID      = "cceb81c9-2201-4495-8a5e-e289a77e24bf";
     public static final String DEFAULT_SNOW_ID       = "ff03b7e2-f794-4d32-9e6c-a046f75eafa5";
+    public static final String DEFAULT_CREATED_BY    = "3fc31b3b-4f2b-47c9-89c8-ad6ead6902ea";
 
     public static final String DEFAULT_INDOOR_NAME     = "FIVB indoor 6x6 volleyball rules";
     public static final String DEFAULT_INDOOR_4X4_NAME = "Default 4x4 volleyball rules";
@@ -91,22 +92,22 @@ public class Rules extends RulesDto {
     }
 
     public static Rules officialIndoorRules() {
-        return new Rules(DEFAULT_INDOOR_ID, null, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR, 5, 25, true, 15, true, true,
+        return new Rules(DEFAULT_INDOOR_ID, DEFAULT_CREATED_BY, 0L, 0L, DEFAULT_INDOOR_NAME, GameType.INDOOR, 5, 25, true, 15, true, true,
                          WIN_TERMINATION, true, 2, 30, false, 60, true, 180, FIVB_LIMITATION, 6, false, 0, 0, 9999);
     }
 
     public static Rules officialBeachRules() {
-        return new Rules(DEFAULT_BEACH_ID, null, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH, 3, 21, true, 15, true, true, WIN_TERMINATION,
+        return new Rules(DEFAULT_BEACH_ID, DEFAULT_CREATED_BY, 0L, 0L, DEFAULT_BEACH_NAME, GameType.BEACH, 3, 21, true, 15, true, true, WIN_TERMINATION,
                          true, 1, 30, true, 30, true, 60, FIVB_LIMITATION, 0, true, 7, 5, 9999);
     }
 
     public static Rules defaultIndoor4x4Rules() {
-        return new Rules(DEFAULT_INDOOR_4X4_ID, null, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4, 5, 25, true, 15, true, true,
+        return new Rules(DEFAULT_INDOOR_4X4_ID, DEFAULT_CREATED_BY, 0L, 0L, DEFAULT_INDOOR_4X4_NAME, GameType.INDOOR_4X4, 5, 25, true, 15, true, true,
                          WIN_TERMINATION, true, 2, 30, true, 60, true, 180, NO_LIMITATION, 4, false, 0, 0, 9999);
     }
 
     public static Rules officialSnowRules() {
-        return new Rules(DEFAULT_SNOW_ID, null, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW, 3, 15, false, 15, true, true, WIN_TERMINATION,
+        return new Rules(DEFAULT_SNOW_ID, DEFAULT_CREATED_BY, 0L, 0L, DEFAULT_SNOW_NAME, GameType.SNOW, 3, 15, false, 15, true, true, WIN_TERMINATION,
                          true, 1, 30, false, 0, true, 60, NO_LIMITATION, 2, true, 5, 5, 9999);
     }
 
