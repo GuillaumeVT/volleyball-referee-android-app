@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Volleyball Referee</string>
-    <string name="rn_40102" translatable="false">
-        New in this release:
-        \n\n\u2022 Improved selection of teams and rules when setting up games
+    <string name="rn_40200" translatable="false">
+        The web services support is now officially over. All the remaining on-going subscriptions will be refunded.
+        \n\n\Thank you for your support over the years.
     </string>
     <string name="discontinued_web_services" translatable="false">
         As if today, it is no longer possible to subscribe to web services.\n\nThis feature will be discontinued and removed entirely in the next few months, after every on-going subscription has expired.\n\nThe app development has been done on my spare time, and I cannot provide the kind of support or feature requests which some users expect from me.\n\nThank you for your patience,\nGuillaume
