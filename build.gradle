@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.5.2'
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.8.2"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.8.4"
     }
 }
 
@@ -20,5 +20,5 @@ allprojects {
 }
 
 tasks.register('clean', Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }
