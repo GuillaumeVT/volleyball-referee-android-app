@@ -3,7 +3,6 @@ package com.tonkar.volleyballreferee.engine;
 public class Tags {
 
     public static final String FACTORY        = "V-Factory";
-    public static final String BILLING        = "V-Billing";
     public static final String STORED_GAMES   = "V-StoredGames";
     public static final String STORED_RULES   = "V-StoredRules";
     public static final String STORED_TEAMS   = "V-StoredTeams";
